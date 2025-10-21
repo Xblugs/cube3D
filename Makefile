@@ -4,6 +4,8 @@ HOOK		:=	src/hook/cube_hook.c						\
 				src/hook/cube_key_hook.c					\
 				src/hook/cube_mouse_hook.c					\
 
+PARSING		:=
+
 UTILS		:=	src/utils/cube_utils.c						\
 				src/utils/math_utils.c						\
 				src/utils/mlx_utils.c						\
@@ -13,7 +15,7 @@ SRC			:=	src/cube.c									\
 				src/cube_data_init.c						\
 				src/cube_draw_line.c						\
 				
-SOURCES		:=	$(HOOK) $(UTILS) $(SRC)
+SOURCES		:=	$(HOOK) $(PARSING) $(UTILS) $(SRC)
 
 NAME		:=	cube3D
 OBJECTS		:=	$(SOURCES:.c=.o)

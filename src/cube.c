@@ -16,31 +16,41 @@
 
 void	brick_wall(t_data *data)
 {
-	int		w = data->tex->w, h = data->tex->h, i = 0, j = 0, k = 0;
+	int		i;
+	int		j;
+	int		k;
 	long	wh;
 
-	while (h * j < PROJ_H)
+	i = 0;
+	j = 0;
+	k = 0;
+	while (data->tex->h * j < PROJ_H)
 	{
-		while (w * i < PROJ_W)
+		while (data->tex->w * i < PROJ_W)
 		{
-			wh = int_to_long(w * i, h * j);
+			wh = int_to_long(data->tex->w * i, data->tex->h * j);
 			if (i == data->img->x && j == data->img->y)
 				mlx_pitow(data->mlx, data->win, data->tex->img1, wh);
-			else if (k == 0)
-				mlx_pitow(data->mlx, data->win, data->tex->img2, wh);
-			else if (k == 1)
-				mlx_pitow(data->mlx, data->win, data->tex->img3, wh);
-			else if (k == 2)
-				mlx_pitow(data->mlx, data->win, data->tex->img4, wh);
-			if (k == 2)
-				k = 0;
 			else
-				k++;
+				brick_wall_drawing(data, wh, &k);
+			k++;
+			if (k == 3)
+				k = 0;
 			i++;
 		}
 		i = 0;
 		j++;
 	}
+}
+
+void	brick_wall_drawing(t_data *data, long wh, int *k)
+{
+	if (*k == 0)
+		mlx_pitow(data->mlx, data->win, data->tex->img2, wh);
+	else if (*k == 1)
+		mlx_pitow(data->mlx, data->win, data->tex->img3, wh);
+	else if (*k == 2)
+		mlx_pitow(data->mlx, data->win, data->tex->img4, wh);
 }
 
 /*

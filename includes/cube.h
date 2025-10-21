@@ -319,5 +319,6 @@ void	invert_coordinates(t_draw *draw);
 
 // 		-- src/cube.c --
 void	brick_wall(t_data *data);
+void	brick_wall_drawing(t_data *data, long wh, int *k);
 
 #endif
