@@ -12,6 +12,10 @@
 
 #include "cube.h"
 
+static void	draw_low(t_img *img, t_draw draw);
+static void	draw_high(t_img *img, t_draw draw);
+static void	invert_coordinates(t_draw *draw);
+
 // function to draw lines from FdF
 void	draw_line(t_img *img, t_draw *draw)
 {
@@ -40,7 +44,7 @@ void	draw_line(t_img *img, t_draw *draw)
 }
 
 // x[3] = {x0 x1 dx} = {start end (end - start)}
-void	draw_low(t_img *img, t_draw draw)
+static void	draw_low(t_img *img, t_draw draw)
 {
 	int	d;
 	int	yi;
@@ -66,7 +70,7 @@ void	draw_low(t_img *img, t_draw draw)
 	}
 }
 
-void	draw_high(t_img *img, t_draw draw)
+static void	draw_high(t_img *img, t_draw draw)
 {
 	int	d;
 	int	xi;
@@ -103,7 +107,7 @@ void	pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	invert_coordinates(t_draw *draw)
+static void	invert_coordinates(t_draw *draw)
 {
 	int	swap;
 

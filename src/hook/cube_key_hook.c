@@ -12,6 +12,9 @@
 
 #include "cube.h"
 
+static int	s_key_handler(int keycode, t_data *data);
+static void	brick_move_handler(int keycode, t_data *data);
+
 int	key_handler(int keycode, t_data *data)
 {
 	if (keycode == ESC)
@@ -27,7 +30,7 @@ int	key_handler(int keycode, t_data *data)
 }
 
 // 0xFF51 to 0xFF54 = arrow keys
-int	s_key_handler(int keycode, t_data *data)
+static int	s_key_handler(int keycode, t_data *data)
 {
 	if (keycode >= 0xFF51 && keycode <= 0xFF54)
 		brick_move_handler(keycode, data);
@@ -35,17 +38,17 @@ int	s_key_handler(int keycode, t_data *data)
 }
 
 // for testing purposes along brick_wall()
-void	brick_move_handler(int keycode, t_data *data)
+static void	brick_move_handler(int keycode, t_data *data)
 {
 	printf(BLINK_YELLOW"TEST HANDLER ! x=[%d] y=[%d]%s\n",
 		data->img->x, data->img->y, END);
 	if (keycode == UP && data->img->y > 0)
 		data->img->y--;
-	else if (keycode == DOWN && data->img->y < (PROJ_H / UNIT_SIZE) - 1)
+	else if (keycode == DOWN && data->img->y < (HEIGHT / UNIT_SIZE) - 1)
 		data->img->y++;
 	else if (keycode == LEFT && data->img->x > 0)
 		data->img->x--;
-	else if (keycode == RIGHT && data->img->x < (PROJ_W / UNIT_SIZE) - 1)
+	else if (keycode == RIGHT && data->img->x < (WIDTH / UNIT_SIZE) - 1)
 		data->img->x++;
 	brick_wall(data);
 }

@@ -19,7 +19,7 @@
 void	size_of_struct(void)
 {
 	printf("sizeof(t_data\tt_img\tt_draw\tt_map\tt_tex\tt_calc)\n");
-	printf("\t[%lu]\t[%lu]\t[%lu]\t[%lu]\t[%lu]\t[%lu]\n", sizeof(t_data),
+	printf("\t[%lu]\t[%lu]\t[%lu]\t[%lu]\t[%lu]\t[%lu]\n\n", sizeof(t_data),
 		sizeof(t_img), sizeof(t_draw), sizeof(t_map), sizeof(t_tex),
 		sizeof(t_calc));
 }

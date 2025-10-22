@@ -129,6 +129,8 @@
 	changing the screen resolution requires 
 	to recalc parameters listed below
 		See math.md for explanations
+
+	Also calc in math_utils.c
 */
 
 // Texture size and half size
@@ -138,30 +140,30 @@
 //	[	320*200	screen with 60° field of view	]
 // # define FOV				60
 // # define FOV_HALF			30
-// # define PROJ_W				320
-// # define PROJ_H				200
-// # define HALF_PROJ_W		160
-// # define HALF_PROJ_H		100
+// # define WIDTH				320
+// # define HEIGHT				200
+// # define HALF_WIDTH			160
+// # define HALF_HEIGHT		100
 // # define DIST_TO_PROJ		277
 // # define ANGLE_BETWEEN_RAYS	0.1875
 
 //	[	640*640	screen with 60° field of view	] // texture test mode
 # define FOV				60
 # define FOV_HALF			30
-# define PROJ_W				640
-# define PROJ_H				640
-# define HALF_PROJ_W		320
-# define HALF_PROJ_H		320
+# define WIDTH				640
+# define HEIGHT				640
+# define HALF_WIDTH			320
+# define HALF_HEIGHT		320
 # define DIST_TO_PROJ		554
 # define ANGLE_BETWEEN_RAYS	0.09375
 
 //	[	800*600	screen with 60° field of view	]
 // # define FOV				60
 // # define FOV_HALF			30
-// # define PROJ_W				800
-// # define PROJ_H				600
-// # define HALF_PROJ_W		400
-// # define HALF_PROJ_H		300
+// # define WIDTH				800
+// # define HEIGHT				600
+// # define HALF_WIDTH			400
+// # define HALF_HEIGHT		300
 // # define DIST_TO_PROJ		693		//692.8
 // # define ANGLE_BETWEEN_RAYS	0.075
 
@@ -189,6 +191,7 @@ typedef struct s_data
 	t_draw	*draw;
 	t_map	*map;
 	t_tex	*tex;
+	t_calc	*calc;
 	void	*mlx;
 	void	*win;
 }	t_data;
@@ -267,13 +270,13 @@ typedef struct s_tex
 typedef struct s_calc
 {
 	int		fov;
-	int		fov_half;
-	int		proj_w;
-	int		proj_h;
-	int		half_proj_w;
-	int		half_proj_h;
+	int		half_fov;
+	int		width;
+	int		height;
+	int		half_width;
+	int		half_height;
 	int		dist_to_proj;
-	float	angle_betweem_rays;
+	double	angle_betweem_rays;
 }	t_calc;
 
 /*
@@ -292,8 +295,6 @@ void	set_hook(t_data *data);
 
 // 		-- src/hook/cube_key_hook.c --
 int		key_handler(int keycode, t_data *data);
-int		s_key_handler(int keycode, t_data *data);
-void	brick_move_handler(int keycode, t_data *data);
 
 // 		-- src/hook/cube_mouse_hook.c --
 int		mouse_io(t_data *data);
@@ -312,10 +313,10 @@ void	long_to_int(long l, int *x, int *y);
 // 		-- src/utils/math_utils.c --
 double	deg_to_rad(double angle);
 double	rad_to_deg(double radian);
+void	precalc_val(t_data *data, t_calc *calc);
 
 // 		-- src/utils/mlx_utils.c --
 int		mlx_close(t_data *data);
-int		mlx_close_tex(t_data *data);
 void	clear_screen(t_data *data);
 void	int_cleanup(int **intmap, int line);
 void	char_cleanup(char **charmap, int line);
@@ -330,22 +331,16 @@ void	*mlx_xpm_ftoi(void *mlx, char *file, int *width, int *height);
 */
 // 		-- src/cube_brick_wall.c --
 void	brick_wall(t_data *data);
-void	brick_wall_drawing(t_data *data, long wh, int *k);
 
 // 		-- src/cube_data_init.c --
 void	data_init(t_data *data, t_img *img, t_draw *draw, t_map *map);
-void	data_value_init(t_data *data, t_img *img, t_draw *draw, t_map *map);
 void	mlx_data_init(t_data *data);
 
 // 		-- src/cube_draw_line.c --
 void	draw_line(t_img *img, t_draw *draw);
-void	draw_low(t_img *img, t_draw draw);
-void	draw_high(t_img *img, t_draw draw);
 void	pixel_put(t_img *img, int x, int y, int color);
-void	invert_coordinates(t_draw *draw);
 
 // 		-- src/cube.c --
 void	brick_wall(t_data *data);
-void	brick_wall_drawing(t_data *data, long wh, int *k);
 
 #endif

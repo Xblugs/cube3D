@@ -12,6 +12,8 @@
 
 #include "cube.h"
 
+static int	mlx_close_tex(t_data *data);
+
 // close wrapper
 int	mlx_close(t_data *data)
 {
@@ -32,7 +34,7 @@ int	mlx_close(t_data *data)
 }
 
 // free texture related memory
-int	mlx_close_tex(t_data *data)
+static int	mlx_close_tex(t_data *data)
 {
 	if (data->tex->img1 != NULL)
 		mlx_destroy_image(data->mlx, data->tex->img1);

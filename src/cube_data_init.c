@@ -12,6 +12,8 @@
 
 #include "cube.h"
 
+static void	data_value_init(t_data *data, t_img *img, t_draw *draw, t_map *map);
+
 void	data_init(t_data *data, t_img *img, t_draw *draw, t_map *map)
 {
 	data->mlx = mlx_init();
@@ -23,10 +25,10 @@ void	data_init(t_data *data, t_img *img, t_draw *draw, t_map *map)
 	data_value_init(data, img, draw, map);
 }
 
-void	data_value_init(t_data *data, t_img *img, t_draw *draw, t_map *map)
+static void	data_value_init(t_data *data, t_img *img, t_draw *draw, t_map *map)
 {
-	data->x = PROJ_W;
-	data->y = PROJ_H;
+	data->x = WIDTH;
+	data->y = HEIGHT;
 	data->img = img;
 	data->draw = draw;
 	data->map = map;

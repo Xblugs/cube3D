@@ -42,6 +42,7 @@
 
 # Texture checking
 (1) Check if texture exist and can be accessed
+	(access() is not allowed, check with open and check its return)
 
 (2) Check if texture is the right format (.png renamed to .xpm)
 						(--> mlx returns NULL)

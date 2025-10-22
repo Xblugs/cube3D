@@ -12,6 +12,8 @@
 
 #include "cube.h"
 
+static void	brick_wall_drawing(t_data *data, long wh, int *k);
+
 /*
 	Requires:
 		cube_key_hook.c
@@ -27,9 +29,9 @@ void	brick_wall(t_data *data)
 	i = 0;
 	j = 0;
 	k = 0;
-	while (data->tex->h * j < PROJ_H)
+	while (data->tex->h * j < HEIGHT)
 	{
-		while (data->tex->w * i < PROJ_W)
+		while (data->tex->w * i < WIDTH)
 		{
 			wh = int_to_long(data->tex->w * i, data->tex->h * j);
 			if (i == data->img->x && j == data->img->y)
@@ -46,7 +48,7 @@ void	brick_wall(t_data *data)
 	}
 }
 
-void	brick_wall_drawing(t_data *data, long wh, int *k)
+static void	brick_wall_drawing(t_data *data, long wh, int *k)
 {
 	if (*k == 0)
 		mlx_pitow(data->mlx, data->win, data->tex->img2, wh);

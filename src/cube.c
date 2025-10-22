@@ -37,37 +37,39 @@ int	texture_init(t_data *data, t_tex *tex)
 	return (0);
 }
 
-void	main_func(void)
+void	main_func(t_data *data)
 {
-	t_data	data;
 	t_img	img;
 	t_map	map;
 	t_draw	draw;
 	t_tex	tex;
+	t_calc	calc;
 
-	data = (t_data){0};
 	img = (t_img){0};
 	map = (t_map){0};
 	draw = (t_draw){0};
 	tex = (t_tex){0};
+	calc = (t_calc){0};
 	size_of_struct();
-	data_init(&data, &img, &draw, &map);
-	if (texture_init(&data, &tex))
-		mlx_close(&data);
-	mlx_data_init(&data);
-	brick_wall(&data);
-	mlx_loop(data.mlx);
+	data_init(data, &img, &draw, &map);
+	precalc_val(data, &calc);
+	if (texture_init(data, &tex))
+		mlx_close(data);
+	mlx_data_init(data);
+	brick_wall(data);
+	mlx_loop(data->mlx);
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av)
 {
-	(void)ac;
+	t_data	data;
+
+	data = (t_data){0};
 	(void)av;
-	(void)env;
 	if (ac == 2)
 	{
 		printf("WIP: Check algo.md!\n");
-		main_func();
+		main_func(&data);
 	}
 	else
 		printf("%s", WRONG_ARGC);
