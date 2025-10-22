@@ -12,10 +12,6 @@
 
 #include "cube.h"
 
-// img->img = mlx_new_image(data->mlx, data->x, data->y);|| img->img == NULL
-// img->addr = mlx_get_data_addr(img->img, &img->bpp,
-	// 		&(img->line_len), &img->endian);
-
 void	data_init(t_data *data, t_img *img, t_draw *draw, t_map *map)
 {
 	data->mlx = mlx_init();
@@ -48,3 +44,6 @@ void	mlx_data_init(t_data *data)
 		mlx_close(data);
 	set_hook(data);
 }
+// img->img = mlx_new_image(data->mlx, data->x, data->y);|| img->img == NULL
+// img->addr = mlx_get_data_addr(img->img, &img->bpp,
+	// 		&(img->line_len), &img->endian);

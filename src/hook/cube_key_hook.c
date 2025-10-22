@@ -30,12 +30,12 @@ int	key_handler(int keycode, t_data *data)
 int	s_key_handler(int keycode, t_data *data)
 {
 	if (keycode >= 0xFF51 && keycode <= 0xFF54)
-		test_move_handler(keycode, data);
+		brick_move_handler(keycode, data);
 	return (0);
 }
 
 // for testing purposes along brick_wall()
-void	test_move_handler(int keycode, t_data *data)
+void	brick_move_handler(int keycode, t_data *data)
 {
 	printf(BLINK_YELLOW"TEST HANDLER ! x=[%d] y=[%d]%s\n",
 		data->img->x, data->img->y, END);

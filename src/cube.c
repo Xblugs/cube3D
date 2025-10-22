@@ -14,56 +14,6 @@
 
 // main
 
-void	brick_wall(t_data *data)
-{
-	int		i;
-	int		j;
-	int		k;
-	long	wh;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	while (data->tex->h * j < PROJ_H)
-	{
-		while (data->tex->w * i < PROJ_W)
-		{
-			wh = int_to_long(data->tex->w * i, data->tex->h * j);
-			if (i == data->img->x && j == data->img->y)
-				mlx_pitow(data->mlx, data->win, data->tex->img1, wh);
-			else
-				brick_wall_drawing(data, wh, &k);
-			k++;
-			if (k == 3)
-				k = 0;
-			i++;
-		}
-		i = 0;
-		j++;
-	}
-}
-
-void	brick_wall_drawing(t_data *data, long wh, int *k)
-{
-	if (*k == 0)
-		mlx_pitow(data->mlx, data->win, data->tex->img2, wh);
-	else if (*k == 1)
-		mlx_pitow(data->mlx, data->win, data->tex->img3, wh);
-	else if (*k == 2)
-		mlx_pitow(data->mlx, data->win, data->tex->img4, wh);
-}
-
-/*
-	for memory alignement purposes (and ordering)
-	(also for curiosity)
-*/
-void	size_of_struct(void)
-{
-	printf("sizeof(t_data\tt_img\tt_draw\tt_map\tt_tex)\n");
-	printf("\t[%lu]\t[%lu]\t[%lu]\t[%lu]\t[%lu]\n", sizeof(t_data),
-		sizeof(t_img), sizeof(t_draw), sizeof(t_map), sizeof(t_tex));
-}
-
 /*
 	hardcoded textures for tests
 	remove them from /texture/xpm to segfault 😉
@@ -87,7 +37,7 @@ int	texture_init(t_data *data, t_tex *tex)
 	return (0);
 }
 
-void	test_func(void)
+void	main_func(void)
 {
 	t_data	data;
 	t_img	img;
@@ -117,7 +67,7 @@ int	main(int ac, char **av, char **env)
 	if (ac == 2)
 	{
 		printf("WIP: Check algo.md!\n");
-		test_func();
+		main_func();
 	}
 	else
 		printf("%s", WRONG_ARGC);

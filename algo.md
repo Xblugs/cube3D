@@ -7,6 +7,7 @@
 
 (3)	Try to access the file (existence/read check)
 	--> if file doesn't exist or can't be read exit with [FILE_NOT_FOUND] or [OPEN_FAIL]
+	(access() is not allowed, check with open and check its return)
 
 (4) File exist, right extension and can be opened
 	--> Get the file content
@@ -43,7 +44,8 @@
 (1) Check if texture exist and can be accessed
 
 (2) Check if texture is the right format (.png renamed to .xpm)
-						(--> Does mlx handle this ?)
+						(--> mlx returns NULL)
+
 # MLX init
 (1) We have a correct map, init mlx and set its hooks
 	-->on init error clean exit with [MLX_FAIL]

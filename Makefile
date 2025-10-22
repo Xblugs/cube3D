@@ -1,5 +1,7 @@
 CFLAGS		:=	-Wextra -Wall -Werror
 
+DEBUG		:=	src/debug/cube_debug.c						\
+
 HOOK		:=	src/hook/cube_hook.c						\
 				src/hook/cube_key_hook.c					\
 				src/hook/cube_mouse_hook.c					\
@@ -12,10 +14,11 @@ UTILS		:=	src/utils/cube_utils.c						\
 				src/utils/mlx_wrapper.c						\
 
 SRC			:=	src/cube.c									\
+				src/cube_brick_wall.c						\
 				src/cube_data_init.c						\
 				src/cube_draw_line.c						\
 				
-SOURCES		:=	$(HOOK) $(PARSING) $(UTILS) $(SRC)
+SOURCES		:=	$(DEBUG) $(HOOK) $(PARSING) $(UTILS) $(SRC)
 
 NAME		:=	cube3D
 OBJECTS		:=	$(SOURCES:.c=.o)

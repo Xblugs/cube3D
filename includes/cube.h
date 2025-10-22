@@ -170,6 +170,7 @@ typedef struct s_draw		t_draw;
 typedef struct s_map		t_map;
 typedef struct s_img		t_img;
 typedef struct s_tex		t_tex;
+typedef struct s_calc		t_calc;
 
 /*
 	[DEPRECATED COMMENT FROM FDF]
@@ -261,6 +262,28 @@ typedef struct s_tex
 }	t_tex;
 
 /*
+	precalc values and possibly more later on
+*/
+typedef struct s_calc
+{
+	int		fov;
+	int		fov_half;
+	int		proj_w;
+	int		proj_h;
+	int		half_proj_w;
+	int		half_proj_h;
+	int		dist_to_proj;
+	float	angle_betweem_rays;
+}	t_calc;
+
+/*
+	Debug functions and info/tests
+	dir: src/debug
+*/
+// 		-- src/debug/cube_debug.c --
+void	size_of_struct(void);
+
+/*
 	Everything related to actions through mlx_hook(...)
 	dir: src/hook
 */
@@ -270,7 +293,7 @@ void	set_hook(t_data *data);
 // 		-- src/hook/cube_key_hook.c --
 int		key_handler(int keycode, t_data *data);
 int		s_key_handler(int keycode, t_data *data);
-void	test_move_handler(int keycode, t_data *data);
+void	brick_move_handler(int keycode, t_data *data);
 
 // 		-- src/hook/cube_mouse_hook.c --
 int		mouse_io(t_data *data);
@@ -305,6 +328,10 @@ void	*mlx_xpm_ftoi(void *mlx, char *file, int *width, int *height);
 	./src/ root folder
 	dir: src/
 */
+// 		-- src/cube_brick_wall.c --
+void	brick_wall(t_data *data);
+void	brick_wall_drawing(t_data *data, long wh, int *k);
+
 // 		-- src/cube_data_init.c --
 void	data_init(t_data *data, t_img *img, t_draw *draw, t_map *map);
 void	data_value_init(t_data *data, t_img *img, t_draw *draw, t_map *map);
