@@ -305,7 +305,7 @@ int		mouse_handler(int button, int x, int y, t_data *data);
 	dir: src/parsing
 */
 // 		-- src/parsing/placeholder.c --
-int	parsing(void);
+int		parsing(void);
 
 /*
 	Various utils files
