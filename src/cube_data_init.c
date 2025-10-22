@@ -27,6 +27,9 @@ void	data_init(t_data *data, t_img *img, t_draw *draw, t_map *map)
 
 static void	data_value_init(t_data *data, t_img *img, t_draw *draw, t_map *map)
 {
+	*img = (t_img){0};
+	*map = (t_map){0};
+	*draw = (t_draw){0};
 	data->x = WIDTH;
 	data->y = HEIGHT;
 	data->img = img;

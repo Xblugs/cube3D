@@ -6,7 +6,7 @@ HOOK		:=	src/hook/cube_hook.c						\
 				src/hook/cube_key_hook.c					\
 				src/hook/cube_mouse_hook.c					\
 
-PARSING		:=
+PARSING		:=	src/parsing/placeholder.c					\
 
 UTILS		:=	src/utils/cube_utils.c						\
 				src/utils/math_utils.c						\

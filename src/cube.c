@@ -20,6 +20,7 @@
 */
 int	texture_init(t_data *data, t_tex *tex)
 {
+	*tex = (t_tex){0};
 	data->tex = tex;
 	tex->path1 = "./texture/xpm/brick.xpm";
 	tex->path2 = "./texture/xpm/tile_cyan.xpm";
@@ -45,13 +46,10 @@ void	main_func(t_data *data)
 	t_tex	tex;
 	t_calc	calc;
 
-	img = (t_img){0};
-	map = (t_map){0};
-	draw = (t_draw){0};
-	tex = (t_tex){0};
-	calc = (t_calc){0};
 	size_of_struct();
 	data_init(data, &img, &draw, &map);
+	if (parsing())
+		mlx_close(data);
 	precalc_val(data, &calc);
 	if (texture_init(data, &tex))
 		mlx_close(data);
@@ -68,7 +66,7 @@ int	main(int ac, char **av)
 	(void)av;
 	if (ac == 2)
 	{
-		printf("WIP: Check algo.md!\n");
+		printf("WIP: Check algo.md and math.md!\n");
 		main_func(&data);
 	}
 	else

@@ -27,6 +27,7 @@ double	rad_to_deg(double radian)
 */
 void	precalc_val(t_data *data, t_calc *calc)
 {
+	*calc = (t_calc){0};
 	data->calc = calc;
 	calc->half_fov = FOV / 2;
 	calc->half_width = WIDTH / 2;

@@ -301,6 +301,13 @@ int		mouse_io(t_data *data);
 int		mouse_handler(int button, int x, int y, t_data *data);
 
 /*
+	Everything related to file parsing
+	dir: src/parsing
+*/
+// 		-- src/parsing/placeholder.c --
+int	parsing(void);
+
+/*
 	Various utils files
 	dir: src/utils
 */
