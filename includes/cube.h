@@ -36,6 +36,7 @@
 # define MLX_FAIL 			"MLX error\n"
 
 // PREPARSING ERROR
+# define MIN_ARGV_LEN		4
 # define WRONG_ARGC 		"cube3D require a path to a map file (*.cub)\n"
 # define WRONG_EXT 			"wrong extension (.cub required)\n"
 # define FILE_NOT_FOUND 	"file not found\n"
@@ -238,9 +239,10 @@ typedef struct s_draw
 */
 typedef struct s_map
 {
-	int		**map;
-	int		line;		// i
-	int		col;		// j
+	char	**map;
+	int		line;		// y
+	int		col;		// x
+	int		pos[2];		// player pos [x, y]
 }	t_map;
 
 /*
@@ -287,6 +289,14 @@ typedef struct s_calc
 void	size_of_struct(void);
 
 /*
+	Exec and rendering functions
+	dir: src/exec
+*/
+// 		-- src/exec/cube_exec.c --
+void	exec_func(t_data *data);
+void	find_start_pos(t_map *map);
+
+/*
 	Everything related to actions through mlx_hook(...)
 	dir: src/hook
 */
@@ -305,7 +315,7 @@ int		mouse_handler(int button, int x, int y, t_data *data);
 	dir: src/parsing
 */
 // 		-- src/parsing/placeholder.c --
-int		parsing(void);
+int	parsing(t_data *data, t_map *map);
 
 /*
 	Various utils files
@@ -328,7 +338,7 @@ void	clear_screen(t_data *data);
 void	int_cleanup(int **intmap, int line);
 void	char_cleanup(char **charmap, int line);
 
-// 		-- src/utils/mlx_utils2.c --
+// 		-- src/utils/mlx_wrapper.c --
 void	mlx_pitow(void *mlx, void *win, void *img, long wh);
 void	*mlx_xpm_ftoi(void *mlx, char *file, int *width, int *height);
 
@@ -340,7 +350,7 @@ void	*mlx_xpm_ftoi(void *mlx, char *file, int *width, int *height);
 void	brick_wall(t_data *data);
 
 // 		-- src/cube_data_init.c --
-void	data_init(t_data *data, t_img *img, t_draw *draw, t_map *map);
+void	data_init(t_data *data, t_img *img, t_draw *draw);
 void	mlx_data_init(t_data *data);
 
 // 		-- src/cube_draw_line.c --

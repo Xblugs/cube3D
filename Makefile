@@ -1,6 +1,8 @@
-CFLAGS		:=	-Wextra -Wall -Werror
+CFLAGS		:=	-Wextra -Wall -Werror -g
 
 DEBUG		:=	src/debug/cube_debug.c						\
+
+EXEC		:=	src/exec/cube_exec.c						\
 
 HOOK		:=	src/hook/cube_hook.c						\
 				src/hook/cube_key_hook.c					\
@@ -18,7 +20,7 @@ SRC			:=	src/cube.c									\
 				src/cube_data_init.c						\
 				src/cube_draw_line.c						\
 				
-SOURCES		:=	$(DEBUG) $(HOOK) $(PARSING) $(UTILS) $(SRC)
+SOURCES		:=	$(DEBUG) $(EXEC) $(HOOK) $(PARSING) $(UTILS) $(SRC)
 
 NAME		:=	cube3D
 OBJECTS		:=	$(SOURCES:.c=.o)

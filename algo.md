@@ -1,8 +1,12 @@
 # Pre-checking
 
-(1) Exit if argv[1] [len < 4] (minimum file name is .cub)
+(0) Check if argc = 2
+	--> else exit with [WRONG_ARGC]
 
-(2) Check if the file a .cub map
+(1) Check if argv[1] [len < 4] (minimum file name is .cub)
+	--> else exit with [WRONG_EXT]
+
+(2) Check if the given file is a .cub map
 	--> else exit with [WRONG_EXT]
 
 (3)	Try to access the file (existence/read check)

@@ -69,6 +69,7 @@ Since the center of the projection plane is defined to be at 100. The middle of 
 
 	c_h is the intersection ray & horizontal grid
 	c_v is the intersection ray & vertical grid
+	--> inter_h, inter_v
 
 	d_h is how much we move c_h to join the grid
 	d_v is 					c_v

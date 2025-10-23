@@ -12,8 +12,19 @@
 
 #include "cube.h"
 
-// return 1 on error
-int	parsing(void)
+/*
+	init map values to {0} and associate the structures
+	return 1 on error
+*/
+int	parsing(t_data *data, t_map *map)
 {
+	// This block refuses to init map->map for reasons
+	// *map = (t_map){0};
+	// map->map = (char *[]){"1111", "1001", "10N1", "1111"};
+	map->line = 4;
+	map->col = ft_strlen(map->map[0]);
+	data->map = map;
+	printf("map =\t%s\n\t%s\n\t%s\n\t%s\n\n",
+		map->map[0], map->map[1], map->map[2], map->map[3]);
 	return (0);
 }

@@ -17,6 +17,7 @@
 /*
 	hardcoded textures for tests
 	remove them from /texture/xpm to segfault 😉
+	TODO: Move this function to its dedicated folder/file later
 */
 int	texture_init(t_data *data, t_tex *tex)
 {
@@ -46,16 +47,17 @@ void	main_func(t_data *data)
 	t_tex	tex;
 	t_calc	calc;
 
+	map = (t_map){0};
+	map.map = (char *[]){"1111", "1001", "10N1", "1111"};
 	size_of_struct();
-	data_init(data, &img, &draw, &map);
-	if (parsing())
+	data_init(data, &img, &draw);
+	if (parsing(data, &map))
 		mlx_close(data);
 	precalc_val(data, &calc);
 	if (texture_init(data, &tex))
 		mlx_close(data);
 	mlx_data_init(data);
-	brick_wall(data);
-	mlx_loop(data->mlx);
+	exec_func(data);
 }
 
 int	main(int ac, char **av)
@@ -63,12 +65,13 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	data = (t_data){0};
-	(void)av;
-	if (ac == 2)
+	if (ac == 2 && ft_strlen(av[1]) >= MIN_ARGV_LEN)
 	{
-		printf("WIP: Check algo.md and math.md!\n");
+		printf(B_WHITE"\n\tWIP: Check algo.md and math.md!%s\n\n", END);
 		main_func(&data);
 	}
+	else if (ac == 2 && ft_strlen(av[1]) < MIN_ARGV_LEN)
+		printf("%s", WRONG_EXT);
 	else
 		printf("%s", WRONG_ARGC);
 	return (0);

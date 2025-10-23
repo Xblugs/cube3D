@@ -27,8 +27,8 @@ int	mlx_close(t_data *data)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
-	if (data->map->map != NULL)
-		int_cleanup(data->map->map, data->map->line);
+	// if (data->map->map != NULL)
+	// 	char_cleanup(data->map->map, data->map->line);
 	exit(0);
 	return (0);
 }
