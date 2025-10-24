@@ -23,9 +23,10 @@ int	mouse_io(t_data *data)
 
 int	mouse_handler(int mouse, int x, int y, t_data *data)
 {
-	(void) data;
 	if (mouse == LMB)
 		printf("Cursor at (x, y) = [%d, %d]\n", x, y);
+	else if (mouse == WHEEL_CLICK)
+		print_pos(data);
 	return (0);
 }
 

@@ -1,12 +1,14 @@
-CFLAGS		:=	-Wextra -Wall -Werror -g
+CFLAGS		:=	-Wextra -Wall -Werror
 
 DEBUG		:=	src/debug/cube_debug.c						\
 
 EXEC		:=	src/exec/cube_exec.c						\
+				src/exec/cube_pos_init.c					\
 
 HOOK		:=	src/hook/cube_hook.c						\
 				src/hook/cube_key_hook.c					\
 				src/hook/cube_mouse_hook.c					\
+				src/hook/cube_move_handler.c				\
 
 PARSING		:=	src/parsing/placeholder.c					\
 

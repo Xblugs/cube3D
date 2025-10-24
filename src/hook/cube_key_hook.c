@@ -12,43 +12,45 @@
 
 #include "cube.h"
 
-static int	s_key_handler(int keycode, t_data *data);
-static void	brick_move_handler(int keycode, t_data *data);
+static int	s_key_handler(int key, t_data *data);
+static void	brick_move_handler(int key, t_data *data);
 
-int	key_handler(int keycode, t_data *data)
+int	key_handler(int key, t_data *data)
 {
-	if (keycode == ESC)
+	if (key == ESC)
 	{
 		printf(RED"ESC pressed, closing...%s\n", END);
 		mlx_close(data);
 	}
-	else if (keycode >= 0xFF00)
-		s_key_handler(keycode, data);
-	if (keycode != ENTER)
-		printf("Key press = [%d 0x%X '%c']\n", keycode, keycode, keycode);
+	else if (key >= 0xFF00)
+		s_key_handler(key, data);
+	else if (key == 'w' || key == 'a' || key == 's' || key == 'd')
+		move_handler(key, data);
+	if (key != ENTER)
+		printf("Key press = [%d 0x%X '%c']\n", key, key, key);
 	return (0);
 }
 
 // 0xFF51 to 0xFF54 = arrow keys
-static int	s_key_handler(int keycode, t_data *data)
+static int	s_key_handler(int key, t_data *data)
 {
-	if (keycode >= 0xFF51 && keycode <= 0xFF54)
-		brick_move_handler(keycode, data);
+	if ((key >= 0xFF51 && key <= 0xFF54))
+		brick_move_handler(key, data);
 	return (0);
 }
 
 // for testing purposes along brick_wall()
-static void	brick_move_handler(int keycode, t_data *data)
+static void	brick_move_handler(int key, t_data *data)
 {
 	printf(BLINK_YELLOW"TEST HANDLER ! x=[%d] y=[%d]%s\n",
 		data->img->x, data->img->y, END);
-	if (keycode == UP && data->img->y > 0)
+	if (key == UP && data->img->y > 0)
 		data->img->y--;
-	else if (keycode == DOWN && data->img->y < (HEIGHT / UNIT_SIZE) - 1)
+	else if (key == DOWN && data->img->y < (HEIGHT / UNIT) - 1)
 		data->img->y++;
-	else if (keycode == LEFT && data->img->x > 0)
+	else if (key == LEFT && data->img->x > 0)
 		data->img->x--;
-	else if (keycode == RIGHT && data->img->x < (WIDTH / UNIT_SIZE) - 1)
+	else if (key == RIGHT && data->img->x < (WIDTH / UNIT) - 1)
 		data->img->x++;
 	brick_wall(data);
 }

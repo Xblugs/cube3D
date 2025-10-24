@@ -115,6 +115,7 @@
 
 // MOUSE
 # define LMB				1
+# define RMB				3
 # define WHEEL_CLICK		2
 # define WHEEL_UP			4
 # define WHEEL_DOWN			5
@@ -123,6 +124,12 @@
 # define ON_ENTER			7
 # define ON_LEAVE			8
 # define ON_DESTROY			17
+
+/*
+	Used for array indexes for more code clarity
+*/
+# define X					0
+# define Y					1
 
 // CUBE PRECOMPUTED VALUES
 /*
@@ -135,8 +142,9 @@
 */
 
 // Texture size and half size
-# define UNIT_SIZE			64
-# define HALF_UNIT_SIZE		32
+# define UNIT				64
+# define HALF_UNIT			32
+# define MOV_SCALE			5
 
 //	[	320*200	screen with 60° field of view	]
 // # define FOV				60
@@ -177,6 +185,7 @@ typedef struct s_calc		t_calc;
 
 /*
 	[DEPRECATED COMMENT FROM FDF]
+	TODO: Rewrite t_data comment
 	img is expected to be window-sized
 	t_data encapsulate everything for easier cleanup
 	pos are where your current image is located at
@@ -235,14 +244,15 @@ typedef struct s_draw
 }	t_draw;
 
 /*
-	Everything read from the map file ends here hopefully
+	Everything read from the map file
 */
 typedef struct s_map
 {
 	char	**map;
-	int		line;		// y
-	int		col;		// x
-	int		pos[2];		// player pos [x, y]
+	int		line;			// y
+	int		col;			// x
+	int		pos[2];			// player pos [x, y]
+	int		view_angle;		// in deg
 }	t_map;
 
 /*
@@ -267,7 +277,8 @@ typedef struct s_tex
 }	t_tex;
 
 /*
-	precalc values and possibly more later on
+	precalc values for dynamic window size
+	define might be used in code for readability purposes
 */
 typedef struct s_calc
 {
@@ -287,6 +298,7 @@ typedef struct s_calc
 */
 // 		-- src/debug/cube_debug.c --
 void	size_of_struct(void);
+void	print_pos(t_data *data);
 
 /*
 	Exec and rendering functions
@@ -294,7 +306,9 @@ void	size_of_struct(void);
 */
 // 		-- src/exec/cube_exec.c --
 void	exec_func(t_data *data);
-void	find_start_pos(t_map *map);
+
+// 		-- src/exec/cube_pos_init.c --
+void	start_pos_wrapper(t_data *data, t_map *map);
 
 /*
 	Everything related to actions through mlx_hook(...)
@@ -304,11 +318,14 @@ void	find_start_pos(t_map *map);
 void	set_hook(t_data *data);
 
 // 		-- src/hook/cube_key_hook.c --
-int		key_handler(int keycode, t_data *data);
+int		key_handler(int key, t_data *data);
 
 // 		-- src/hook/cube_mouse_hook.c --
 int		mouse_io(t_data *data);
 int		mouse_handler(int button, int x, int y, t_data *data);
+
+// 		-- src/hook/cube_move_handler.c --
+void	move_handler(int key, t_data *data);
 
 /*
 	Everything related to file parsing

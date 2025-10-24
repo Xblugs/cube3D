@@ -23,3 +23,11 @@ void	size_of_struct(void)
 		sizeof(t_img), sizeof(t_draw), sizeof(t_map), sizeof(t_tex),
 		sizeof(t_calc));
 }
+
+void	print_pos(t_data *data)
+{
+	printf(B_WHITE"Player coordinates:\n");
+	printf("\tplayer is located at [%d, %d]",
+		data->map->pos[X], data->map->pos[Y]);
+	printf(", looking at [%d°]%s\n", data->map->view_angle, END);
+}
