@@ -2,8 +2,12 @@ CFLAGS		:=	-Wextra -Wall -Werror
 
 DEBUG		:=	src/debug/cube_debug.c						\
 
-EXEC		:=	src/exec/cube_exec.c						\
+EXEC		:=	$(RAYCAST)									\
+				src/exec/cube_exec.c						\
 				src/exec/cube_pos_init.c					\
+
+RAYCAST		:=	src/exec/raycasting/cube_raycast.c			\
+				src/exec/raycasting/cube_raycast2.c			\
 
 HOOK		:=	src/hook/cube_hook.c						\
 				src/hook/cube_key_hook.c					\

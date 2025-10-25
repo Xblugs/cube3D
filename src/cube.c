@@ -19,18 +19,14 @@
 	remove them from /texture/xpm to segfault 😉
 	TODO: Move this function to its dedicated folder/file later
 */
-int	texture_init(t_data *data, t_tex *tex)
+int	texture_init(t_data *data, t_tex *tex, t_map *map)
 {
 	*tex = (t_tex){0};
 	data->tex = tex;
-	tex->path1 = "./texture/xpm/brick.xpm";
-	tex->path2 = "./texture/xpm/tile_cyan.xpm";
-	tex->path3 = "./texture/xpm/tile_magenta.xpm";
-	tex->path4 = "./texture/xpm/tile_yellow.xpm";
-	tex->img1 = mlx_xpm_ftoi(data->mlx, tex->path1, &tex->w, &tex->h);
-	tex->img2 = mlx_xpm_ftoi(data->mlx, tex->path2, &tex->w, &tex->h);
-	tex->img3 = mlx_xpm_ftoi(data->mlx, tex->path3, &tex->w, &tex->h);
-	tex->img4 = mlx_xpm_ftoi(data->mlx, tex->path4, &tex->w, &tex->h);
+	tex->img1 = mlx_xpm_ftoi(data->mlx, map->path1, &tex->w, &tex->h);
+	tex->img2 = mlx_xpm_ftoi(data->mlx, map->path2, &tex->w, &tex->h);
+	tex->img3 = mlx_xpm_ftoi(data->mlx, map->path3, &tex->w, &tex->h);
+	tex->img4 = mlx_xpm_ftoi(data->mlx, map->path4, &tex->w, &tex->h);
 	if (!tex->img1 || !tex->img2 || !tex->img3 || !tex->img4)
 	{
 		printf("%s", TEXT_OPEN_FAIL);
@@ -53,7 +49,7 @@ void	main_func(t_data *data)
 	if (parsing_placeholder(data, &map))
 		mlx_close(data);
 	precalc_val(data, &calc);
-	if (texture_init(data, &tex))
+	if (texture_init(data, &tex, &map))
 		mlx_close(data);
 	mlx_data_init(data);
 	exec_func(data);

@@ -12,30 +12,34 @@
 
 #include "cube.h"
 
+/*
+	This file mostly implement [math.md] formulas for quadrant raycasting
+*/
+
 static void	q1_raycast(t_data *data, t_raycast *rc);
 static void	q2_raycast(t_data *data, t_raycast *rc);
 static void	q3_raycast(t_data *data, t_raycast *rc);
 static void	q4_raycast(t_data *data, t_raycast *rc);
 
-void	raycast_wrapper(t_data *data)
+void	raycast_wrapper(t_data *data, t_raycast *rc)
 {
-	if (ray_angle % 90 == 0)
-		ray_angle++;
-	if (ray_angle < 90)
-		q1_raycast(data, data->rc);
-	else if (ray_angle < 180)
-		q2_raycast(data, data->rc);
-	else if (ray_angle < 270)
-		q3_raycast(data, data->rc);
-	else if (ray_angle < 360)
-		q4_raycast(data, data->rc);
+	rc->ray_angle = rc->view_angle - data->calc->half_fov;
+	if (rc->ray_angle % 90 == 0)
+		rc->ray_angle++;
+	if (rc->ray_angle < 90)
+		q1_raycast(data, rc);
+	else if (rc->ray_angle < 180)
+		q2_raycast(data, rc);
+	else if (rc->ray_angle < 270)
+		q3_raycast(data, rc);
+	else if (rc->ray_angle < 360)
+		q4_raycast(data, rc);
 }
 
 // (0 < ray_angle < 90)
-// wrong formula, to be completed
 static void	q1_raycast(t_data *data, t_raycast *rc)
 {
-	rc->alpha = tan(deg_to_rad(ray_angle));
+	rc->alpha = tan(deg_to_rad(rc->ray_angle));
 	rc->mov_h[X] = UNIT / rc->alpha;
 	rc->mov_v[Y] = -rc->alpha * (rc->mov_v[X]);
 	rc->inter_h[X] = ((rc->inter_h[Y] - rc->pos[Y]) / rc->alpha) + rc->pos[X];
@@ -44,18 +48,20 @@ static void	q1_raycast(t_data *data, t_raycast *rc)
 	rc->inter_v[Y] = rc->alpha * (rc->inter_v[X] - rc->pos[X]) + rc->pos[Y];
 	while (is_in_scope(rc->inter_h, rc->inter_v))
 	{
+		if (wall_hit(rc, data->map))
+			break ;
 		rc->inter_h[X] += rc->mov_h[X];
 		rc->inter_h[Y] += -UNIT;
 		rc->inter_v[X] += UNIT;
 		rc->inter_v[Y] += rc->mov_v[Y];
 	}
-	return ();
+	printf("raycasting is out of bound boss\n");
 }
 
 // (91 < ray_angle < 179)
 static void	q2_raycast(t_data *data, t_raycast *rc)
 {
-	rc->alpha = tan(deg_to_rad(ray_angle - 90));
+	rc->alpha = tan(deg_to_rad(rc->ray_angle - 90));
 	rc->mov_h[X] = -UNIT * rc->alpha;
 	rc->mov_v[Y] = -UNIT / rc->alpha;
 	rc->inter_h[Y] = ((rc->pos[Y] / UNIT) * UNIT) - 1;
@@ -64,18 +70,20 @@ static void	q2_raycast(t_data *data, t_raycast *rc)
 	rc->inter_v[Y] = rc->pos[Y] - ((rc->pos[X] - rc->inter_v[X]) / rc->alpha);
 	while (is_in_scope(rc->inter_h, rc->inter_v))
 	{
+		if (wall_hit(rc, data->map))
+			break ;
 		rc->inter_h[X] += rc->mov_h[X];
 		rc->inter_h[Y] += -UNIT;
 		rc->inter_v[X] += -UNIT;
 		rc->inter_v[Y] += rc->mov_v[Y];
 	}
-	return ();
+	printf("raycasting is out of bound boss\n");
 }
 
 // (181 < ray_angle < 269)
 static void	q3_raycast(t_data *data, t_raycast *rc)
 {
-	rc->alpha = tan(deg_to_rad(ray_angle - 180));
+	rc->alpha = tan(deg_to_rad(rc->ray_angle - 180));
 	rc->mov_h[X] = -UNIT * rc->alpha;
 	rc->mov_v[Y] = UNIT * rc->alpha;
 	rc->inter_h[Y] = ((rc->pos[Y] / UNIT) * UNIT) + UNIT;
@@ -84,18 +92,20 @@ static void	q3_raycast(t_data *data, t_raycast *rc)
 	rc->inter_v[Y] = rc->alpha * (rc->pos[X] - rc->inter_v[X]) + rc->pos[Y];
 	while (is_in_scope(rc->inter_h, rc->inter_v))
 	{
+		if (wall_hit(rc, data->map))
+			break ;
 		rc->inter_h[X] += rc->mov_h[X];
 		rc->inter_h[Y] += UNIT;
 		rc->inter_v[X] += -UNIT;
 		rc->inter_v[Y] += rc->mov_v[Y];
 	}
-	return ();
+	printf("raycasting is out of bound boss\n");
 }
 
 // (271 < ray_angle < 359)
 static void	q4_raycast(t_data *data, t_raycast *rc)
 {
-	rc->alpha = tan(deg_to_rad(ray_angle - 270));
+	rc->alpha = tan(deg_to_rad(rc->ray_angle - 270));
 	rc->mov_h[X] = UNIT * rc->alpha;
 	rc->mov_v[Y] = UNIT / rc->alpha;
 	rc->inter_h[Y] = ((rc->pos[Y] / UNIT) * UNIT) + UNIT;
@@ -104,12 +114,14 @@ static void	q4_raycast(t_data *data, t_raycast *rc)
 	rc->inter_v[Y] = rc->pos[Y] + (rc->inter_v[X] - rc->pos[X]) / rc->alpha;
 	while (is_in_scope(rc->inter_h, rc->inter_v))
 	{
+		if (wall_hit(rc, data->map))
+			break ;
 		rc->inter_h[X] += rc->mov_h[X];
 		rc->inter_h[Y] += UNIT;
 		rc->inter_v[X] += UNIT;
 		rc->inter_v[Y] += rc->mov_v[Y];
 	}
-	return ();
+	printf("raycasting is out of bound boss\n");
 }
 
 // quadrant template before changes

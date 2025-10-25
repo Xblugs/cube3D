@@ -253,23 +253,21 @@ typedef struct s_map
 	char		**map;
 	int			line;				// y
 	int			col;				// x
+	char		*path1;
+	char		*path2;
+	char		*path3;
+	char		*path4;
 }	t_map;
 
 /*
 	texture are assumed to be the exact same size (UNIT_SIZE)
 	path is used only to load the texture once
 	textures are kept in memory for the program entire lifetime
-
-	TODO: move texture path to t_map once parsing is done for cleaner struct
 */
 typedef struct s_tex
 {
 	int			w;
 	int			h;
-	char		*path1;
-	char		*path2;
-	char		*path3;
-	char		*path4;
 	void		*img1;
 	void		*img2;
 	void		*img3;
@@ -298,7 +296,8 @@ typedef struct s_raycast
 	int			pos[2];				// player pos [x, y]
 	int			alpha;
 	int			view_angle;			// in deg
-	int			ray_angle;			// raycasting table
+	int			ray_angle;			// raycasting angle
+	int			wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
 }	t_raycast;
 
 /*
@@ -324,7 +323,11 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc);
 	dir: src/exec/raycasting
 */
 // 		-- src/exec/raycasting/cube_raycast.c --
-void	raycast_wrapper(t_data *data);
+void	raycast_wrapper(t_data *data, t_raycast *rc);
+
+// 		-- src/exec/raycasting/cube_raycast2.c --
+int	is_in_scope(int inter_h[2], int inter_v[2]);
+int	wall_hit(t_raycast *rc, t_map *map);
 
 /*
 	Everything related to actions through mlx_hook(...)
@@ -394,6 +397,6 @@ void	draw_line(t_img *img, t_draw *draw);
 void	pixel_put(t_img *img, int x, int y, int color);
 
 // 		-- src/cube.c --
-int		texture_init(t_data *data, t_tex *tex);
+int		texture_init(t_data *data, t_tex *tex, t_map *map);
 
 #endif
