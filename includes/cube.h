@@ -182,6 +182,7 @@ typedef struct s_map		t_map;
 typedef struct s_img		t_img;
 typedef struct s_tex		t_tex;
 typedef struct s_calc		t_calc;
+typedef struct s_raycast	t_raycast;
 
 /*
 	[DEPRECATED COMMENT FROM FDF]
@@ -193,17 +194,18 @@ typedef struct s_calc		t_calc;
 */
 typedef struct s_data
 {
-	int		x;
-	int		y;
-	int		pos_x;
-	int		pos_y;
-	t_img	*img;
-	t_draw	*draw;
-	t_map	*map;
-	t_tex	*tex;
-	t_calc	*calc;
-	void	*mlx;
-	void	*win;
+	int			x;
+	int			y;
+	int			pos_x;
+	int			pos_y;
+	t_img		*img;
+	t_draw		*draw;
+	t_map		*map;
+	t_tex		*tex;
+	t_calc		*calc;
+	t_raycast	*rc;
+	void		*mlx;
+	void		*win;
 }	t_data;
 
 /*
@@ -213,13 +215,13 @@ typedef struct s_data
 */
 typedef struct s_img
 {
-	int		bpp;
-	int		line_len;
-	int		endian;
-	int		x;
-	int		y;
-	void	*img;
-	char	*addr;
+	int			bpp;
+	int			line_len;
+	int			endian;
+	int			x;
+	int			y;
+	void		*img;
+	char		*addr;
 }	t_img;
 
 /*
@@ -228,19 +230,19 @@ typedef struct s_img
 */
 typedef struct s_draw
 {
-	int		x[3];
-	int		y[3];
-	int		z[3];
-	int		pix_x;
-	int		pix_y;
-	int		pix_z;
-	int		off_x;
-	int		off_y;
-	int		angle;
-	int		angle_off;
-	int		scale;
-	int		h_delta;
-	int		color;
+	int			x[3];
+	int			y[3];
+	int			z[3];
+	int			pix_x;
+	int			pix_y;
+	int			pix_z;
+	int			off_x;
+	int			off_y;
+	int			angle;
+	int			angle_off;
+	int			scale;
+	int			h_delta;
+	int			color;
 }	t_draw;
 
 /*
@@ -248,12 +250,9 @@ typedef struct s_draw
 */
 typedef struct s_map
 {
-	char	**map;
-	int		line;				// y
-	int		col;				// x
-	int		pos[2];				// player pos [x, y]
-	int		view_angle;			// in deg
-	int		ray_angle;			// raycasting table
+	char		**map;
+	int			line;				// y
+	int			col;				// x
 }	t_map;
 
 /*
@@ -265,16 +264,16 @@ typedef struct s_map
 */
 typedef struct s_tex
 {
-	int		w;
-	int		h;
-	char	*path1;
-	char	*path2;
-	char	*path3;
-	char	*path4;
-	void	*img1;
-	void	*img2;
-	void	*img3;
-	void	*img4;
+	int			w;
+	int			h;
+	char		*path1;
+	char		*path2;
+	char		*path3;
+	char		*path4;
+	void		*img1;
+	void		*img2;
+	void		*img3;
+	void		*img4;
 }	t_tex;
 
 /*
@@ -283,12 +282,24 @@ typedef struct s_tex
 */
 typedef struct s_calc
 {
-	int		half_fov;
-	int		half_width;
-	int		half_height;
-	int		dist_to_proj;
-	double	angle_betweem_rays;
+	int			half_fov;
+	int			half_width;
+	int			half_height;
+	int			dist_to_proj;
+	double		angle_betweem_rays;
 }	t_calc;
+
+typedef struct s_raycast
+{
+	int			mov_h[2];
+	int			mov_v[2];
+	int			inter_h[2];
+	int			inter_v[2];
+	int			pos[2];				// player pos [x, y]
+	int			alpha;
+	int			view_angle;			// in deg
+	int			ray_angle;			// raycasting table
+}	t_raycast;
 
 /*
 	Debug functions and info/tests
@@ -306,7 +317,7 @@ void	print_pos(t_data *data);
 void	exec_func(t_data *data);
 
 // 		-- src/exec/cube_pos_init.c --
-void	start_pos_wrapper(t_data *data, t_map *map);
+void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc);
 
 /*
 	Raycasting functions

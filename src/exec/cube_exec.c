@@ -14,7 +14,11 @@
 
 void	exec_func(t_data *data)
 {
-	start_pos_wrapper(data, data->map);
+	t_raycast	rc;
+
+	rc = (t_raycast){0};
+	data->rc = &rc;
+	start_pos_wrapper(data, data->map, data->rc);
 	brick_wall(data);
 	mlx_loop(data->mlx);
 }

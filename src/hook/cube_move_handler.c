@@ -26,24 +26,24 @@ void	move_handler(int key, t_data *data)
 	{
 		if (key == UP || key == 'w')
 		{
-			data->map->pos[X] += (cos(deg_to_rad(data->map->view_angle)) * mov);
-			data->map->pos[Y] -= (sin(deg_to_rad(data->map->view_angle)) * mov);
+			data->rc->pos[X] += (cos(deg_to_rad(data->rc->view_angle)) * mov);
+			data->rc->pos[Y] -= (sin(deg_to_rad(data->rc->view_angle)) * mov);
 		}
 		else
 		{
-			data->map->pos[X] -= (cos(deg_to_rad(data->map->view_angle)) * mov);
-			data->map->pos[Y] += (sin(deg_to_rad(data->map->view_angle)) * mov);
+			data->rc->pos[X] -= (cos(deg_to_rad(data->rc->view_angle)) * mov);
+			data->rc->pos[Y] += (sin(deg_to_rad(data->rc->view_angle)) * mov);
 		}
 	}
 	else if (key == LEFT || key == 'a')
-		data->map->view_angle += 10;
+		data->rc->view_angle += 10;
 	else if (key == RIGHT || key == 'd')
 	{
-		data->map->view_angle -= 10;
-		if (data->map->view_angle < 0)
-			data->map->view_angle += 360;
+		data->rc->view_angle -= 10;
+		if (data->rc->view_angle < 0)
+			data->rc->view_angle += 360;
 	}
-	data->map->view_angle %= 360;
+	data->rc->view_angle %= 360;
 }
 
 // for testing purposes along brick_wall()

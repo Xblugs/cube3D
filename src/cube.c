@@ -43,14 +43,13 @@ void	main_func(t_data *data)
 {
 	t_img	img;
 	t_map	map;
-	t_draw	draw;
 	t_tex	tex;
 	t_calc	calc;
 
 	map = (t_map){0};
 	map.map = (char *[]){"1111", "1001", "10N1", "1111"};
 	size_of_struct();
-	data_init(data, &img, &draw);
+	data_init(data, &img, NULL);
 	if (parsing_placeholder(data, &map))
 		mlx_close(data);
 	precalc_val(data, &calc);

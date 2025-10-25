@@ -18,16 +18,16 @@
 */
 void	size_of_struct(void)
 {
-	printf("sizeof(t_data\tt_img\tt_draw\tt_map\tt_tex\tt_calc)\n");
-	printf("\t[%lu]\t[%lu]\t[%lu]\t[%lu]\t[%lu]\t[%lu]\n\n", sizeof(t_data),
-		sizeof(t_img), sizeof(t_draw), sizeof(t_map), sizeof(t_tex),
-		sizeof(t_calc));
+	printf("sizeof(t_data\tt_img\tt_draw\tt_map\tt_tex\tt_calc\tt_raycast)\n");
+	printf("\t[%lu]\t[%lu]\t[%lu]\t[%lu]\t[%lu]\t[%lu]\t[%lu]\n\n",
+		sizeof(t_data), sizeof(t_img), sizeof(t_draw), sizeof(t_map),
+		sizeof(t_tex), sizeof(t_calc), sizeof(t_raycast));
 }
 
 void	print_pos(t_data *data)
 {
 	printf(B_WHITE"Player coordinates:\n");
 	printf("\tplayer is located at [%d, %d]",
-		data->map->pos[X], data->map->pos[Y]);
-	printf(", looking at [%d°]%s\n", data->map->view_angle, END);
+		data->rc->pos[X], data->rc->pos[Y]);
+	printf(", looking at [%d°]%s\n", data->rc->view_angle, END);
 }

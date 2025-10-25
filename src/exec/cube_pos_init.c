@@ -12,20 +12,20 @@
 
 #include "cube.h"
 
-static void	find_start_pos(t_map *map);
-static void	find_start_angle(t_map *map);
+static void	find_start_pos(t_map *map, t_raycast *rc);
+static void	find_start_angle(t_map *map, t_raycast *rc);
 
-void	start_pos_wrapper(t_data *data, t_map *map)
+void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc)
 {
-	find_start_pos(map);
-	find_start_angle(map);
-	printf("pos(x, y) = (%d, %d)\n", data->map->pos[X], data->map->pos[Y]);
+	find_start_pos(map, rc);
+	find_start_angle(map, rc);
+	printf("pos(x, y) = (%d, %d)\n", data->rc->pos[X], data->rc->pos[Y]);
 	printf("   (l, c) = (%d, %d)\n\n", data->map->line, data->map->col);
 	print_pos(data);
 }
 
 // find position in index values
-static void	find_start_pos(t_map *map)
+static void	find_start_pos(t_map *map, t_raycast *rc)
 {
 	int	i;
 	int	j;
@@ -39,8 +39,8 @@ static void	find_start_pos(t_map *map)
 			if (map->map[i][j] == 'N' || map->map[i][j] == 'S'
 				|| map->map[i][j] == 'W' || map->map[i][j] == 'E')
 			{
-				map->pos[X] = j;
-				map->pos[Y] = i;
+				rc->pos[X] = j;
+				rc->pos[Y] = i;
 				return ;
 			}
 			j++;
@@ -51,19 +51,19 @@ static void	find_start_pos(t_map *map)
 }
 
 // set start angle and switches coordinates to px representation
-static void	find_start_angle(t_map *map)
+static void	find_start_angle(t_map *map, t_raycast *rc)
 {
 	int	i;
 	int	j;
 
-	i = map->pos[X];
-	j = map->pos[Y];
+	i = rc->pos[X];
+	j = rc->pos[Y];
 	if (map->map[i][j] == 'N')
-		map->view_angle = 90;
+		rc->view_angle = 90;
 	else if (map->map[i][j] == 'W')
-		map->view_angle = 180;
+		rc->view_angle = 180;
 	else if (map->map[i][j] == 'S')
-		map->view_angle = 270;
-	map->pos[X] = map->pos[X] * UNIT + HALF_UNIT;
-	map->pos[Y] = map->pos[Y] * UNIT + HALF_UNIT;
+		rc->view_angle = 270;
+	rc->pos[X] = rc->pos[X] * UNIT + HALF_UNIT;
+	rc->pos[Y] = rc->pos[Y] * UNIT + HALF_UNIT;
 }

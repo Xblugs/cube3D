@@ -27,13 +27,22 @@ void	data_init(t_data *data, t_img *img, t_draw *draw)
 
 static void	data_value_init(t_data *data, t_img *img, t_draw *draw)
 {
-	*img = (t_img){0};
-	*draw = (t_draw){0};
-	data->x = WIDTH;
-	data->y = HEIGHT;
-	data->img = img;
-	data->draw = draw;
-	draw->scale = 1;
+	if (data != NULL)
+	{
+		data->x = WIDTH;
+		data->y = HEIGHT;
+		data->img = img;
+		data->draw = draw;
+	}
+	if (img != NULL)
+	{
+		*img = (t_img){0};
+	}
+	if (draw != NULL)
+	{
+		*draw = (t_draw){0};
+		draw->scale = 1;
+	}
 }
 
 /*
