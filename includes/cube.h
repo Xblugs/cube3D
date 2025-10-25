@@ -326,8 +326,8 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc);
 void	raycast_wrapper(t_data *data, t_raycast *rc);
 
 // 		-- src/exec/raycasting/cube_raycast2.c --
-int	is_in_scope(int inter_h[2], int inter_v[2]);
-int	wall_hit(t_raycast *rc, t_map *map);
+int		is_in_scope(int inter_h[2], int inter_v[2]);
+int		wall_hit(t_raycast *rc, t_map *map);
 
 /*
 	Everything related to actions through mlx_hook(...)
