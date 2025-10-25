@@ -284,7 +284,7 @@ typedef struct s_calc
 	int			half_width;
 	int			half_height;
 	int			dist_to_proj;
-	double		angle_betweem_rays;
+	double		angle_between_rays;
 }	t_calc;
 
 typedef struct s_raycast
@@ -294,10 +294,13 @@ typedef struct s_raycast
 	int			inter_h[2];
 	int			inter_v[2];
 	int			pos[2];				// player pos [x, y]
-	int			alpha;
+	double		alpha;
+	double		ray_angle;			// raycasting angle
+	int			ray_index;
 	int			view_angle;			// in deg
-	int			ray_angle;			// raycasting angle
 	int			wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
+	int			out_v;
+	int			out_h;
 }	t_raycast;
 
 /*
@@ -326,7 +329,7 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc);
 void	raycast_wrapper(t_data *data, t_raycast *rc);
 
 // 		-- src/exec/raycasting/cube_raycast2.c --
-int		is_in_scope(int inter_h[2], int inter_v[2]);
+void	scope_check(t_raycast *rc, int inter_h[2], int inter_v[2]);
 int		wall_hit(t_raycast *rc, t_map *map);
 
 /*

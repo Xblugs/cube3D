@@ -24,16 +24,22 @@ static void	q4_raycast(t_data *data, t_raycast *rc);
 void	raycast_wrapper(t_data *data, t_raycast *rc)
 {
 	rc->ray_angle = rc->view_angle - data->calc->half_fov;
-	if (rc->ray_angle % 90 == 0)
-		rc->ray_angle++;
-	if (rc->ray_angle < 90)
-		q1_raycast(data, rc);
-	else if (rc->ray_angle < 180)
-		q2_raycast(data, rc);
-	else if (rc->ray_angle < 270)
-		q3_raycast(data, rc);
-	else if (rc->ray_angle < 360)
-		q4_raycast(data, rc);
+	while (rc->ray_angle < rc->view_angle + data->calc->half_fov)
+	{
+		rc->out_h = 0;
+		rc->out_v = 0;
+		if (fmod(rc->ray_angle, 90) == 0)
+			rc->ray_angle += data->calc->angle_between_rays;
+		if (rc->ray_angle < 90)
+			q1_raycast(data, rc);
+		else if (rc->ray_angle < 180)
+			q2_raycast(data, rc);
+		else if (rc->ray_angle < 270)
+			q3_raycast(data, rc);
+		else if (rc->ray_angle < 360)
+			q4_raycast(data, rc);
+		rc->ray_angle += data->calc->angle_between_rays;
+	}
 }
 
 // (0 < ray_angle < 90)
@@ -46,16 +52,22 @@ static void	q1_raycast(t_data *data, t_raycast *rc)
 	rc->inter_h[Y] = ((rc->pos[Y] / UNIT) * UNIT) - 1;
 	rc->inter_v[X] = ((rc->pos[X] / UNIT) * UNIT) + UNIT;
 	rc->inter_v[Y] = rc->alpha * (rc->inter_v[X] - rc->pos[X]) + rc->pos[Y];
-	while (is_in_scope(rc->inter_h, rc->inter_v))
+	while (!(rc->out_h && rc->out_v))
 	{
 		if (wall_hit(rc, data->map))
 			break ;
-		rc->inter_h[X] += rc->mov_h[X];
-		rc->inter_h[Y] += -UNIT;
-		rc->inter_v[X] += UNIT;
-		rc->inter_v[Y] += rc->mov_v[Y];
+		if (!rc->out_h)
+		{
+			rc->inter_h[X] += rc->mov_h[X];
+			rc->inter_h[Y] += -UNIT;
+		}
+		if (!rc->out_v)
+		{
+			rc->inter_v[X] += UNIT;
+			rc->inter_v[Y] += rc->mov_v[Y];
+		}
+		scope_check(rc, rc->inter_h, rc->inter_v);
 	}
-	printf("raycasting is out of bound boss\n");
 }
 
 // (91 < ray_angle < 179)
@@ -68,16 +80,22 @@ static void	q2_raycast(t_data *data, t_raycast *rc)
 	rc->inter_h[X] = rc->alpha * (rc->pos[Y] - rc->inter_h[Y]);
 	rc->inter_v[X] = ((rc->pos[X] / UNIT) * UNIT) - 1;
 	rc->inter_v[Y] = rc->pos[Y] - ((rc->pos[X] - rc->inter_v[X]) / rc->alpha);
-	while (is_in_scope(rc->inter_h, rc->inter_v))
+	while (!(rc->out_h && rc->out_v))
 	{
 		if (wall_hit(rc, data->map))
 			break ;
-		rc->inter_h[X] += rc->mov_h[X];
-		rc->inter_h[Y] += -UNIT;
-		rc->inter_v[X] += -UNIT;
-		rc->inter_v[Y] += rc->mov_v[Y];
+		if (!rc->out_h)
+		{
+			rc->inter_h[X] += rc->mov_h[X];
+			rc->inter_h[Y] += -UNIT;
+		}
+		if (!rc->out_v)
+		{
+			rc->inter_v[X] += -UNIT;
+			rc->inter_v[Y] += rc->mov_v[Y];
+		}
+		scope_check(rc, rc->inter_h, rc->inter_v);
 	}
-	printf("raycasting is out of bound boss\n");
 }
 
 // (181 < ray_angle < 269)
@@ -90,16 +108,22 @@ static void	q3_raycast(t_data *data, t_raycast *rc)
 	rc->inter_h[X] = rc->pos[X] - (rc->inter_h[Y] - rc->pos[Y]) / rc->alpha;
 	rc->inter_v[X] = ((rc->pos[X] / UNIT) * UNIT) - 1;
 	rc->inter_v[Y] = rc->alpha * (rc->pos[X] - rc->inter_v[X]) + rc->pos[Y];
-	while (is_in_scope(rc->inter_h, rc->inter_v))
+	while (!(rc->out_h && rc->out_v))
 	{
 		if (wall_hit(rc, data->map))
 			break ;
-		rc->inter_h[X] += rc->mov_h[X];
-		rc->inter_h[Y] += UNIT;
-		rc->inter_v[X] += -UNIT;
-		rc->inter_v[Y] += rc->mov_v[Y];
+		if (!rc->out_h)
+		{
+			rc->inter_h[X] += rc->mov_h[X];
+			rc->inter_h[Y] += UNIT;
+		}
+		if (!rc->out_v)
+		{
+			rc->inter_v[X] += -UNIT;
+			rc->inter_v[Y] += rc->mov_v[Y];
+		}
+		scope_check(rc, rc->inter_h, rc->inter_v);
 	}
-	printf("raycasting is out of bound boss\n");
 }
 
 // (271 < ray_angle < 359)
@@ -112,16 +136,22 @@ static void	q4_raycast(t_data *data, t_raycast *rc)
 	rc->inter_h[X] = rc->pos[X] + rc->alpha * (rc->inter_h[Y] - rc->pos[Y]);
 	rc->inter_v[X] = ((rc->pos[X] / UNIT) * UNIT) - UNIT;
 	rc->inter_v[Y] = rc->pos[Y] + (rc->inter_v[X] - rc->pos[X]) / rc->alpha;
-	while (is_in_scope(rc->inter_h, rc->inter_v))
+	while (!(rc->out_h && rc->out_v))
 	{
 		if (wall_hit(rc, data->map))
 			break ;
-		rc->inter_h[X] += rc->mov_h[X];
-		rc->inter_h[Y] += UNIT;
-		rc->inter_v[X] += UNIT;
-		rc->inter_v[Y] += rc->mov_v[Y];
+		if (!rc->out_h)
+		{
+			rc->inter_h[X] += rc->mov_h[X];
+			rc->inter_h[Y] += UNIT;
+		}
+		if (!rc->out_v)
+		{
+			rc->inter_v[X] += UNIT;
+			rc->inter_v[Y] += rc->mov_v[Y];
+		}
+		scope_check(rc, rc->inter_h, rc->inter_v);
 	}
-	printf("raycasting is out of bound boss\n");
 }
 
 // quadrant template before changes

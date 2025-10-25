@@ -2,8 +2,7 @@ CFLAGS		:=	-Wextra -Wall -Werror
 
 DEBUG		:=	src/debug/cube_debug.c						\
 
-EXEC		:=	$(RAYCAST)									\
-				src/exec/cube_exec.c						\
+EXEC		:=	src/exec/cube_exec.c						\
 				src/exec/cube_pos_init.c					\
 
 RAYCAST		:=	src/exec/raycasting/cube_raycast.c			\
@@ -26,8 +25,11 @@ SRC			:=	src/cube.c									\
 				src/cube_brick_wall.c						\
 				src/cube_data_init.c						\
 				src/cube_draw_line.c						\
-				
-SOURCES		:=	$(DEBUG) $(EXEC) $(HOOK) $(PARSING) $(UTILS) $(SRC)
+
+EXEC_SRC	:=	$(EXEC) $(RAYCAST)
+PARSING_SRC	:=	$(PARSING)
+
+SOURCES		:=	$(DEBUG) $(EXEC_SRC) $(HOOK) $(PARSING_SRC) $(UTILS) $(SRC)
 
 NAME		:=	cube3D
 OBJECTS		:=	$(SOURCES:.c=.o)
@@ -56,7 +58,7 @@ fclean:
 	@rm -f $(NAME)
 
 libs:
-	make -sC ./libft
+	make -C ./libft
 	make -sC ./minilibx-linux
 
 re: fclean all
