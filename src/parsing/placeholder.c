@@ -16,11 +16,12 @@
 	init map values to {0} and associate the structures
 	return 1 on error
 */
-int	parsing(t_data *data, t_map *map)
+// This block refuses to init map->map for reasons
+// most likely requires **map to affect the *map
+// *map = (t_map){0};
+// map->map = (char *[]){"1111", "1001", "10N1", "1111"};
+int	parsing_placeholder(t_data *data, t_map *map)
 {
-	// This block refuses to init map->map for reasons
-	// *map = (t_map){0};
-	// map->map = (char *[]){"1111", "1001", "10N1", "1111"};
 	map->line = 4;
 	map->col = ft_strlen(map->map[0]);
 	data->map = map;

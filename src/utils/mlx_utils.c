@@ -27,11 +27,11 @@ int	mlx_close(t_data *data)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
-	// if (data->map->map != NULL)
-	// 	char_cleanup(data->map->map, data->map->line);
 	exit(0);
 	return (0);
 }
+// if (data->map->map != NULL)
+// 	char_cleanup(data->map->map, data->map->line);
 
 // free texture related memory
 static int	mlx_close_tex(t_data *data)
@@ -57,32 +57,4 @@ void	clear_screen(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->img->img,
 		data->pos_x, data->pos_y);
 	mlx_destroy_image(data->mlx, black_screen);
-}
-
-void	int_cleanup(int **intmap, int line)
-{
-	int	i;
-
-	i = 0;
-	while (i < line)
-	{
-		if (intmap[i] != NULL)
-			free(intmap[i]);
-		i++;
-	}
-	free(intmap);
-}
-
-void	char_cleanup(char **charmap, int line)
-{
-	int	i;
-
-	i = 0;
-	while (i < line)
-	{
-		if (charmap[i] != NULL)
-			free(charmap[i]);
-		i++;
-	}
-	free(charmap);
 }

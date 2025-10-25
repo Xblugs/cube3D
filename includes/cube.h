@@ -249,10 +249,11 @@ typedef struct s_draw
 typedef struct s_map
 {
 	char	**map;
-	int		line;			// y
-	int		col;			// x
-	int		pos[2];			// player pos [x, y]
-	int		view_angle;		// in deg
+	int		line;				// y
+	int		col;				// x
+	int		pos[2];				// player pos [x, y]
+	int		view_angle;			// in deg
+	int		ray_angle;			// raycasting table
 }	t_map;
 
 /*
@@ -282,10 +283,7 @@ typedef struct s_tex
 */
 typedef struct s_calc
 {
-	int		fov;
 	int		half_fov;
-	int		width;
-	int		height;
 	int		half_width;
 	int		half_height;
 	int		dist_to_proj;
@@ -311,6 +309,13 @@ void	exec_func(t_data *data);
 void	start_pos_wrapper(t_data *data, t_map *map);
 
 /*
+	Raycasting functions
+	dir: src/exec/raycasting
+*/
+// 		-- src/exec/raycasting/cube_raycast.c --
+void	raycast_wrapper(t_data *data);
+
+/*
 	Everything related to actions through mlx_hook(...)
 	dir: src/hook
 */
@@ -326,18 +331,23 @@ int		mouse_handler(int button, int x, int y, t_data *data);
 
 // 		-- src/hook/cube_move_handler.c --
 void	move_handler(int key, t_data *data);
+void	brick_move_handler(int key, t_data *data);
 
 /*
 	Everything related to file parsing
 	dir: src/parsing
 */
 // 		-- src/parsing/placeholder.c --
-int	parsing(t_data *data, t_map *map);
+int		parsing_placeholder(t_data *data, t_map *map);
 
 /*
-	Various utils files
+	Various generic utils files
 	dir: src/utils
 */
+// 		-- src/utils/clean_utils.c --
+void	int_cleanup(int **intmap, int line);
+void	char_cleanup(char **charmap, int line);
+
 // 		-- src/utils/cube_utils.c --
 size_t	ft_splitcheck(char **split, size_t wordcount);
 size_t	ft_digitcount(char const *s, char c);
@@ -352,8 +362,6 @@ void	precalc_val(t_data *data, t_calc *calc);
 // 		-- src/utils/mlx_utils.c --
 int		mlx_close(t_data *data);
 void	clear_screen(t_data *data);
-void	int_cleanup(int **intmap, int line);
-void	char_cleanup(char **charmap, int line);
 
 // 		-- src/utils/mlx_wrapper.c --
 void	mlx_pitow(void *mlx, void *win, void *img, long wh);
@@ -375,6 +383,6 @@ void	draw_line(t_img *img, t_draw *draw);
 void	pixel_put(t_img *img, int x, int y, int color);
 
 // 		-- src/cube.c --
-void	brick_wall(t_data *data);
+int		texture_init(t_data *data, t_tex *tex);
 
 #endif

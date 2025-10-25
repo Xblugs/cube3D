@@ -15,23 +15,24 @@
 /*
 	move values depend on current orientation
 	currently arrow key are used on brick_handler and [wasd] for player pos
+	TODO: change this comment and comment brick_handler once it's out of prod
 */
 void	move_handler(int key, t_data *data)
 {
-	int	ms;
+	int	mov;
 
-	ms = MOV_SCALE;
+	mov = MOV_SCALE;
 	if (key == UP || key == DOWN || key == 'w' || key == 's')
 	{
 		if (key == UP || key == 'w')
 		{
-			data->map->pos[X] += (cos(deg_to_rad(data->map->view_angle)) * ms);
-			data->map->pos[Y] += (sin(deg_to_rad(data->map->view_angle)) * ms);
+			data->map->pos[X] += (cos(deg_to_rad(data->map->view_angle)) * mov);
+			data->map->pos[Y] -= (sin(deg_to_rad(data->map->view_angle)) * mov);
 		}
 		else
 		{
-			data->map->pos[X] -= (cos(deg_to_rad(data->map->view_angle)) * ms);
-			data->map->pos[Y] -= (sin(deg_to_rad(data->map->view_angle)) * ms);
+			data->map->pos[X] -= (cos(deg_to_rad(data->map->view_angle)) * mov);
+			data->map->pos[Y] += (sin(deg_to_rad(data->map->view_angle)) * mov);
 		}
 	}
 	else if (key == LEFT || key == 'a')
@@ -43,4 +44,20 @@ void	move_handler(int key, t_data *data)
 			data->map->view_angle += 360;
 	}
 	data->map->view_angle %= 360;
+}
+
+// for testing purposes along brick_wall()
+void	brick_move_handler(int key, t_data *data)
+{
+	printf(BLINK_YELLOW"TEST HANDLER ! x=[%d] y=[%d]%s\n",
+		data->img->x, data->img->y, END);
+	if (key == UP && data->img->y > 0)
+		data->img->y--;
+	else if (key == DOWN && data->img->y < (HEIGHT / UNIT) - 1)
+		data->img->y++;
+	else if (key == LEFT && data->img->x > 0)
+		data->img->x--;
+	else if (key == RIGHT && data->img->x < (WIDTH / UNIT) - 1)
+		data->img->x++;
+	brick_wall(data);
 }

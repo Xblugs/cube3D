@@ -12,7 +12,8 @@ HOOK		:=	src/hook/cube_hook.c						\
 
 PARSING		:=	src/parsing/placeholder.c					\
 
-UTILS		:=	src/utils/cube_utils.c						\
+UTILS		:=	src/utils/clean_utils.c						\
+				src/utils/cube_utils.c						\
 				src/utils/math_utils.c						\
 				src/utils/mlx_utils.c						\
 				src/utils/mlx_wrapper.c						\

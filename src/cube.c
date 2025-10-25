@@ -51,7 +51,7 @@ void	main_func(t_data *data)
 	map.map = (char *[]){"1111", "1001", "10N1", "1111"};
 	size_of_struct();
 	data_init(data, &img, &draw);
-	if (parsing(data, &map))
+	if (parsing_placeholder(data, &map))
 		mlx_close(data);
 	precalc_val(data, &calc);
 	if (texture_init(data, &tex))
