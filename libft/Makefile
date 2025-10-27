@@ -27,6 +27,11 @@ GNL			:= 	src/gnl/get_next_line_bonus.c					\
 				src/gnl/get_next_line_utils_bonus.c				\
 				src/gnl/get_next_line.c							\
 
+FD			:=	src/fd/ft_putchar_fd.c							\
+				src/fd/ft_putstr_fd.c							\
+				src/fd/ft_putendl_fd.c							\
+				src/fd/ft_putnbr_fd.c							\
+
 LIST		:=	src/list/ft_lstadd_front.c						\
 				src/list/ft_lstadd_back.c						\
 				src/list/ft_lstclear.c							\
@@ -56,10 +61,6 @@ MISC		:=	src/misc/ft_atoi.c								\
 				src/misc/ft_intchr.c							\
 				src/misc/ft_itoa.c								\
 				src/misc/ft_long_atoi.c							\
-				src/misc/ft_putchar_fd.c						\
-				src/misc/ft_putstr_fd.c							\
-				src/misc/ft_putendl_fd.c						\
-				src/misc/ft_putnbr_fd.c							\
 				src/misc/ft_range.c								\
 				src/misc/ft_tolower.c							\
 				src/misc/ft_toupper.c							\
@@ -88,7 +89,7 @@ TYPE		:=	src/type/ft_isalnum.c							\
 				src/type/ft_isprint.c							\
 				src/type/ft_isset.c								\
 
-LIBFT		:=	$(LIST) $(MATH) $(MEM) $(MISC) $(STR) $(TYPE)
+LIBFT		:=	$(FD) $(LIST) $(MATH) $(MEM) $(MISC) $(STR) $(TYPE)
 C_FILES		:= 	$(FT_PRINT) $(GNL) $(LIBFT)
 
 OBJ			:=	$(C_FILES:.c=.o)

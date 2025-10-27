@@ -14,6 +14,7 @@
 # define CUBE_H
 
 # include <fcntl.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -131,6 +132,15 @@
 # define X					0
 # define Y					1
 
+# define N					0
+# define W					1
+# define S					2
+# define E					3
+
+# define R					0
+# define G					1
+# define B					2
+
 // CUBE PRECOMPUTED VALUES
 /*
 	norm only allow for constant defines
@@ -247,16 +257,18 @@ typedef struct s_draw
 
 /*
 	Everything read from the map file
+	hex_color = (R << 16) + (G << 8) + B
 */
 typedef struct s_map
 {
 	char		**map;
-	int			line;				// y
-	int			col;				// x
-	char		*path1;
-	char		*path2;
-	char		*path3;
-	char		*path4;
+	short		line;				// y
+	short		col;				// x
+	char		*path[4];			// path to N, W, S, E textures
+	int			ceiling[3];			// R, G, B
+	int			floor[3];			// R, G, B
+	int			h_ceiling;			// color in hex format
+	int			h_floor;			// color in hex format
 }	t_map;
 
 /*
@@ -268,10 +280,7 @@ typedef struct s_tex
 {
 	int			w;
 	int			h;
-	void		*img1;
-	void		*img2;
-	void		*img3;
-	void		*img4;
+	void		*img[4];
 }	t_tex;
 
 /*
@@ -280,27 +289,31 @@ typedef struct s_tex
 */
 typedef struct s_calc
 {
-	int			half_fov;
-	int			half_width;
-	int			half_height;
-	int			dist_to_proj;
+	short		half_fov;
+	short		half_width;
+	short		half_height;
+	short		dist_to_proj;
 	double		angle_between_rays;
 }	t_calc;
 
+/*
+	short is used for wall_hit to reduce memory used
+	it can handle 16 bit values so 511*511 map (512 overflow) 
+*/
 typedef struct s_raycast
 {
-	int			mov_h[2];
-	int			mov_v[2];
-	int			inter_h[2];
-	int			inter_v[2];
-	int			pos[2];				// player pos [x, y]
+	short		mov_h[2];
+	short		mov_v[2];
+	short		inter_h[2];
+	short		inter_v[2];
+	short		pos[2];				// player pos [x, y]
 	double		alpha;
 	double		ray_angle;			// raycasting angle
-	int			ray_index;
-	int			view_angle;			// in deg
-	int			wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
-	int			out_v;
-	int			out_h;
+	short		ray_index;
+	short		view_angle;			// in deg
+	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
+	short		out_v;
+	short		out_h;
 }	t_raycast;
 
 /*
@@ -329,7 +342,7 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc);
 void	raycast_wrapper(t_data *data, t_raycast *rc);
 
 // 		-- src/exec/raycasting/cube_raycast2.c --
-void	scope_check(t_raycast *rc, int inter_h[2], int inter_v[2]);
+void	scope_check(t_raycast *rc, short inter_h[2], short inter_v[2]);
 int		wall_hit(t_raycast *rc, t_map *map);
 
 /*

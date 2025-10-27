@@ -16,7 +16,7 @@ static void	find_closest_hit(t_raycast *rc);
 static void	find_closest_hit2(t_raycast *rc);
 
 // check if our raycast are going out of bounds
-void	scope_check(t_raycast *rc, int inter_h[2], int inter_v[2])
+void	scope_check(t_raycast *rc, short inter_h[2], short inter_v[2])
 {
 	int			x;
 	int			y;

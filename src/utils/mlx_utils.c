@@ -36,14 +36,14 @@ int	mlx_close(t_data *data)
 // free texture related memory
 static int	mlx_close_tex(t_data *data)
 {
-	if (data->tex->img1 != NULL)
-		mlx_destroy_image(data->mlx, data->tex->img1);
-	if (data->tex->img2 != NULL)
-		mlx_destroy_image(data->mlx, data->tex->img2);
-	if (data->tex->img3 != NULL)
-		mlx_destroy_image(data->mlx, data->tex->img3);
-	if (data->tex->img4 != NULL)
-		mlx_destroy_image(data->mlx, data->tex->img4);
+	if (data->tex->img[N] != NULL)
+		mlx_destroy_image(data->mlx, data->tex->img[N]);
+	if (data->tex->img[W] != NULL)
+		mlx_destroy_image(data->mlx, data->tex->img[W]);
+	if (data->tex->img[S] != NULL)
+		mlx_destroy_image(data->mlx, data->tex->img[S]);
+	if (data->tex->img[E] != NULL)
+		mlx_destroy_image(data->mlx, data->tex->img[E]);
 	return (0);
 }
 

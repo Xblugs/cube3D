@@ -23,11 +23,11 @@ int	texture_init(t_data *data, t_tex *tex, t_map *map)
 {
 	*tex = (t_tex){0};
 	data->tex = tex;
-	tex->img1 = mlx_xpm_ftoi(data->mlx, map->path1, &tex->w, &tex->h);
-	tex->img2 = mlx_xpm_ftoi(data->mlx, map->path2, &tex->w, &tex->h);
-	tex->img3 = mlx_xpm_ftoi(data->mlx, map->path3, &tex->w, &tex->h);
-	tex->img4 = mlx_xpm_ftoi(data->mlx, map->path4, &tex->w, &tex->h);
-	if (!tex->img1 || !tex->img2 || !tex->img3 || !tex->img4)
+	tex->img[N] = mlx_xpm_ftoi(data->mlx, map->path[N], &tex->w, &tex->h);
+	tex->img[W] = mlx_xpm_ftoi(data->mlx, map->path[W], &tex->w, &tex->h);
+	tex->img[S] = mlx_xpm_ftoi(data->mlx, map->path[S], &tex->w, &tex->h);
+	tex->img[E] = mlx_xpm_ftoi(data->mlx, map->path[E], &tex->w, &tex->h);
+	if (!tex->img[N] || !tex->img[W] || !tex->img[S] || !tex->img[E])
 	{
 		printf("%s", TEXT_OPEN_FAIL);
 		return (1);

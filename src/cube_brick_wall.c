@@ -35,7 +35,7 @@ void	brick_wall(t_data *data)
 		{
 			wh = int_to_long(data->tex->w * i, data->tex->h * j);
 			if (i == data->img->x && j == data->img->y)
-				mlx_pitow(data->mlx, data->win, data->tex->img1, wh);
+				mlx_pitow(data->mlx, data->win, data->tex->img[N], wh);
 			else
 				brick_wall_drawing(data, wh, &k);
 			k++;
@@ -51,9 +51,9 @@ void	brick_wall(t_data *data)
 static void	brick_wall_drawing(t_data *data, long wh, int *k)
 {
 	if (*k == 0)
-		mlx_pitow(data->mlx, data->win, data->tex->img2, wh);
+		mlx_pitow(data->mlx, data->win, data->tex->img[W], wh);
 	else if (*k == 1)
-		mlx_pitow(data->mlx, data->win, data->tex->img3, wh);
+		mlx_pitow(data->mlx, data->win, data->tex->img[S], wh);
 	else if (*k == 2)
-		mlx_pitow(data->mlx, data->win, data->tex->img4, wh);
+		mlx_pitow(data->mlx, data->win, data->tex->img[E], wh);
 }
