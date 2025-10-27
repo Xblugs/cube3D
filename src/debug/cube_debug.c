@@ -31,3 +31,28 @@ void	print_pos(t_data *data)
 		data->rc->pos[X], data->rc->pos[Y]);
 	printf(", looking at [%d°]%s\n", data->rc->view_angle, END);
 }
+
+/*
+	Every ray should ALWAYS hit since our maps are closed
+	otherwise some memory cleaning is needed between frames
+
+	Change modulo value to display more or less rays data
+*/
+void	print_raycast_hit(t_raycast *rc)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 1;
+	while (i < WIDTH)
+	{
+		if (i % 10 == 0)
+			printf("(x, y) = (%d, %d)\n",
+				rc->wall_hit[i][X], rc->wall_hit[i][Y]);
+		if (rc->wall_hit[i][X] || rc->wall_hit[i][Y])
+			j++;
+		i++;
+	}
+	printf("%d raycast hit a wall out of %d casted\n", j, WIDTH);
+}

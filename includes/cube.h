@@ -323,6 +323,7 @@ typedef struct s_raycast
 // 		-- src/debug/cube_debug.c --
 void	size_of_struct(void);
 void	print_pos(t_data *data);
+void	print_raycast_hit(t_raycast *rc);
 
 /*
 	Exec and rendering functions
