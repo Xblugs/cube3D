@@ -312,8 +312,8 @@ typedef struct s_raycast
 	short		ray_index;
 	short		view_angle;			// in deg
 	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
-	short		out_v;
 	short		out_h;
+	short		out_v;
 }	t_raycast;
 
 /*

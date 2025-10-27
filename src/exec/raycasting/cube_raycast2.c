@@ -16,6 +16,8 @@ static void	find_closest_hit(t_raycast *rc);
 static void	find_closest_hit2(t_raycast *rc);
 
 // check if our raycast are going out of bounds
+// TODO: change 256 to [map->line] and [map->col] [* UNIT] 
+// 		to have the right coordinates to check from	
 void	scope_check(t_raycast *rc, short inter_h[2], short inter_v[2])
 {
 	int			x;
@@ -31,36 +33,7 @@ void	scope_check(t_raycast *rc, short inter_h[2], short inter_v[2])
 		rc->out_v = 1;
 }
 
-// copy closest wall hit coordinates for rendering
-// int	wall_hit(t_raycast *rc, t_map *map)
-// {
-// 	static int	cur_ray = 0;
-// 	int			x;
-// 	int			y;
-
-// 	if (cur_ray == WIDTH)
-// 		cur_ray = 0;
-// 	x = rc->inter_h[X] / UNIT;
-// 	y = rc->inter_h[Y] / UNIT;
-// 	if (map->map[x][y] == '1')
-// 	{
-// 		rc->wall_hit[cur_ray][X] = rc->inter_h[X];
-// 		rc->wall_hit[cur_ray][Y] = rc->inter_h[Y];
-// 		cur_ray++;
-// 		return (1);
-// 	}
-// 	x = rc->inter_v[X] / UNIT;
-// 	y = rc->inter_v[Y] / UNIT;
-// 	if (map->map[x][y] == '1')
-// 	{
-// 		rc->wall_hit[cur_ray][X] = rc->inter_v[X];
-// 		rc->wall_hit[cur_ray][Y] = rc->inter_v[Y];
-// 		cur_ray++;
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
+// did we hit a wall yet?
 int	wall_hit(t_raycast *rc, t_map *map)
 {
 	int			x[2];
@@ -81,6 +54,10 @@ int	wall_hit(t_raycast *rc, t_map *map)
 	return (0);
 }
 
+/*
+	This function is called only once a wall is hit
+	If one ray is out of bound, the other must have hit the wall
+*/
 static void	find_closest_hit(t_raycast *rc)
 {
 	scope_check(rc, rc->inter_h, rc->inter_v);

@@ -33,7 +33,7 @@ void	print_pos(t_data *data)
 }
 
 /*
-	Every ray should ALWAYS hit since our maps are closed
+	Every ray should ALWAYS hit since correct maps are closed
 	otherwise some memory cleaning is needed between frames
 
 	Change modulo value to display more or less rays data
@@ -45,6 +45,7 @@ void	print_raycast_hit(t_raycast *rc)
 
 	i = 0;
 	j = 1;
+	printf(GREEN"\tDEBUG RAYCAST VALUES%s\n", END);
 	while (i < WIDTH)
 	{
 		if (i % 10 == 0)
@@ -55,4 +56,5 @@ void	print_raycast_hit(t_raycast *rc)
 		i++;
 	}
 	printf("%d raycast hit a wall out of %d casted\n", j, WIDTH);
+	printf(GREEN"\tDEBUG RAYCAST END%s\n", END);
 }

@@ -1,5 +1,4 @@
 # Pre-checking
-
 (0) Check if argc = 2
 	--> else exit with [WRONG_ARGC]
 
@@ -61,3 +60,36 @@ Once MLX is set we need to do the calculations to render the map
 
 (2) Init player values in our representation facing the right side
 	-->		x	y	fov angle
+
+# Raycasting
+(~) For each column of pixel we have to render, do the following:
+
+(1) Find which quadrant we need to calculate from
+
+(2) Move through the space
+	--> Check if we're out of bound / hit a wall
+	NOTE: map is closed, ray will hit a wall il ALL cases
+
+(3) On wall hit, save wall coordinates
+
+(4) Use wall coordinates to find which pixel from texture to render
+	--> transpose texture to screen, 
+		(one pix can be rendered twice depending on
+		how close we are to the wall, view angle etc)
+
+(5) Once all pixel are rendered, put the resulting image on screen
+
+On player movement, the raycasting part is done again with different starting coordinates / angle
+	Recalculation is sent from mlx hooks
+
+# On exit
+(~) Using mlx functions
+
+(1) Destroy mlx images, the actual rendered one AND each loaded texture
+
+(2) Destroy mlx window
+
+(3) Destroy mlx display, free mlx pointer
+
+(4) Free all allocated memory
+	(only map should be still allocated at this point since internal buffers [if any] should have been freed once they're done being used)
