@@ -129,24 +129,32 @@
 /*
 	Used for array indexes for more code clarity
 */
+// X, Y coordinates
 # define X					0
 # define Y					1
+# define XY					2
 
+// Horizontal or Vertical
+# define H					0
+# define V					1
+# define HV					2
+
+// Cardinal positions
 # define N					0
 # define W					1
 # define S					2
 # define E					3
+# define NWSE				4
 
+// Red, Green, Blue for color coding
 # define R					0
 # define G					1
 # define B					2
+# define RGB				3
 
 // CUBE PRECOMPUTED VALUES
 /*
-	norm only allow for constant defines
-	changing the screen resolution requires 
-	to recalc parameters listed below
-		See math.md for explanations
+	See math.md for explanations
 
 	Also calc in math_utils.c
 */
@@ -158,33 +166,18 @@
 
 //	[	320*200	screen with 60° field of view	]
 // # define FOV				60
-// # define FOV_HALF			30
 // # define WIDTH				320
 // # define HEIGHT				200
-// # define HALF_WIDTH			160
-// # define HALF_HEIGHT		100
-// # define DIST_TO_PROJ		277
-// # define ANGLE_BETWEEN_RAYS	0.1875
 
 //	[	640*640	screen with 60° field of view	] // texture test mode
 # define FOV				60
-# define FOV_HALF			30
 # define WIDTH				640
 # define HEIGHT				640
-# define HALF_WIDTH			320
-# define HALF_HEIGHT		320
-# define DIST_TO_PROJ		554
-# define ANGLE_BETWEEN_RAYS	0.09375
 
 //	[	800*600	screen with 60° field of view	]
 // # define FOV				60
-// # define FOV_HALF			30
 // # define WIDTH				800
 // # define HEIGHT				600
-// # define HALF_WIDTH			400
-// # define HALF_HEIGHT		300
-// # define DIST_TO_PROJ		693		//692.8
-// # define ANGLE_BETWEEN_RAYS	0.075
 
 typedef struct s_data		t_data;
 typedef struct s_draw		t_draw;
@@ -278,9 +271,9 @@ typedef struct s_map
 */
 typedef struct s_tex
 {
-	int			w;
-	int			h;
-	void		*img[4];
+	int			w;					// texture width  [set by mlx]
+	int			h;					// texture height [set by mlx]
+	void		*img[4];			// ptr to N, W, S, E textures
 }	t_tex;
 
 /*
@@ -290,30 +283,31 @@ typedef struct s_tex
 typedef struct s_calc
 {
 	short		half_fov;
-	short		half_width;
-	short		half_height;
-	short		dist_to_proj;
-	double		angle_between_rays;
+	short		half_width;			// screen size
+	short		half_height;		// screen size
+	short		max_width;			// projection size
+	short		max_height;			// projection size
+	short		dist_to_proj;		// distance in pixels
+	double		angle_between_rays; // angle variation between rays in degree
 }	t_calc;
 
 /*
-	short is used for wall_hit to reduce memory used
+	short is used for reduced memory cost
 	it can handle 16 bit values so 511*511 map (512 overflow) 
+
+	[ulimit -s] in bash to see stack size limit
 */
 typedef struct s_raycast
 {
-	short		mov_h[2];
-	short		mov_v[2];
-	short		inter_h[2];
-	short		inter_v[2];
+	short		mov[2][2];			// mov[H, V][X, Y]
+	short		inter[2][2];		// inter[H, V][X, Y]
 	short		pos[2];				// player pos [x, y]
 	double		alpha;
 	double		ray_angle;			// raycasting angle
 	short		ray_index;
 	short		view_angle;			// in deg
 	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
-	short		out_h;
-	short		out_v;
+	short		out[2];
 }	t_raycast;
 
 /*
@@ -343,8 +337,8 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc);
 void	raycast_wrapper(t_data *data, t_raycast *rc);
 
 // 		-- src/exec/raycasting/cube_raycast2.c --
-void	scope_check(t_raycast *rc, short inter_h[2], short inter_v[2]);
-int		wall_hit(t_raycast *rc, t_map *map);
+void	scope_check(t_raycast *rc, t_calc *calc);
+int		wall_hit(t_data *data, t_raycast *rc, t_map *map);
 
 /*
 	Everything related to actions through mlx_hook(...)

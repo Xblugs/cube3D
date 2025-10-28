@@ -40,15 +40,17 @@ void	print_pos(t_data *data)
 */
 void	print_raycast_hit(t_raycast *rc)
 {
-	int	i;
-	int	j;
+	const int	scale = 10;
+	int			i;
+	int			j;
 
 	i = 0;
-	j = 1;
+	j = 0;
 	printf(GREEN"\tDEBUG RAYCAST VALUES%s\n", END);
+	printf(GREEN"\tPrinting 1:%d rays values%s\n", scale, END);
 	while (i < WIDTH)
 	{
-		if (i % 10 == 0)
+		if (i % scale == 0)
 			printf("(x, y) = (%d, %d)\n",
 				rc->wall_hit[i][X], rc->wall_hit[i][Y]);
 		if (rc->wall_hit[i][X] || rc->wall_hit[i][Y])

@@ -12,88 +12,85 @@
 
 #include "cube.h"
 
-static void	find_closest_hit(t_raycast *rc);
-static void	find_closest_hit2(t_raycast *rc);
-
-// check if our raycast are going out of bounds
-// TODO: change 256 to [map->line] and [map->col] [* UNIT] 
-// 		to have the right coordinates to check from	
-void	scope_check(t_raycast *rc, short inter_h[2], short inter_v[2])
-{
-	int			x;
-	int			y;
-
-	x = inter_h[X];
-	y = inter_h[Y];
-	if (x >= 256 || y >= 256 || x < 0 || y < 0)
-		rc->out_h = 1;
-	x = inter_v[X];
-	y = inter_v[Y];
-	if (x >= 256 || y >= 256 || x < 0 || y < 0)
-		rc->out_v = 1;
-}
+static void	find_closest_hit(t_data *data, t_raycast *rc);
+static void	find_closest_hit2(t_data *data, t_raycast *rc);
 
 // did we hit a wall yet?
-int	wall_hit(t_raycast *rc, t_map *map)
+int	wall_hit(t_data *data, t_raycast *rc, t_map *map)
 {
 	int			x[2];
 	int			y[2];
 
-	if (rc->ray_index == WIDTH)
-		rc->ray_index = 0;
-	x[0] = rc->inter_h[X] / UNIT;
-	y[0] = rc->inter_h[Y] / UNIT;
-	x[1] = rc->inter_v[X] / UNIT;
-	y[1] = rc->inter_v[Y] / UNIT;
-	if (map->map[x[0]][y[0]] == '1' || map->map[x[1]][y[1]] == '1')
+	x[H] = rc->inter[H][X] / UNIT;
+	y[H] = rc->inter[H][Y] / UNIT;
+	x[V] = rc->inter[V][X] / UNIT;
+	y[V] = rc->inter[V][Y] / UNIT;
+	if (map->map[x[H]][y[H]] == '1' || map->map[x[V]][y[V]] == '1')
 	{
-		find_closest_hit(rc);
+		find_closest_hit(data, rc);
 		rc->ray_index++;
 		return (1);
 	}
 	return (0);
 }
 
+// check if our raycast are going out of bounds
+void	scope_check(t_raycast *rc, t_calc *calc)
+{
+	int			x;
+	int			y;
+
+	x = rc->inter[H][X];
+	y = rc->inter[H][Y];
+	if (x >= calc->max_width || y >= calc->max_height || x < 0 || y < 0)
+		rc->out[H] = 1;
+	x = rc->inter[V][X];
+	y = rc->inter[V][Y];
+	if (x >= calc->max_width || y >= calc->max_height || x < 0 || y < 0)
+		rc->out[V] = 1;
+}
+
 /*
 	This function is called only once a wall is hit
 	If one ray is out of bound, the other must have hit the wall
 */
-static void	find_closest_hit(t_raycast *rc)
+static void	find_closest_hit(t_data *data, t_raycast *rc)
 {
-	scope_check(rc, rc->inter_h, rc->inter_v);
-	if (rc->out_h)
+	scope_check(rc, data->calc);
+	if (rc->out[H])
 	{
-		rc->wall_hit[rc->ray_index][X] = rc->inter_v[X];
-		rc->wall_hit[rc->ray_index][Y] = rc->inter_v[Y];
+		rc->wall_hit[rc->ray_index][X] = rc->inter[V][X];
+		rc->wall_hit[rc->ray_index][Y] = rc->inter[V][Y];
 		return ;
 	}
-	if (rc->out_v)
+	if (rc->out[V])
 	{
-		rc->wall_hit[rc->ray_index][X] = rc->inter_h[X];
-		rc->wall_hit[rc->ray_index][Y] = rc->inter_h[Y];
+		rc->wall_hit[rc->ray_index][X] = rc->inter[H][X];
+		rc->wall_hit[rc->ray_index][Y] = rc->inter[H][Y];
 		return ;
 	}
-	find_closest_hit2(rc);
+	find_closest_hit2(data, rc);
 }
 
 // both ray hit, calc distance and copy the closest one
-static void	find_closest_hit2(t_raycast *rc)
+static void	find_closest_hit2(t_data *data, t_raycast *rc)
 {
-	int	dist_h;
-	int	dist_v;
+	double	dist_h;
+	double	dist_v;
 
-	dist_h = sqrt(ft_iter_pow(rc->pos[X] - rc->inter_h[X], 2)
-			+ ft_iter_pow(rc->pos[Y] - rc->inter_h[Y], 2));
-	dist_v = sqrt(ft_iter_pow(rc->pos[X] - rc->inter_v[X], 2)
-			+ ft_iter_pow(rc->pos[Y] - rc->inter_v[Y], 2));
-	if (dist_h > dist_v)
+	(void)data;
+	dist_h = sqrt(pow(rc->pos[X] - rc->inter[H][X], 2)
+			+ pow(rc->pos[Y] - rc->inter[H][Y], 2));
+	dist_v = sqrt(pow(rc->pos[X] - rc->inter[V][X], 2)
+			+ pow(rc->pos[Y] - rc->inter[V][Y], 2));
+	if (dist_h < dist_v)
 	{
-		rc->wall_hit[rc->ray_index][X] = rc->inter_h[X];
-		rc->wall_hit[rc->ray_index][Y] = rc->inter_h[Y];
+		rc->wall_hit[rc->ray_index][X] = rc->inter[H][X];
+		rc->wall_hit[rc->ray_index][Y] = rc->inter[H][Y];
 	}
 	else
 	{
-		rc->wall_hit[rc->ray_index][X] = rc->inter_v[X];
-		rc->wall_hit[rc->ray_index][Y] = rc->inter_v[Y];
+		rc->wall_hit[rc->ray_index][X] = rc->inter[V][X];
+		rc->wall_hit[rc->ray_index][Y] = rc->inter[V][Y];
 	}
 }
