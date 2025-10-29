@@ -302,10 +302,10 @@ typedef struct s_raycast
 	short		mov[2][2];			// mov[H, V][X, Y]
 	short		inter[2][2];		// inter[H, V][X, Y]
 	short		pos[2];				// player pos [x, y]
-	double		alpha;
+	double		alpha;				// angle corrected for current quadrant
 	double		ray_angle;			// raycasting angle
-	short		ray_index;
-	short		view_angle;			// in deg
+	short		ray_index;			// 0 to WIDTH - 1
+	short		view_angle;			// in degree
 	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
 	short		out[2];
 }	t_raycast;
@@ -333,6 +333,9 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc);
 	Raycasting functions
 	dir: src/exec/raycasting
 */
+// 		-- src/exec/raycasting/cube_raycast_init.c --
+void	raycast_init_wrapper(t_data *data, t_raycast *rc);
+
 // 		-- src/exec/raycasting/cube_raycast.c --
 void	raycast_wrapper(t_data *data, t_raycast *rc);
 

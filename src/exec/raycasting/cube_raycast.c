@@ -21,16 +21,16 @@ static void	q2_raycast(t_data *data, t_raycast *rc);
 static void	q3_raycast(t_data *data, t_raycast *rc);
 static void	q4_raycast(t_data *data, t_raycast *rc);
 
+/*
+	Raycast is calculated depending on its angle
+*/
 void	raycast_wrapper(t_data *data, t_raycast *rc)
 {
 	rc->ray_index = 0;
 	rc->ray_angle = rc->view_angle - data->calc->half_fov;
 	while (rc->ray_angle < rc->view_angle + data->calc->half_fov)
 	{
-		rc->out[H] = 0;
-		rc->out[V] = 0;
-		if (fmod(rc->ray_angle, 90) == 0)
-			rc->ray_angle += data->calc->angle_between_rays;
+		raycast_init_wrapper(data, rc);
 		if (rc->ray_angle < 90)
 			q1_raycast(data, rc);
 		else if (rc->ray_angle < 180)
@@ -46,13 +46,6 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 // (0 < ray_angle < 90)
 static void	q1_raycast(t_data *data, t_raycast *rc)
 {
-	rc->alpha = tan(deg_to_rad(rc->ray_angle));
-	rc->mov[H][X] = UNIT / rc->alpha;
-	rc->mov[V][Y] = -rc->alpha * (rc->mov[V][X]);
-	rc->inter[H][X] = ((rc->inter[H][Y] - rc->pos[Y]) / rc->alpha) + rc->pos[X];
-	rc->inter[H][Y] = ((rc->pos[Y] / UNIT) * UNIT) - 1;
-	rc->inter[V][X] = ((rc->pos[X] / UNIT) * UNIT) + UNIT;
-	rc->inter[V][Y] = rc->alpha * (rc->inter[V][X] - rc->pos[X]) + rc->pos[Y];
 	while (!(rc->out[H] && rc->out[V]))
 	{
 		if (wall_hit(data, rc, data->map))
@@ -73,13 +66,6 @@ static void	q1_raycast(t_data *data, t_raycast *rc)
 // (91 < ray_angle < 179)
 static void	q2_raycast(t_data *data, t_raycast *rc)
 {
-	rc->alpha = tan(deg_to_rad(rc->ray_angle - 90));
-	rc->mov[H][X] = -UNIT * rc->alpha;
-	rc->mov[V][Y] = -UNIT / rc->alpha;
-	rc->inter[H][Y] = ((rc->pos[Y] / UNIT) * UNIT) - 1;
-	rc->inter[H][X] = rc->alpha * (rc->pos[Y] - rc->inter[H][Y]);
-	rc->inter[V][X] = ((rc->pos[X] / UNIT) * UNIT) - 1;
-	rc->inter[V][Y] = rc->pos[Y] - ((rc->pos[X] - rc->inter[V][X]) / rc->alpha);
 	while (!(rc->out[H] && rc->out[V]))
 	{
 		if (wall_hit(data, rc, data->map))
@@ -100,13 +86,6 @@ static void	q2_raycast(t_data *data, t_raycast *rc)
 // (181 < ray_angle < 269)
 static void	q3_raycast(t_data *data, t_raycast *rc)
 {
-	rc->alpha = tan(deg_to_rad(rc->ray_angle - 180));
-	rc->mov[H][X] = -UNIT * rc->alpha;
-	rc->mov[V][Y] = UNIT * rc->alpha;
-	rc->inter[H][Y] = ((rc->pos[Y] / UNIT) * UNIT) + UNIT;
-	rc->inter[H][X] = rc->pos[X] - (rc->inter[H][Y] - rc->pos[Y]) / rc->alpha;
-	rc->inter[V][X] = ((rc->pos[X] / UNIT) * UNIT) - 1;
-	rc->inter[V][Y] = rc->alpha * (rc->pos[X] - rc->inter[V][X]) + rc->pos[Y];
 	while (!(rc->out[H] && rc->out[V]))
 	{
 		if (wall_hit(data, rc, data->map))
@@ -127,13 +106,6 @@ static void	q3_raycast(t_data *data, t_raycast *rc)
 // (271 < ray_angle < 359)
 static void	q4_raycast(t_data *data, t_raycast *rc)
 {
-	rc->alpha = tan(deg_to_rad(rc->ray_angle - 270));
-	rc->mov[H][X] = UNIT * rc->alpha;
-	rc->mov[V][Y] = UNIT / rc->alpha;
-	rc->inter[H][Y] = ((rc->pos[Y] / UNIT) * UNIT) + UNIT;
-	rc->inter[H][X] = rc->pos[X] + rc->alpha * (rc->inter[H][Y] - rc->pos[Y]);
-	rc->inter[V][X] = ((rc->pos[X] / UNIT) * UNIT) - UNIT;
-	rc->inter[V][Y] = rc->pos[Y] + (rc->inter[V][X] - rc->pos[X]) / rc->alpha;
 	while (!(rc->out[H] && rc->out[V]))
 	{
 		if (wall_hit(data, rc, data->map))

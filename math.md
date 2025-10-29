@@ -104,15 +104,15 @@ Since the center of the projection plane is defined to be at 100. The middle of 
 ## WALL RENDERING
 # Computations for Quadrant 1 (0 < Ray Angle < 90)
 
-    c_h.x = ((c_h.y - player.y) / Tan(alpha)) + player.x
     c_h.y = (floor(player_pos.y / 64) * 64) - 1
+    c_h.x = ((c_h.y - player.y) / Tan(alpha)) + player.x
     d_h.y = -64 (Since we travel in the negative direction along the y-axis)
     d_h.x = 64 / Tan(alpha)
 	
     c_v.x = (floor(player.x / 64) * 64) + 64
     c_v.y = Tan(alpha) * (c_v.x - player.x) + player.y
     d_v.x = 64
-    d_v.y = -Tan(alpha)(d_v.x)
+    d_v.y = -Tan(alpha) * (d_v.x)
 
 	floor if using floating numbers, int are auto rounded
 	Alpha is the ray index [0 --> 360] - current quadrant start angle
@@ -122,8 +122,8 @@ Since the center of the projection plane is defined to be at 100. The middle of 
 	--> Same formulas rewritten: (struct path to data is ignored for clarity)
 	
 	alpha = deg_to_rad(ray_angle - 0);
-	inter_h[X] = ((inter_h[Y] - pos[Y]) / tan(alpha)) + pos[X];
     inter_h[Y] = ((pos[Y] / UNIT) * UNIT) - 1;
+	inter_h[X] = ((inter_h[Y] - pos[Y]) / tan(alpha)) + pos[X];
     mov_h[Y] = -UNIT;
     mov_h[X] = UNIT / tan(alpha);
 	

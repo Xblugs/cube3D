@@ -27,6 +27,10 @@ int	wall_hit(t_data *data, t_raycast *rc, t_map *map)
 	y[V] = rc->inter[V][Y] / UNIT;
 	if (map->map[x[H]][y[H]] == '1' || map->map[x[V]][y[V]] == '1')
 	{
+		if (map->map[x[H]][y[H]] == '1')
+			printf("H %c, index %d %d, val %d %d\n", map->map[x[H]][y[H]], x[H], y[H], rc->inter[H][X], rc->inter[H][Y]);
+		else if (map->map[x[V]][y[V]] == '1')
+			printf("V %c, index %d %d, val %d %d\n", map->map[x[V]][y[V]], x[V], y[V], rc->inter[V][X], rc->inter[V][Y]);
 		find_closest_hit(data, rc);
 		rc->ray_index++;
 		return (1);

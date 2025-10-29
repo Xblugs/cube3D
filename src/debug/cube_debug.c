@@ -29,7 +29,7 @@ void	print_pos(t_data *data)
 	printf(B_WHITE"Player coordinates:\n");
 	printf("\tplayer is located at [%d, %d]",
 		data->rc->pos[X], data->rc->pos[Y]);
-	printf(", looking at [%d°]%s\n", data->rc->view_angle, END);
+	printf(", looking at [%d°]%s\n\n", data->rc->view_angle, END);
 }
 
 /*
@@ -53,7 +53,7 @@ void	print_raycast_hit(t_raycast *rc)
 		if (i % scale == 0)
 			printf("(x, y) = (%d, %d)\n",
 				rc->wall_hit[i][X], rc->wall_hit[i][Y]);
-		if (rc->wall_hit[i][X] || rc->wall_hit[i][Y])
+		if (rc->wall_hit[i][X] != 0 || rc->wall_hit[i][Y] != 0)
 			j++;
 		i++;
 	}
