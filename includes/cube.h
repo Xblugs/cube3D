@@ -239,13 +239,13 @@ typedef struct s_draw
 {
 	short		x[3];				// x0, x1, dx
 	short		y[3];				// y0, y1, dy
-	short		z[3];				// z0, z1, dz
-	short		pix[3];				// x, y, z
-	short		off[2];				// x, y
-	short		angle;				// in degree
-	short		angle_off;			// in degree
-	short		scale;				// unused
-	short		h_delta;			// unused
+	short		z[3];				// z0, z1, dz		unused
+	short		pix[3];				// x, y, z			unused
+	short		off[2];				// x, y				unused
+	short		angle;				// in degree		unused
+	short		angle_off;			// in degree		unused
+	short		scale;				// 					unused
+	short		h_delta;			// 					unused
 	int			color;
 }	t_draw;
 
@@ -259,8 +259,8 @@ typedef struct s_map
 	short		line;				// y
 	short		col;				// x
 	char		*path[4];			// path to N, W, S, E textures
-	int			ceiling[3];			// R, G, B
-	int			floor[3];			// R, G, B
+	short		ceiling[3];			// R, G, B
+	short		floor[3];			// R, G, B
 	int			h_ceiling;			// color in hex format
 	int			h_floor;			// color in hex format
 }	t_map;

@@ -60,7 +60,7 @@ int	main(int ac, char **av)
 	data = (t_data){0};
 	if (ac == 2 && ft_strlen(av[1]) >= MIN_ARGV_LEN)
 	{
-		printf(B_WHITE"\n\tWIP: Check algo.md and math.md!%s\n\n", END);
+		printf(B_WHITE"\n\tCheck algo.md and math.md!%s\n\n", END);
 		main_func(&data);
 	}
 	else if (ac == 2 && ft_strlen(av[1]) < MIN_ARGV_LEN)

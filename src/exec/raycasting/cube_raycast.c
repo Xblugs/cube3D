@@ -53,6 +53,7 @@ static void	raycast(t_data *data, t_raycast *rc)
 
 // calc distance, resulting projection and correction for fisheye lens effect
 // TODO: move this to its own file, eventually separate it into multiple func?
+// 	distance calculation could be optimized, sqrt and pow are cpu expensive
 static void	test_render(t_data *data, t_raycast *rc)
 {
 	(void) data;
