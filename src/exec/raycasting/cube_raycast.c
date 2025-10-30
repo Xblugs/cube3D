@@ -13,6 +13,7 @@
 #include "cube.h"
 
 static void	raycast(t_data *data, t_raycast *rc);
+static void	test_render(t_data *data, t_raycast *rc);
 
 /*
 	Raycast is calculated depending on its angle
@@ -25,6 +26,7 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 	{
 		raycast_init_wrapper(data, rc);
 		raycast(data, rc);
+		test_render(data, rc);
 		rc->ray_angle += data->calc->angle_between_rays;
 	}
 }
@@ -47,6 +49,20 @@ static void	raycast(t_data *data, t_raycast *rc)
 		}
 	}
 	wall_hit(data, rc);
+}
+
+// calc distance, resulting projection and correction for fisheye lens effect
+// TODO: move this to its own file, eventually separate it into multiple func?
+static void	test_render(t_data *data, t_raycast *rc)
+{
+	(void) data;
+	rc->wall_dist[rc->ray_index] = sqrt(pow(rc->pos[X]
+				- rc->wall_hit[rc->ray_index][X], 2)
+			+ pow(rc->pos[Y] - rc->wall_hit[rc->ray_index][Y], 2));
+	rc->wall_dist[rc->ray_index] = ((float) UNIT / rc->wall_dist[rc->ray_index])
+		* data->calc->dist_to_proj;
+	rc->wall_dist[rc->ray_index] *= cos(deg_to_rad(
+				rc->ray_angle - rc->view_angle));
 }
 
 // quadrant template before changes

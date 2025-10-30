@@ -12,6 +12,7 @@
 
 #include "cube.h"
 
+// using a short here would spawn a [LINE TOO LONG] norm error :c
 static void	ray_status_check(t_data *data, t_raycast *rc, t_calc *calc, int i);
 static void	find_hit(t_data *data, t_raycast *rc);
 static void	find_closest_hit(t_data *data, t_raycast *rc);

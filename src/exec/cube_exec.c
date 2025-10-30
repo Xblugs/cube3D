@@ -22,7 +22,8 @@ void	exec_func(t_data *data)
 	precalc_val(data, &calc);
 	start_pos_wrapper(data, data->map, data->rc);
 	raycast_wrapper(data, &rc);
-	print_raycast_hit_px(&rc);
+	print_raycast_dist(&rc);
 	brick_wall(data);
 	mlx_loop(data->mlx);
 }
+// print_raycast_hit_px(&rc);

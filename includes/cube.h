@@ -129,28 +129,25 @@
 /*
 	Used for array indexes for more code clarity
 */
-// X, Y coordinates
+// X, Y, Z coordinates
 # define X					0
 # define Y					1
-# define XY					2
+# define Z					2
 
 // Horizontal or Vertical
 # define H					0
 # define V					1
-# define HV					2
 
 // Cardinal positions
 # define N					0
 # define W					1
 # define S					2
 # define E					3
-# define NWSE				4
 
 // Red, Green, Blue for color coding
 # define R					0
 # define G					1
 # define B					2
-# define RGB				3
 
 // Ray status
 # define CASTING			0
@@ -235,21 +232,20 @@ typedef struct s_img
 /*
 	(x,y,z) are made to hold x0, x1 and dx for the draw_line function
 	pix are the pixel between two data point
+
+	Some part are unused in cube3D
 */
 typedef struct s_draw
 {
-	int			x[3];
-	int			y[3];
-	int			z[3];
-	int			pix_x;
-	int			pix_y;
-	int			pix_z;
-	int			off_x;
-	int			off_y;
-	int			angle;
-	int			angle_off;
-	int			scale;
-	int			h_delta;
+	short		x[3];				// x0, x1, dx
+	short		y[3];				// y0, y1, dy
+	short		z[3];				// z0, z1, dz
+	short		pix[3];				// x, y, z
+	short		off[2];				// x, y
+	short		angle;				// in degree
+	short		angle_off;			// in degree
+	short		scale;				// unused
+	short		h_delta;			// unused
 	int			color;
 }	t_draw;
 
@@ -312,6 +308,7 @@ typedef struct s_raycast
 	short		ray_index;			// 0 to WIDTH - 1
 	short		view_angle;			// in degree
 	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
+	short		wall_dist[WIDTH];	// distance to projected wall
 	short		ray_status[2];		// ray[H, V] current status
 }	t_raycast;
 
@@ -324,6 +321,7 @@ void	size_of_struct(void);
 void	print_pos(t_data *data);
 void	print_raycast_hit_px(t_raycast *rc);
 void	print_raycast_hit_index(t_raycast *rc);
+void	print_raycast_dist(t_raycast *rc);
 
 /*
 	Exec and rendering functions

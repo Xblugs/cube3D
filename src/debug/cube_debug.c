@@ -47,7 +47,7 @@ void	print_raycast_hit_px(t_raycast *rc)
 
 	i = 0;
 	j = 0;
-	printf(GREEN"\tDEBUG RAYCAST VALUES%s\n", END);
+	printf(GREEN"\tDEBUG RAYCAST HIT VALUES%s\n", END);
 	printf(GREEN"\tPrinting 1:%d rays values%s\n", scale, END);
 	while (i < WIDTH)
 	{
@@ -71,7 +71,7 @@ void	print_raycast_hit_index(t_raycast *rc)
 
 	i = 0;
 	j = 0;
-	printf(GREEN"\tDEBUG RAYCAST VALUES%s\n", END);
+	printf(GREEN"\tDEBUG RAYCAST HIT VALUES%s\n", END);
 	printf(GREEN"\tPrinting 1:%d rays values%s\n", scale, END);
 	while (i < WIDTH)
 	{
@@ -83,5 +83,24 @@ void	print_raycast_hit_index(t_raycast *rc)
 		i++;
 	}
 	printf("%d raycast hit a wall out of %d casted\n", j, WIDTH);
+	printf(GREEN"\tDEBUG RAYCAST END%s\n", END);
+}
+
+// prints corrected coordinates distances
+void	print_raycast_dist(t_raycast *rc)
+{
+	const int	scale = 10;
+	int			i;
+
+	i = 0;
+	printf(GREEN"\tDEBUG RAYCAST DIST VALUES%s\n", END);
+	printf(GREEN"\tPrinting 1:%d rays values%s\n", scale, END);
+	while (i < WIDTH)
+	{
+		if (i % scale == 0)
+			printf("(x, y) = (%d, %d)\n",
+				rc->wall_dist[i], rc->wall_dist[i]);
+		i++;
+	}
 	printf(GREEN"\tDEBUG RAYCAST END%s\n", END);
 }

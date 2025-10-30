@@ -306,18 +306,34 @@ Since the center of the projection plane is defined to be at 100. The middle of 
 
 	projected wall height / 277 = 64 / ray hit distance
 	projected wall height = (64 / ray hit distance) * 277
+		[277 = distance to projection here]
 
-# Correction for “Fisheye Effect”
+# Correction for “Fisheye lens Effect”
 
 	hit_dist * cos(theta)
 
 	Cos(theta) = corrected_distance / hit_distance
 	corrected_distance = Cos(theta) * hit_distance
 
-	Where theta is the ray angle, not alpha
+	(( Where theta is the ray angle, not alpha ))
+
+	[Permadi part 8: https://permadi.com/1996/05/ray-casting-tutorial-8/]
+	Where theta is the angle of the ray that is being cast relative to the viewing angle, the viewing angle is 90 degrees because the player is facing straight upward. Because we have 60 degrees field of view, BETA is 30 degrees for the leftmost ray and it is -30 degrees for the rightmost ray.
+
+		theta
+	[30   0  -30]
+     \    |    /                  
+      \   |   /                   
+       \  |  /  
+	   	\ | /
+		 (P)    <-- Player         
 
 	**REMINDER**
 	[[Alpha is the ray index [0 --> 360] - current quadrant start angle]]
+
+	[Permadi part 9: https://permadi.com/1996/05/ray-casting-tutorial-9/]
+	For example, suppose the ray at column 200 hits a wall slice at distance of 330 units. The projection of the slice will be 64 / 330 * 277 = 54 (rounded up).
+	Since the center of the projection plane is defined to be at 100. The middle of the wall slice should appear at this point. Hence, the top position where the wall slice should be drawn is 100-27=73. (where 27 is one half of 54)
 
 ## FLOOR & CEILING RENDERING
 
