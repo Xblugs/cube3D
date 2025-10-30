@@ -28,9 +28,9 @@ int	wall_hit(t_data *data, t_raycast *rc, t_map *map)
 	if (map->map[x[H]][y[H]] == '1' || map->map[x[V]][y[V]] == '1')
 	{
 		if (map->map[x[H]][y[H]] == '1')
-			printf("H %c, index %d %d, val %d %d\n", map->map[x[H]][y[H]], x[H], y[H], rc->inter[H][X], rc->inter[H][Y]);
+			;
 		else if (map->map[x[V]][y[V]] == '1')
-			printf("V %c, index %d %d, val %d %d\n", map->map[x[V]][y[V]], x[V], y[V], rc->inter[V][X], rc->inter[V][Y]);
+			;
 		find_closest_hit(data, rc);
 		rc->ray_index++;
 		return (1);
@@ -47,11 +47,11 @@ void	scope_check(t_raycast *rc, t_calc *calc)
 	x = rc->inter[H][X];
 	y = rc->inter[H][Y];
 	if (x >= calc->max_width || y >= calc->max_height || x < 0 || y < 0)
-		rc->out[H] = 1;
+		rc->ray_status[H] = OUT;
 	x = rc->inter[V][X];
 	y = rc->inter[V][Y];
 	if (x >= calc->max_width || y >= calc->max_height || x < 0 || y < 0)
-		rc->out[V] = 1;
+		rc->ray_status[V] = OUT;
 }
 
 /*
@@ -61,13 +61,13 @@ void	scope_check(t_raycast *rc, t_calc *calc)
 static void	find_closest_hit(t_data *data, t_raycast *rc)
 {
 	scope_check(rc, data->calc);
-	if (rc->out[H])
+	if (rc->ray_status[H])
 	{
 		rc->wall_hit[rc->ray_index][X] = rc->inter[V][X];
 		rc->wall_hit[rc->ray_index][Y] = rc->inter[V][Y];
 		return ;
 	}
-	if (rc->out[V])
+	if (rc->ray_status[V])
 	{
 		rc->wall_hit[rc->ray_index][X] = rc->inter[H][X];
 		rc->wall_hit[rc->ray_index][Y] = rc->inter[H][Y];

@@ -152,6 +152,11 @@
 # define B					2
 # define RGB				3
 
+// Ray status
+# define CASTING			0
+# define OUT				1
+# define HIT				2
+
 // CUBE PRECOMPUTED VALUES
 /*
 	See math.md for explanations
@@ -307,7 +312,7 @@ typedef struct s_raycast
 	short		ray_index;			// 0 to WIDTH - 1
 	short		view_angle;			// in degree
 	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
-	short		out[2];
+	short		ray_status[2];		// ray[H, V] current status
 }	t_raycast;
 
 /*

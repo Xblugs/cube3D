@@ -131,6 +131,8 @@ Since the center of the projection plane is defined to be at 100. The middle of 
     inter_v[Y] = tan(alpha) * (inter_v[X] - pos[X]) + pos[Y];
     mov_v[X] = UNIT;
     mov_v[Y] = -tan(alpha) * (mov_v[X]);
+	
+	[mov_v[X] = UNIT] here, we can simplify our expression
 
 
 # Computations for Quadrant 2 (91 < Ray Angle < 179)
