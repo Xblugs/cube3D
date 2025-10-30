@@ -34,8 +34,7 @@ static void	raycast(t_data *data, t_raycast *rc)
 {
 	while (!(rc->ray_status[H] && rc->ray_status[V]))
 	{
-		if (wall_hit(data, rc, data->map))
-			break ;
+		ray_status_check_wrapper(data, rc);
 		if (!rc->ray_status[H])
 		{
 			rc->inter[H][X] += rc->mov[H][X];
@@ -47,6 +46,7 @@ static void	raycast(t_data *data, t_raycast *rc)
 			rc->inter[V][Y] += rc->mov[V][Y];
 		}
 	}
+	wall_hit(data, rc);
 }
 
 // quadrant template before changes

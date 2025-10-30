@@ -37,8 +37,9 @@ void	print_pos(t_data *data)
 	otherwise some memory cleaning is needed between frames
 
 	Change modulo value to display more or less rays data
+	note: ray hit are INSIDE walls
 */
-void	print_raycast_hit(t_raycast *rc)
+void	print_raycast_hit_px(t_raycast *rc)
 {
 	const int	scale = 10;
 	int			i;
@@ -53,6 +54,30 @@ void	print_raycast_hit(t_raycast *rc)
 		if (i % scale == 0)
 			printf("(x, y) = (%d, %d)\n",
 				rc->wall_hit[i][X], rc->wall_hit[i][Y]);
+		if (rc->wall_hit[i][X] != 0 || rc->wall_hit[i][Y] != 0)
+			j++;
+		i++;
+	}
+	printf("%d raycast hit a wall out of %d casted\n", j, WIDTH);
+	printf(GREEN"\tDEBUG RAYCAST END%s\n", END);
+}
+
+// same function except we print index coordinates instead of px values
+void	print_raycast_hit_index(t_raycast *rc)
+{
+	const int	scale = 10;
+	int			i;
+	int			j;
+
+	i = 0;
+	j = 0;
+	printf(GREEN"\tDEBUG RAYCAST VALUES%s\n", END);
+	printf(GREEN"\tPrinting 1:%d rays values%s\n", scale, END);
+	while (i < WIDTH)
+	{
+		if (i % scale == 0)
+			printf("(x, y) = (%d, %d)\n",
+				rc->wall_hit[i][X] / 64, rc->wall_hit[i][Y] / 64);
 		if (rc->wall_hit[i][X] != 0 || rc->wall_hit[i][Y] != 0)
 			j++;
 		i++;

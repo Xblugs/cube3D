@@ -6,8 +6,8 @@ EXEC		:=	src/exec/cube_exec.c						\
 				src/exec/cube_pos_init.c					\
 
 RAYCAST		:=	src/exec/raycasting/cube_raycast_init.c		\
+				src/exec/raycasting/cube_raycast_status.c	\
 				src/exec/raycasting/cube_raycast.c			\
-				src/exec/raycasting/cube_raycast2.c			\
 
 HOOK		:=	src/hook/cube_hook.c						\
 				src/hook/cube_key_hook.c					\

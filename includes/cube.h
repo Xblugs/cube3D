@@ -322,7 +322,8 @@ typedef struct s_raycast
 // 		-- src/debug/cube_debug.c --
 void	size_of_struct(void);
 void	print_pos(t_data *data);
-void	print_raycast_hit(t_raycast *rc);
+void	print_raycast_hit_px(t_raycast *rc);
+void	print_raycast_hit_index(t_raycast *rc);
 
 /*
 	Exec and rendering functions
@@ -341,12 +342,12 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc);
 // 		-- src/exec/raycasting/cube_raycast_init.c --
 void	raycast_init_wrapper(t_data *data, t_raycast *rc);
 
+// 		-- src/exec/raycasting/cube_raycast_status.c --
+void	ray_status_check_wrapper(t_data *data, t_raycast *rc);
+int		wall_hit(t_data *data, t_raycast *rc);
+
 // 		-- src/exec/raycasting/cube_raycast.c --
 void	raycast_wrapper(t_data *data, t_raycast *rc);
-
-// 		-- src/exec/raycasting/cube_raycast2.c --
-void	scope_check(t_raycast *rc, t_calc *calc);
-int		wall_hit(t_data *data, t_raycast *rc, t_map *map);
 
 /*
 	Everything related to actions through mlx_hook(...)
