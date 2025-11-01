@@ -82,6 +82,13 @@
 
 # define END				"\e[0m"
 
+# define ASCII_00 "            _           ___________ \n"
+# define ASCII_01 "           | |         |____ |  _  \\\n"
+# define ASCII_02 "  ___ _   _| |__   ___     / / | | |\n"
+# define ASCII_03 " / __| | | | '_ \\ / _ \\    \\ \\ | | |\n"
+# define ASCII_04 "| (__| |_| | |_) |  __/.___/ / |/ / \n"
+# define ASCII_05 " \\___|\\__,_|_.__/ \\___|\\____/|___/  \n"
+
 // COLOR CODE MACROS
 # define C_PURPLE			0xFF00FF
 # define C_ORANGE			0xFF9900

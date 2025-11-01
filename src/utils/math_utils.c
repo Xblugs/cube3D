@@ -23,7 +23,7 @@ double	rad_to_deg(double radian)
 }
 
 /*
-	To be used later for potential math optimization
+	Precalculate constant values
 */
 void	precalc_val(t_data *data, t_calc *calc)
 {

@@ -35,7 +35,7 @@ int	texture_init(t_data *data, t_tex *tex, t_map *map)
 	return (0);
 }
 
-void	main_func(t_data *data)
+static void	main_func(t_data *data)
 {
 	t_img	img;
 	t_map	map;
