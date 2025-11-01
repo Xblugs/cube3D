@@ -22,10 +22,11 @@ UTILS		:=	src/utils/clean_utils.c						\
 				src/utils/mlx_utils.c						\
 				src/utils/mlx_wrapper.c						\
 
-SRC			:=	src/cube.c									\
-				src/cube_brick_wall.c						\
+SRC			:=	src/cube_brick_wall.c						\
 				src/cube_data_init.c						\
 				src/cube_draw_line.c						\
+				src/cube_welcome.c							\
+				src/cube.c									\
 
 EXEC_SRC	:=	$(EXEC) $(RAYCAST)
 PARSING_SRC	:=	$(PARSING)

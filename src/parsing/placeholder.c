@@ -33,3 +33,5 @@ int	parsing_placeholder(t_data *data, t_map *map)
 		map->map[0], map->map[1], map->map[2], map->map[3]);
 	return (0);
 }
+
+int	parsing(t_data *data, t_map *map);

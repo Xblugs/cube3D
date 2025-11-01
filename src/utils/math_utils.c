@@ -37,9 +37,9 @@ void	precalc_val(t_data *data, t_calc *calc)
 	calc->dist_to_proj = calc->half_height / tan(deg_to_rad(calc->half_fov));
 	calc->angle_between_rays = (double)FOV / WIDTH;
 	printf("Precalc values:\n");
-	printf("fov/2=[%d]\tH/2=[%d]\tW/2=[%d]\tdist=[%d]\tangle=[%f]\n\n",
-		calc->half_fov, calc->half_height,
-		calc->half_width, calc->dist_to_proj, calc->angle_between_rays);
+	printf("fov/2=[%d]\tW/2=[%d]\tH/2=[%d]\tdist=[%d]\tangle=[%f]\n\n",
+		calc->half_fov, calc->half_width,
+		calc->half_height, calc->dist_to_proj, calc->angle_between_rays);
 	printf("Projection bounds:\n");
 	printf("width=[%d]\theight=[%d]\n\n", calc->max_width, calc->max_height);
 }

@@ -63,9 +63,14 @@
 
 	[END] is called on %s to ensure the text format
 	is reset before the next print (internal buffer issues)
+
+	0; is for normal font
+	1; is for bold font
+	5; is for blinking font
 */
 # define B_WHITE			"\e[1;37m"
 # define WHITE				"\e[0;97m"
+# define B_RED				"\e[1;31m"
 # define RED				"\e[0;31m"
 # define BLUE				"\e[0;96m"
 # define GREEN				"\e[0;92m"
@@ -165,6 +170,12 @@
 # define UNIT				64
 # define HALF_UNIT			32
 # define MOV_SCALE			5
+
+// Resolutions definitions
+# define MAX_WID			1600
+# define MAX_HEI			900
+# define MIN_WID			320
+# define MIN_HEI			200
 
 //	[	320*200	screen with 60° field of view	]
 // # define FOV				60
@@ -413,6 +424,9 @@ void	mlx_data_init(t_data *data);
 // 		-- src/cube_draw_line.c --
 void	draw_line(t_img *img, t_draw *draw);
 void	pixel_put(t_img *img, int x, int y, int color);
+
+// 		-- src/cube_welcome.c --
+void	cube_welcome(void);
 
 // 		-- src/cube.c --
 int		texture_init(t_data *data, t_tex *tex, t_map *map);
