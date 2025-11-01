@@ -12,6 +12,8 @@
 
 #include "cube.h"
 
+static void	angle_handler(int key, t_data *data);
+
 /*
 	move values depend on current orientation
 	use arrow key and [wasd] for movement

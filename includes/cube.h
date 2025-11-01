@@ -82,6 +82,7 @@
 
 # define END				"\e[0m"
 
+// ASCII LOGO MACROS
 # define ASCII_00 "            _           ___________ \n"
 # define ASCII_01 "           | |         |____ |  _  \\\n"
 # define ASCII_02 "  ___ _   _| |__   ___     / / | | |\n"
