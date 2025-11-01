@@ -14,6 +14,21 @@
 
 static int	s_key_handler(int key, t_data *data);
 
+/*
+	TODO: add gettimeofday() to limit fps output 60
+	1/60 = 0.016666 second between images = ~16ms per frame
+	gettimeofday returns second and microseconds
+
+	gettimeofday(time, NULL);
+	if (prev_time - time > threshold)
+	{
+		do something
+		prev_time = time;
+	}
+
+	Add time struct into data
+	--> mlx_loop_hook or hook on keypress?
+*/
 int	key_handler(int key, t_data *data)
 {
 	if (key == ESC)

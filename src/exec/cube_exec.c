@@ -26,4 +26,6 @@ void	exec_func(t_data *data)
 	brick_wall(data);
 	mlx_loop(data->mlx);
 }
+// DEBUG PRINT FUNCTIONS
 // print_raycast_hit_px(&rc);
+// print_raycast_hit_index(&rc);

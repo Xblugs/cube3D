@@ -30,7 +30,7 @@
 
 # include "libft.h"
 # include "mlx.h"
-// # include "mlx_int.h"
+// # include "mlx_int.h"	// t_img conflict
 
 // ERROR MACROS
 # define ALLOC_FAIL 		"memory allocation error\n"
@@ -208,25 +208,28 @@ typedef struct s_calc		t_calc;
 typedef struct s_raycast	t_raycast;
 
 /*
-	[DEPRECATED COMMENT FROM FDF]
-	TODO: Rewrite t_data comment
-	img is expected to be window-sized
-	t_data encapsulate everything for easier cleanup
+	Some struct part are unused in cube3D
+	TODO: clear the unused parts if still unused once rendering is done
+*/
+
+/*
+	t_img is expected to be window-sized (main frame)
+	t_data encapsulate everything for easier cleanup / access
 	pos are where your current image is located at
 	only one image is expected to be drawn at all times
 */
 typedef struct s_data
 {
-	int			x;
-	int			y;
-	int			pos_x;
-	int			pos_y;
-	t_img		*img;
-	t_draw		*draw;
-	t_map		*map;
-	t_tex		*tex;
-	t_calc		*calc;
-	t_raycast	*rc;
+	int			x;					// unused (could be changed to defined val)
+	int			y;					// unused (could be changed to defined val)
+	int			pos_x;				// unused
+	int			pos_y;				// unused
+	t_img		*img;				// rendered screen
+	t_draw		*draw;				// data to draw for point A to B
+	t_map		*map;				// data from map file
+	t_tex		*tex;				// textures
+	t_calc		*calc;				// precalculated math
+	t_raycast	*rc;				// raycasting variables
 	void		*mlx;
 	void		*win;
 }	t_data;
@@ -249,9 +252,12 @@ typedef struct s_img
 
 /*
 	(x,y,z) are made to hold x0, x1 and dx for the draw_line function
-	pix are the pixel between two data point
 
-	Some part are unused in cube3D
+		x0 = starting point
+		x1 = destination
+		dx is set internally
+
+	pix are the pixel between two data point
 */
 typedef struct s_draw
 {

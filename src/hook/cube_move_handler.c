@@ -14,28 +14,48 @@
 
 /*
 	move values depend on current orientation
-	currently arrow key are used on brick_handler and [wasd] for player pos
-	TODO: change this comment and comment brick_handler once it's out of prod
+	use arrow key and [wasd] for movement
+
+	TODO: move handler actual calc into regular function to link mouse later on
+	forward_handler()
+	backward_handler()
+	+ Make a wall detection + if(move value > dist to wall), move to wall (-1)
+
+	manage in mouse_hook then call the function with emulated key depending
+		on where we clicked on screen?
+	
+				UP
+			╔═══════╗			Or bind LMD / RMB and mousewheel?		
+			║ \   / ║				+ make sure it doesn't conflict
+			║  \ /	║				with some other Kb input
+	TURN  	║   X   ║ 	TURN	
+	  LEFT	║  / \	║	  RIGHT	
+			║ /   \ ║					
+			╚═══════╝
+				DOWN
 */
 void	move_handler(int key, t_data *data)
 {
 	int	mov;
 
 	mov = MOV_SCALE;
-	if (key == UP || key == DOWN || key == 'w' || key == 's')
+	if (key == UP || key == 'w')
 	{
-		if (key == UP || key == 'w')
-		{
-			data->rc->pos[X] += (cos(deg_to_rad(data->rc->view_angle)) * mov);
-			data->rc->pos[Y] -= (sin(deg_to_rad(data->rc->view_angle)) * mov);
-		}
-		else
-		{
-			data->rc->pos[X] -= (cos(deg_to_rad(data->rc->view_angle)) * mov);
-			data->rc->pos[Y] += (sin(deg_to_rad(data->rc->view_angle)) * mov);
-		}
+		data->rc->pos[X] += (cos(deg_to_rad(data->rc->view_angle)) * mov);
+		data->rc->pos[Y] -= (sin(deg_to_rad(data->rc->view_angle)) * mov);
 	}
-	else if (key == LEFT || key == 'a')
+	else if (key == DOWN || key == 's')
+	{
+		data->rc->pos[X] -= (cos(deg_to_rad(data->rc->view_angle)) * mov);
+		data->rc->pos[Y] += (sin(deg_to_rad(data->rc->view_angle)) * mov);
+	}
+	else if (key == LEFT || key == 'a' || key == RIGHT || key == 'd')
+		angle_handler(key, data);
+}
+
+static void	angle_handler(int key, t_data *data)
+{
+	if (key == LEFT || key == 'a')
 		data->rc->view_angle += 10;
 	else if (key == RIGHT || key == 'd')
 	{
@@ -46,7 +66,10 @@ void	move_handler(int key, t_data *data)
 	data->rc->view_angle %= 360;
 }
 
-// for testing purposes along brick_wall()
+/*
+	for testing purposes along brick_wall()
+	arrow keys to move the brick wall on the mosaic
+*/
 void	brick_move_handler(int key, t_data *data)
 {
 	printf(BLINK_YELLOW"TEST HANDLER ! x=[%d] y=[%d]%s\n",
