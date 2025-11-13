@@ -29,8 +29,6 @@ static void	data_value_init(t_data *data, t_img *img, t_draw *draw)
 {
 	if (data != NULL)
 	{
-		data->x = WIDTH;
-		data->y = HEIGHT;
 		data->img = img;
 		data->draw = draw;
 	}
@@ -41,7 +39,6 @@ static void	data_value_init(t_data *data, t_img *img, t_draw *draw)
 	if (draw != NULL)
 	{
 		*draw = (t_draw){0};
-		draw->scale = 1;
 	}
 }
 
@@ -51,11 +48,11 @@ static void	data_value_init(t_data *data, t_img *img, t_draw *draw)
 */
 void	mlx_data_init(t_data *data)
 {
-	data->win = mlx_new_window(data->mlx, data->x, data->y, "Cube3D");
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cube3D");
 	if (data->mlx == NULL || data->win == NULL)
 		mlx_close(data);
 	set_hook(data);
 }
-// img->img = mlx_new_image(data->mlx, data->x, data->y);|| img->img == NULL
+// img->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);|| img->img == NULL
 // img->addr = mlx_get_data_addr(img->img, &img->bpp,
 	// 		&(img->line_len), &img->endian);

@@ -209,22 +209,13 @@ typedef struct s_calc		t_calc;
 typedef struct s_raycast	t_raycast;
 
 /*
-	Some struct part are unused in cube3D
-	TODO: clear the unused parts if still unused once rendering is done
-*/
-
-/*
 	t_img is expected to be window-sized (main frame)
 	t_data encapsulate everything for easier cleanup / access
-	pos are where your current image is located at
-	only one image is expected to be drawn at all times
+
+	Only one image is expected to be drawn at all times
 */
 typedef struct s_data
 {
-	int			x;					// unused (could be changed to defined val)
-	int			y;					// unused (could be changed to defined val)
-	int			pos_x;				// unused
-	int			pos_y;				// unused
 	t_img		*img;				// rendered screen
 	t_draw		*draw;				// data to draw for point A to B
 	t_map		*map;				// data from map file
@@ -252,25 +243,17 @@ typedef struct s_img
 }	t_img;
 
 /*
-	(x,y,z) are made to hold x0, x1 and dx for the draw_line function
+	(x,y) are made to hold x0, x1 and dx for the draw_line function
 
 		x0 = starting point
 		x1 = destination
 		dx is set internally
-
-	pix are the pixel between two data point
 */
 typedef struct s_draw
 {
 	short		x[3];				// x0, x1, dx
 	short		y[3];				// y0, y1, dy
-	short		z[3];				// z0, z1, dz		unused
-	short		pix[3];				// x, y, z			unused
-	short		off[2];				// x, y				unused
-	short		angle;				// in degree		unused
-	short		angle_off;			// in degree		unused
-	short		scale;				// 					unused
-	short		h_delta;			// 					unused
+	short		angle;				// in degree		unused for now
 	int			color;
 }	t_draw;
 

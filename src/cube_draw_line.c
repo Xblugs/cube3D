@@ -12,11 +12,12 @@
 
 #include "cube.h"
 
+static void	draw_precalc(t_draw *draw);
 static void	draw_low(t_img *img, t_draw draw);
 static void	draw_high(t_img *img, t_draw draw);
 static void	invert_coordinates(t_draw *draw);
 
-// function to draw lines from FdF
+// (simplified) function to draw lines inherited from FdF
 void	draw_line(t_img *img, t_draw *draw)
 {
 	if (abs_val(draw->y[1] - draw->y[0]) < abs_val(draw->x[1] - draw->x[0]))
@@ -43,6 +44,13 @@ void	draw_line(t_img *img, t_draw *draw)
 	}
 }
 
+static void	draw_precalc(t_draw *draw)
+{
+	draw->x[2] = draw->x[1] - draw->x[0];
+	draw->y[2] = draw->y[1] - draw->y[0];
+	draw->color = C_PURPLE;
+}
+
 // x[3] = {x0 x1 dx} = {start end (end - start)}
 static void	draw_low(t_img *img, t_draw draw)
 {
@@ -50,6 +58,7 @@ static void	draw_low(t_img *img, t_draw draw)
 	int	yi;
 
 	yi = 1;
+	draw_precalc(&draw);
 	if (draw.y[2] < 0)
 	{
 		yi = -1;
@@ -76,6 +85,7 @@ static void	draw_high(t_img *img, t_draw draw)
 	int	xi;
 
 	xi = 1;
+	draw_precalc(&draw);
 	if (draw.x[2] < 0)
 	{
 		xi = -1;
@@ -101,7 +111,7 @@ void	pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x < 0 || y < 0 || x >= img->x || y >= img->y)
+	if (x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT)
 		return ;
 	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(unsigned int *)dst = color;
@@ -109,7 +119,7 @@ void	pixel_put(t_img *img, int x, int y, int color)
 
 static void	invert_coordinates(t_draw *draw)
 {
-	int	swap;
+	short	swap;
 
 	swap = draw->x[0];
 	draw->x[0] = draw->x[1];

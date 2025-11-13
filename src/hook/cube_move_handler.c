@@ -74,8 +74,6 @@ static void	angle_handler(int key, t_data *data)
 */
 void	brick_move_handler(int key, t_data *data)
 {
-	printf(BLINK_YELLOW"TEST HANDLER ! x=[%d] y=[%d]%s\n",
-		data->img->x, data->img->y, END);
 	if (key == UP && data->img->y > 0)
 		data->img->y--;
 	else if (key == DOWN && data->img->y < (HEIGHT / UNIT) - 1)
@@ -84,5 +82,7 @@ void	brick_move_handler(int key, t_data *data)
 		data->img->x--;
 	else if (key == RIGHT && data->img->x < (WIDTH / UNIT) - 1)
 		data->img->x++;
+	printf(BLINK_YELLOW"TEST HANDLER ! x=[%d] y=[%d]%s\n",
+		data->img->x, data->img->y, END);
 	brick_wall(data);
 }

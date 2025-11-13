@@ -52,9 +52,8 @@ void	clear_screen(t_data *data)
 {
 	void	*black_screen;
 
-	black_screen = mlx_new_image(data->mlx, data->x, data->y);
+	black_screen = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	mlx_put_image_to_window(data->mlx, data->win, black_screen, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->img->img,
-		data->pos_x, data->pos_y);
+	mlx_put_image_to_window(data->mlx, data->win, data->img->img, 0, 0);
 	mlx_destroy_image(data->mlx, black_screen);
 }
