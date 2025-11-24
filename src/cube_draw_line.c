@@ -48,7 +48,6 @@ static void	draw_precalc(t_draw *draw)
 {
 	draw->x[2] = draw->x[1] - draw->x[0];
 	draw->y[2] = draw->y[1] - draw->y[0];
-	draw->color = C_PURPLE;
 }
 
 // x[3] = {x0 x1 dx} = {start end (end - start)}
@@ -104,17 +103,6 @@ static void	draw_high(t_img *img, t_draw draw)
 			d = d + 2 * draw.x[2];
 		draw.y[0]++;
 	}
-}
-
-// put pixel except if we're outside the window to prevent crashing
-void	pixel_put(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT)
-		return ;
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int *)dst = color;
 }
 
 static void	invert_coordinates(t_draw *draw)

@@ -371,7 +371,7 @@ int		mouse_handler(int button, int x, int y, t_data *data);
 
 // 		-- src/hook/cube_move_handler.c --
 void	move_handler(int key, t_data *data);
-void	brick_move_handler(int key, t_data *data);
+// void	brick_move_handler(int key, t_data *data);
 
 /*
 	Everything related to file parsing
@@ -402,6 +402,7 @@ void	precalc_val(t_data *data, t_calc *calc);
 // 		-- src/utils/mlx_utils.c --
 int		mlx_close(t_data *data);
 void	clear_screen(t_data *data);
+void	pixel_put(t_img *img, int x, int y, int color);
 
 // 		-- src/utils/mlx_wrapper.c --
 void	mlx_pitow(void *mlx, void *win, void *img, long wh);
@@ -412,7 +413,7 @@ void	*mlx_xpm_ftoi(void *mlx, char *file, int *width, int *height);
 	dir: src/
 */
 // 		-- src/cube_brick_wall.c --
-void	brick_wall(t_data *data);
+// void	brick_wall(t_data *data);
 
 // 		-- src/cube_data_init.c --
 void	data_init(t_data *data, t_img *img, t_draw *draw);
@@ -420,7 +421,6 @@ void	mlx_data_init(t_data *data);
 
 // 		-- src/cube_draw_line.c --
 void	draw_line(t_img *img, t_draw *draw);
-void	pixel_put(t_img *img, int x, int y, int color);
 
 // 		-- src/cube_welcome.c --
 void	cube_welcome(void);

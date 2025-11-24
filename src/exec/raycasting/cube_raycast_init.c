@@ -34,10 +34,7 @@ void	raycast_init_wrapper(t_data *data, t_raycast *rc)
 	rc->ray_status[H] = CASTING;
 	rc->ray_status[V] = CASTING;
 	if (fmod(rc->ray_angle, 90) == 0)
-	{
 		rc->ray_angle += data->calc->angle_between_rays;
-		rc->ray_index++;
-	}
 	if (rc->ray_angle < 90)
 		q1_init(data, rc);
 	else if (rc->ray_angle < 180)
@@ -107,3 +104,26 @@ static void	q4_init(t_data *data, t_raycast *rc)
 	rc->inter[V][X] = ((rc->pos[X] / UNIT) * UNIT) - UNIT;
 	rc->inter[V][Y] = rc->pos[Y] + (rc->inter[V][X] - rc->pos[X]) / rc->alpha;
 }
+
+// quadrant template before changes (concept)
+// static void	q4_raycast(type name, type name, ...)
+// {
+// 	const static int	mov[H][Y] = UNIT;	// note: compiler doesn't like this
+// 	const static int	mov[V][X] = UNIT;
+
+// 	alpha = tan(deg_to_rad(ray_angle - 270));
+// 	mov[H][X] = UNIT * alpha;
+// 	mov[V][Y] = UNIT / alpha;
+// 	inter[H][Y] = ((pos[Y] / UNIT) * UNIT) + UNIT;
+// 	inter[H][X] = pos[X] + alpha * (inter[H][Y] - pos[Y]);
+// 	inter[V][X] = ((pos[X] / UNIT) * UNIT) - UNIT;
+// 	inter[V][Y] = pos[Y] + (inter[V][X] - pos[X]) / alpha;
+// 	while (not out of scope)
+// 	{
+// 		inter[H][X] += mov[H][X];
+// 		inter[H][Y] += mov[H][Y];
+// 		inter[V][X] += mov[V][X];
+// 		inter[V][Y] += mov[V][Y];
+// 	}
+// 	return (depend on wall hit but map is closed so we will hit);
+// }

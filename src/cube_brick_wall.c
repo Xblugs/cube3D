@@ -12,48 +12,50 @@
 
 #include "cube.h"
 
-static void	brick_wall_drawing(t_data *data, long wh, int *k);
+// static void	brick_wall_drawing(t_data *data, long wh, int *k);
 
 /*
 	Requires:
-		cube_key_hook.c
+		cube_move_handler.c
 		void	brick_move_handler(int keycode, t_data *data)
+
+	To be completely deleted or commented once unused
 */
-void	brick_wall(t_data *data)
-{
-	int		i;
-	int		j;
-	int		k;
-	long	wh;
+// void	brick_wall(t_data *data)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		k;
+// 	long	wh;
 
-	i = 0;
-	j = 0;
-	k = 0;
-	while (data->tex->h * j < HEIGHT)
-	{
-		while (data->tex->w * i < WIDTH)
-		{
-			wh = int_to_long(data->tex->w * i, data->tex->h * j);
-			if (i == data->img->x && j == data->img->y)
-				mlx_pitow(data->mlx, data->win, data->tex->img[N], wh);
-			else
-				brick_wall_drawing(data, wh, &k);
-			k++;
-			if (k == 3)
-				k = 0;
-			i++;
-		}
-		i = 0;
-		j++;
-	}
-}
+// 	i = 0;
+// 	j = 0;
+// 	k = 0;
+// 	while (data->tex->h * j < HEIGHT)
+// 	{
+// 		while (data->tex->w * i < WIDTH)
+// 		{
+// 			wh = int_to_long(data->tex->w * i, data->tex->h * j);
+// 			if (i == data->img->x && j == data->img->y)
+// 				mlx_pitow(data->mlx, data->win, data->tex->img[N], wh);
+// 			else
+// 				brick_wall_drawing(data, wh, &k);
+// 			k++;
+// 			if (k == 3)
+// 				k = 0;
+// 			i++;
+// 		}
+// 		i = 0;
+// 		j++;
+// 	}
+// }
 
-static void	brick_wall_drawing(t_data *data, long wh, int *k)
-{
-	if (*k == 0)
-		mlx_pitow(data->mlx, data->win, data->tex->img[W], wh);
-	else if (*k == 1)
-		mlx_pitow(data->mlx, data->win, data->tex->img[S], wh);
-	else if (*k == 2)
-		mlx_pitow(data->mlx, data->win, data->tex->img[E], wh);
-}
+// static void	brick_wall_drawing(t_data *data, long wh, int *k)
+// {
+// 	if (*k == 0)
+// 		mlx_pitow(data->mlx, data->win, data->tex->img[W], wh);
+// 	else if (*k == 1)
+// 		mlx_pitow(data->mlx, data->win, data->tex->img[S], wh);
+// 	else if (*k == 2)
+// 		mlx_pitow(data->mlx, data->win, data->tex->img[E], wh);
+// }

@@ -14,6 +14,7 @@
 
 static void	raycast(t_data *data, t_raycast *rc);
 static void	test_render(t_data *data, t_raycast *rc);
+static void	test_predraw(t_data *data, t_raycast *rc, t_draw *draw);
 
 /*
 	Raycast is calculated depending on its angle
@@ -22,13 +23,14 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 {
 	rc->ray_index = 0;
 	rc->ray_angle = rc->view_angle - data->calc->half_fov;
-	while (rc->ray_angle < rc->view_angle + data->calc->half_fov)
+	while (rc->ray_index != WIDTH - 1)
 	{
 		raycast_init_wrapper(data, rc);
 		raycast(data, rc);
 		test_render(data, rc);
 		rc->ray_angle += data->calc->angle_between_rays;
 	}
+	mlx_pitow(data->mlx, data->win, data->img->img, 0);
 }
 
 // ray_status is [TRUE] once the ray is [OUT] or [HIT] a wall
@@ -56,6 +58,8 @@ static void	raycast(t_data *data, t_raycast *rc)
 // 	distance calculation could be optimized, sqrt and pow are cpu expensive
 static void	test_render(t_data *data, t_raycast *rc)
 {
+	t_draw	draw;
+
 	(void) data;
 	rc->wall_dist[rc->ray_index] = sqrt(pow(rc->pos[X]
 				- rc->wall_hit[rc->ray_index][X], 2)
@@ -64,27 +68,40 @@ static void	test_render(t_data *data, t_raycast *rc)
 		* data->calc->dist_to_proj;
 	rc->wall_dist[rc->ray_index] *= cos(deg_to_rad(
 				rc->ray_angle - rc->view_angle));
+
+	// ceiling
+	draw.color = C_CYAN;
+	test_predraw(data, rc, &draw);
+	draw_line(data->img, &draw);
+
+	// walls
+	draw.color = C_PURPLE;
+	test_predraw(data, rc, &draw);
+	draw_line(data->img, &draw);
+
+	// floor
+	draw.color = C_BROWN;
+	test_predraw(data, rc, &draw);
+	draw_line(data->img, &draw);
 }
 
-// quadrant template before changes
-// static void	q4_raycast(type name, type name, ...)
-// {
-// 	const static int	mov[H][Y] = UNIT;	// note: compiler doesn't like this
-// 	const static int	mov[V][X] = UNIT;
-
-// 	alpha = tan(deg_to_rad(ray_angle - 270));
-// 	mov[H][X] = UNIT * alpha;
-// 	mov[V][Y] = UNIT / alpha;
-// 	inter[H][Y] = ((pos[Y] / UNIT) * UNIT) + UNIT;
-// 	inter[H][X] = pos[X] + alpha * (inter[H][Y] - pos[Y]);
-// 	inter[V][X] = ((pos[X] / UNIT) * UNIT) - UNIT;
-// 	inter[V][Y] = pos[Y] + (inter[V][X] - pos[X]) / alpha;
-// 	while (not out of scope)
-// 	{
-// 		inter[H][X] += mov[H][X];
-// 		inter[H][Y] += mov[H][Y];
-// 		inter[V][X] += mov[V][X];
-// 		inter[V][Y] += mov[V][Y];
-// 	}
-// 	return (depend on wall hit but map is closed sooooooo);
-// }
+static void	test_predraw(t_data *data, t_raycast *rc, t_draw *draw)
+{
+	draw->x[0] = rc->ray_index;
+	draw->x[1] = rc->ray_index;
+	if (draw->color == C_CYAN)
+	{
+		draw->y[0] = 0;
+		draw->y[1] = data->calc->half_height - rc->wall_dist[rc->ray_index];
+	}
+	else if (draw->color == C_PURPLE)
+	{
+		draw->y[0] = draw->y[1];
+		draw->y[1] = data->calc->half_height + rc->wall_dist[rc->ray_index];
+	}
+	else
+	{
+		draw->y[0] = draw->y[1];
+		draw->y[1] = HEIGHT - 1;
+	}
+}
