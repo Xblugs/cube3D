@@ -337,6 +337,7 @@ void	print_raycast_dist(t_raycast *rc);
 */
 // 		-- src/exec/cube_exec.c --
 void	exec_func(t_data *data);
+int		exec_loop(t_data *data);
 
 // 		-- src/exec/cube_pos_init.c --
 void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc);

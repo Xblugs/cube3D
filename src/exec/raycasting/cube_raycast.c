@@ -23,7 +23,9 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 {
 	rc->ray_index = 0;
 	rc->ray_angle = rc->view_angle - data->calc->half_fov;
-	while (rc->ray_index != WIDTH - 1)
+	ft_memset(data->rc->wall_hit, 0, WIDTH * 2 * sizeof(short));
+	ft_memset(data->rc->wall_dist, 0, WIDTH * sizeof(short));
+	while (rc->ray_index != WIDTH)
 	{
 		raycast_init_wrapper(data, rc);
 		raycast(data, rc);
@@ -87,8 +89,8 @@ static void	test_render(t_data *data, t_raycast *rc)
 
 static void	test_predraw(t_data *data, t_raycast *rc, t_draw *draw)
 {
-	draw->x[0] = rc->ray_index;
-	draw->x[1] = rc->ray_index;
+	draw->x[0] = (WIDTH - 1) - rc->ray_index;
+	draw->x[1] = (WIDTH - 1) - rc->ray_index;
 	if (draw->color == C_CYAN)
 	{
 		draw->y[0] = 0;

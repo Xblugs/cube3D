@@ -22,12 +22,8 @@ static void	q4_init(t_data *data, t_raycast *rc);
 		(set initial values used in raycast depending on angle/quadrant)
 
 	Angles that would result in undefined tan() values are skipped
-	In rendering consider (0, 0) as previous value as one index is also skipped
 
 	Functions are agenced this way to allow for static and norm compliance
-
-	TODO: Change (0, 0) to (-1, -1) even if a corner MUST be a wall
-		  better have a clean workflow to prevent potential errors
 */
 void	raycast_init_wrapper(t_data *data, t_raycast *rc)
 {

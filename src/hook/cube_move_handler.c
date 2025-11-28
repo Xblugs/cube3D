@@ -53,6 +53,7 @@ void	move_handler(int key, t_data *data)
 	}
 	else if (key == LEFT || key == 'a' || key == RIGHT || key == 'd')
 		angle_handler(key, data);
+	exec_loop(data);
 }
 
 static void	angle_handler(int key, t_data *data)
