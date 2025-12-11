@@ -68,7 +68,8 @@ Once MLX is set we need to do the calculations to render the map
 
 (2) Move through the space
 	--> Check if we're out of bound / hit a wall
-	NOTE: map is closed, ray will hit a wall il ALL cases
+	NOTE: map is closed, ray will hit a wall in ALL cases 
+		(if wall colision are OK, else if we get out of the map it's going to be bad)
 
 (3) On wall hit, save wall coordinates
 

@@ -17,7 +17,7 @@ static void	ray_status_check(t_data *data, t_raycast *rc, t_calc *calc, int i);
 static void	find_hit(t_data *data, t_raycast *rc);
 static void	find_closest_hit(t_data *data, t_raycast *rc);
 
-// check if our raycast are going out of bounds or hit a wall
+// check if our rays are going out of bounds or hit a wall
 void	ray_status_check_wrapper(t_data *data, t_raycast *rc)
 {
 	if (!(rc->ray_status[H]))
@@ -26,10 +26,16 @@ void	ray_status_check_wrapper(t_data *data, t_raycast *rc)
 		ray_status_check(data, rc, data->calc, V);
 }
 
+/*
+	TODO: Change the map wall check depending on current quadrant
+
+	i is the equivalent value to macro [H] or [V]
+		to differentiate vertical / horizontal ray
+*/
 static void	ray_status_check(t_data *data, t_raycast *rc, t_calc *calc, int i)
 {
-	int			x;
-	int			y;
+	int	x;
+	int	y;
 
 	x = rc->inter[i][X];
 	y = rc->inter[i][Y];
@@ -94,10 +100,12 @@ static void	find_closest_hit(t_data *data, t_raycast *rc)
 	{
 		rc->wall_hit[rc->ray_index][X] = rc->inter[H][X];
 		rc->wall_hit[rc->ray_index][Y] = rc->inter[H][Y];
+		rc->ray_status[V] = OUT;
 	}
 	else
 	{
 		rc->wall_hit[rc->ray_index][X] = rc->inter[V][X];
 		rc->wall_hit[rc->ray_index][Y] = rc->inter[V][Y];
+		rc->ray_status[H] = OUT;
 	}
 }

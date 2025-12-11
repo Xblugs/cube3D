@@ -68,10 +68,10 @@ static void	test_render(t_data *data, t_raycast *rc)
 			+ pow(rc->pos[Y] - rc->wall_hit[rc->ray_index][Y], 2));
 	rc->wall_dist[rc->ray_index] = ((float) UNIT / rc->wall_dist[rc->ray_index])
 		* data->calc->dist_to_proj;
-	rc->wall_dist[rc->ray_index] *= cos(deg_to_rad(
-				rc->ray_angle - rc->view_angle));
+	// rc->wall_dist[rc->ray_index] *= cos(deg_to_rad(
+	// 			rc->ray_angle - rc->view_angle));
 
-	// ceiling
+	// map->h_ceiling
 	draw.color = C_CYAN;
 	test_predraw(data, rc, &draw);
 	draw_line(data->img, &draw);
@@ -81,7 +81,7 @@ static void	test_render(t_data *data, t_raycast *rc)
 	test_predraw(data, rc, &draw);
 	draw_line(data->img, &draw);
 
-	// floor
+	// map->h_floor
 	draw.color = C_BROWN;
 	test_predraw(data, rc, &draw);
 	draw_line(data->img, &draw);

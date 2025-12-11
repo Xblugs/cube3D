@@ -31,6 +31,10 @@ void	raycast_init_wrapper(t_data *data, t_raycast *rc)
 	rc->ray_status[V] = CASTING;
 	if (fmod(rc->ray_angle, 90) == 0)
 		rc->ray_angle += data->calc->angle_between_rays;
+	if (rc->ray_angle >= 360)
+		rc->ray_angle -= 360;
+	else if (rc->ray_angle < 0)
+		rc->ray_angle += 360;
 	if (rc->ray_angle < 90)
 		q1_init(data, rc);
 	else if (rc->ray_angle < 180)

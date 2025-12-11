@@ -12,6 +12,8 @@
 	-> Part 19: Shading	
 		Intensity = Object Intensity/Distance * Multiplier
 
+# https://ismailassil.medium.com/ray-casting-c-8bfae2c2fc13
+
 # Assuming the following:
 	- Projection on 320*200px screen [0 to 319, 199]
 	- Every sprite is 64*64px
