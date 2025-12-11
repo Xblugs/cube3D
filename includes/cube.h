@@ -308,15 +308,15 @@ typedef struct s_calc
 */
 typedef struct s_raycast
 {
-	short		mov[2][2];			// mov[H, V][X, Y]
-	short		inter[2][2];		// inter[H, V][X, Y]
-	short		pos[2];				// player pos [x, y]
+	double		mov[2][2];			// mov[H, V][X, Y]
+	double		inter[2][2];		// inter[H, V][X, Y]
+	int			pos[2];				// player pos [x, y]
 	double		alpha;				// angle corrected for current quadrant
 	double		ray_angle;			// raycasting angle
 	short		ray_index;			// 0 to WIDTH - 1
 	short		view_angle;			// in degree
 	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
-	short		wall_dist[WIDTH];	// distance to projected wall
+	double		wall_dist[WIDTH];	// distance to projected wall
 	short		ray_status[2];		// ray[H, V] current status
 }	t_raycast;
 

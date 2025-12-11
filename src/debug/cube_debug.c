@@ -98,7 +98,7 @@ void	print_raycast_dist(t_raycast *rc)
 	while (i < WIDTH)
 	{
 		if (i % scale == 0)
-			printf("(x, y) = (%d, %d)\n",
+			printf("(x, y) = (%f, %f)\n",
 				rc->wall_dist[i], rc->wall_dist[i]);
 		i++;
 	}

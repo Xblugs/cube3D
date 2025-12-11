@@ -22,7 +22,7 @@
 // map->map = (char *[]){"1111", "1001", "10N1", "1111"};
 int	parsing_placeholder(t_data *data, t_map *map)
 {
-	map->line = 4;
+	map->line = 5;
 	map->col = ft_strlen(map->map[0]);
 	map->path[N] = "./texture/xpm/brick.xpm";
 	map->path[W] = "./texture/xpm/tile_cyan.xpm";

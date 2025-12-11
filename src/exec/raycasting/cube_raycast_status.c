@@ -56,7 +56,6 @@ int	wall_hit(t_data *data, t_raycast *rc)
 	if (rc->ray_status[H] == HIT || rc->ray_status[V] == HIT)
 	{
 		find_hit(data, rc);
-		rc->ray_index++;
 		return (1);
 	}
 	else

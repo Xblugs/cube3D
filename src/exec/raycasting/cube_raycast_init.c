@@ -54,9 +54,9 @@ static void	q1_init(t_data *data, t_raycast *rc)
 	rc->mov[H][Y] = -UNIT;
 	rc->mov[V][X] = UNIT;
 	rc->mov[V][Y] = -rc->alpha * (UNIT);
-	rc->inter[H][Y] = ((rc->pos[Y] / UNIT) * UNIT) - 1;
+	rc->inter[H][Y] = (floor(rc->pos[Y] / UNIT) * UNIT) - 1;
 	rc->inter[H][X] = ((rc->inter[H][Y] - rc->pos[Y]) / rc->alpha) + rc->pos[X];
-	rc->inter[V][X] = ((rc->pos[X] / UNIT) * UNIT) + UNIT;
+	rc->inter[V][X] = (floor(rc->pos[X] / UNIT) * UNIT) + UNIT;
 	rc->inter[V][Y] = rc->alpha * (rc->inter[V][X] - rc->pos[X]) + rc->pos[Y];
 }
 
@@ -69,9 +69,9 @@ static void	q2_init(t_data *data, t_raycast *rc)
 	rc->mov[H][Y] = -UNIT;
 	rc->mov[V][X] = -UNIT;
 	rc->mov[V][Y] = -UNIT / rc->alpha;
-	rc->inter[H][Y] = ((rc->pos[Y] / UNIT) * UNIT) - 1;
+	rc->inter[H][Y] = (floor(rc->pos[Y] / UNIT) * UNIT) - 1;
 	rc->inter[H][X] = rc->alpha * (rc->pos[Y] - rc->inter[H][Y]);
-	rc->inter[V][X] = ((rc->pos[X] / UNIT) * UNIT) - 1;
+	rc->inter[V][X] = (floor(rc->pos[X] / UNIT) * UNIT) - 1;
 	rc->inter[V][Y] = rc->pos[Y] - ((rc->pos[X] - rc->inter[V][X]) / rc->alpha);
 }
 
@@ -84,9 +84,9 @@ static void	q3_init(t_data *data, t_raycast *rc)
 	rc->mov[H][Y] = UNIT;
 	rc->mov[V][X] = -UNIT;
 	rc->mov[V][Y] = UNIT * rc->alpha;
-	rc->inter[H][Y] = ((rc->pos[Y] / UNIT) * UNIT) + UNIT;
+	rc->inter[H][Y] = (floor(rc->pos[Y] / UNIT) * UNIT) + UNIT;
 	rc->inter[H][X] = rc->pos[X] - (rc->inter[H][Y] - rc->pos[Y]) / rc->alpha;
-	rc->inter[V][X] = ((rc->pos[X] / UNIT) * UNIT) - 1;
+	rc->inter[V][X] = (floor(rc->pos[X] / UNIT) * UNIT) - 1;
 	rc->inter[V][Y] = rc->alpha * (rc->pos[X] - rc->inter[V][X]) + rc->pos[Y];
 }
 
@@ -99,9 +99,9 @@ static void	q4_init(t_data *data, t_raycast *rc)
 	rc->mov[H][Y] = UNIT;
 	rc->mov[V][X] = UNIT;
 	rc->mov[V][Y] = UNIT / rc->alpha;
-	rc->inter[H][Y] = ((rc->pos[Y] / UNIT) * UNIT) + UNIT;
+	rc->inter[H][Y] = (floor(rc->pos[Y] / UNIT) * UNIT) + UNIT;
 	rc->inter[H][X] = rc->pos[X] + rc->alpha * (rc->inter[H][Y] - rc->pos[Y]);
-	rc->inter[V][X] = ((rc->pos[X] / UNIT) * UNIT) - UNIT;
+	rc->inter[V][X] = (floor(rc->pos[X] / UNIT) * UNIT) - UNIT;
 	rc->inter[V][Y] = rc->pos[Y] + (rc->inter[V][X] - rc->pos[X]) / rc->alpha;
 }
 
