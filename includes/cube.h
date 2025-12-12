@@ -147,10 +147,6 @@
 # define Y					1
 # define Z					2
 
-// Horizontal or Vertical
-# define H					0
-# define V					1
-
 // Cardinal positions
 # define N					0
 # define W					1
@@ -177,7 +173,7 @@
 // Texture size and half size
 # define UNIT				64
 # define HALF_UNIT			32
-# define MOV_SCALE			5
+# define MOV_SPEED			5
 
 // Resolutions definitions
 # define MAX_WID			1600
@@ -190,10 +186,10 @@
 // # define WIDTH				320
 // # define HEIGHT				200
 
-//	[	640*640	screen with 60° field of view	] // texture test mode
+//	[	640*480	screen with 60° field of view	]
 # define FOV				60
 # define WIDTH				640
-# define HEIGHT				640
+# define HEIGHT				480
 
 //	[	800*600	screen with 60° field of view	]
 // # define FOV				60
@@ -302,22 +298,20 @@ typedef struct s_calc
 
 /*
 	short is used for reduced memory cost
-	it can handle 16 bit values so 511*511 map (512 overflow) 
 
 	[ulimit -s] in bash to see stack size limit
 */
 typedef struct s_raycast
 {
-	double		mov[2][2];			// mov[H, V][X, Y]
-	double		inter[2][2];		// inter[H, V][X, Y]
+	double		delta[2];			// delta[X, Y]
+	double		ray[2];				// ray[X, Y]
 	int			pos[2];				// player pos [x, y]
-	double		alpha;				// angle corrected for current quadrant
 	double		ray_angle;			// raycasting angle
 	short		ray_index;			// 0 to WIDTH - 1
-	short		view_angle;			// in degree
+	short		view_angle;			// player angle in degree
 	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
 	double		wall_dist[WIDTH];	// distance to projected wall
-	short		ray_status[2];		// ray[H, V] current status
+	short		ray_status;			// ray current status
 }	t_raycast;
 
 /*

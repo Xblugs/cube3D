@@ -52,6 +52,6 @@ int	key_handler(int key, t_data *data)
 static int	s_key_handler(int key, t_data *data)
 {
 	if ((key >= 0xFF51 && key <= 0xFF54))
-		(void) data;
+		move_handler(key, data);
 	return (0);
 }

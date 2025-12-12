@@ -1,18 +1,25 @@
 ## Sources:
-# https://wynnliam.github.io/blog/
+# (1) https://wynnliam.github.io/blog/
 	-> Part 1: Wall rendering
 	-> Part 2: Sprite rendering
 	-> Part 3: Floor / Ceiling / Sky rendering
 	-> Part 4: Optimization (i.e lookup tables, using translated int)
 
-# https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/
+# (2) https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/
 	-> Bunch of texture files
 	-> Part  9: Drawing walls
 	-> Part 12: Floor casting
 	-> Part 19: Shading	
 		Intensity = Object Intensity/Distance * Multiplier
 
-# https://ismailassil.medium.com/ray-casting-c-8bfae2c2fc13
+# (3) https://ismailassil.medium.com/ray-casting-c-8bfae2c2fc13
+
+
+	This file compiles informations from both sources (1) and (2)
+	
+	Currently cube3D use a simpler approach using only cos and sine func to
+	move through the map, ressources are still very worth reading
+	(to be honest this took time to write and format i don't want to delete it)
 
 # Assuming the following:
 	- Projection on 320*200px screen [0 to 319, 199]

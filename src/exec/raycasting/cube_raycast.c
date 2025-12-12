@@ -24,11 +24,12 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 	rc->ray_index = 0;
 	rc->ray_angle = rc->view_angle - data->calc->half_fov;
 	ft_memset(data->rc->wall_hit, 0, WIDTH * 2 * sizeof(short));
-	ft_memset(data->rc->wall_dist, 0, WIDTH * sizeof(short));
+	ft_memset(data->rc->wall_dist, 0, WIDTH * sizeof(double));
 	while (rc->ray_index != WIDTH)
 	{
 		raycast_init_wrapper(data, rc);
 		raycast(data, rc);
+		// here correct wall hit to be the exact pixel
 		test_render(data, rc);
 		rc->ray_angle += data->calc->angle_between_rays;
 		rc->ray_index++;
@@ -39,18 +40,13 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 // ray_status is [TRUE] once the ray is [OUT] or [HIT] a wall
 static void	raycast(t_data *data, t_raycast *rc)
 {
-	while (!(rc->ray_status[H] && rc->ray_status[V]))
+	while (!(rc->ray_status))
 	{
 		ray_status_check_wrapper(data, rc);
-		if (!rc->ray_status[H])
+		if (!rc->ray_status)
 		{
-			rc->inter[H][X] += rc->mov[H][X];
-			rc->inter[H][Y] += rc->mov[H][Y];
-		}
-		if (!rc->ray_status[V])
-		{
-			rc->inter[V][X] += rc->mov[V][X];
-			rc->inter[V][Y] += rc->mov[V][Y];
+			rc->ray[X] += rc->delta[X];
+			rc->ray[Y] += rc->delta[Y];
 		}
 	}
 	wall_hit(data, rc);
@@ -67,11 +63,9 @@ static void	test_render(t_data *data, t_raycast *rc)
 	rc->wall_dist[rc->ray_index] = sqrt(pow(rc->pos[X]
 				- rc->wall_hit[rc->ray_index][X], 2)
 			+ pow(rc->pos[Y] - rc->wall_hit[rc->ray_index][Y], 2));
-	printf("DIST %f\n", rc->wall_dist[rc->ray_index]);
 	rc->wall_dist[rc->ray_index] = ((float) UNIT / rc->wall_dist[rc->ray_index])
 		* data->calc->dist_to_proj;
-	printf("RENDER %f\n", rc->wall_dist[rc->ray_index]);
-	rc->wall_dist[rc->ray_index] *= cos(deg_to_rad(
+	rc->wall_dist[rc->ray_index] /= cos(deg_to_rad(
 				rc->ray_angle - rc->view_angle));
 
 	// map->h_ceiling
@@ -97,14 +91,14 @@ static void	test_predraw(t_data *data, t_raycast *rc, t_draw *draw)
 	if (draw->color == C_CYAN)
 	{
 		draw->y[0] = 0;
-		draw->y[1] = data->calc->half_height - rc->wall_dist[rc->ray_index];
+		draw->y[1] = data->calc->half_height - (rc->wall_dist[rc->ray_index] / 2);
 	}
 	else if (draw->color == C_PURPLE)
 	{
 		draw->y[0] = draw->y[1];
-		draw->y[1] = data->calc->half_height + rc->wall_dist[rc->ray_index];
+		draw->y[1] = data->calc->half_height + (rc->wall_dist[rc->ray_index] / 2);
 	}
-	else
+	else if (draw->color == C_BROWN)
 	{
 		draw->y[0] = draw->y[1];
 		draw->y[1] = HEIGHT - 1;

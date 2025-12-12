@@ -12,17 +12,16 @@
 
 #include "cube.h"
 
+static void	move_prep(t_raycast *rc);
+static void	forward_handler(t_data *data, t_raycast *rc);
+static void	backward_handler(t_data *data, t_raycast *rc);
 static void	angle_handler(int key, t_data *data);
 
 /*
 	move values depend on current orientation
 	use arrow key and [wasd] for movement
 
-	TODO: move handler actual calc into regular function to link mouse later on
-	forward_handler()
-	backward_handler()
-	+ Make a wall detection + if(move value > dist to wall), move to wall (-1)
-
+	TODO:
 	manage in mouse_hook then call the function with emulated key depending
 		on where we clicked on screen?
 	
@@ -31,29 +30,67 @@ static void	angle_handler(int key, t_data *data);
 			║ \   / ║				+ make sure it doesn't conflict
 			║  \ /	║				with some other Kb input
 	TURN  	║   X   ║ 	TURN	
-	  LEFT	║  / \	║	  RIGHT	
+	  LEFT	║  / \	║	  RIGHT		Or even consider "banner" on the screen edge
 			║ /   \ ║					
-			╚═══════╝
+			╚═══════╝				Bonus is only rotating with mouse, EASY
 				DOWN
 */
 void	move_handler(int key, t_data *data)
 {
-	int	mov;
-
-	mov = MOV_SCALE;
 	if (key == UP || key == 'w')
-	{
-		data->rc->pos[X] += (cos(deg_to_rad(data->rc->view_angle)) * mov);
-		data->rc->pos[Y] -= (sin(deg_to_rad(data->rc->view_angle)) * mov);
-	}
+		forward_handler(data, data->rc);
 	else if (key == DOWN || key == 's')
-	{
-		data->rc->pos[X] -= (cos(deg_to_rad(data->rc->view_angle)) * mov);
-		data->rc->pos[Y] += (sin(deg_to_rad(data->rc->view_angle)) * mov);
-	}
+		backward_handler(data, data->rc);
 	else if (key == LEFT || key == 'a' || key == RIGHT || key == 'd')
 		angle_handler(key, data);
 	exec_loop(data);
+}
+
+/*
+	Re-using delta array to not allocate more memory
+*/
+static void	move_prep(t_raycast *rc)
+{
+	rc->delta[X] = cos(deg_to_rad(rc->view_angle));
+	rc->delta[Y] = -sin(deg_to_rad(rc->view_angle));
+	rc->delta[X] *= MOV_SPEED;
+	rc->delta[Y] *= MOV_SPEED;
+}
+
+/*
+	Check both directions individually
+		wall licking is allowed
+*/
+static void	forward_handler(t_data *data, t_raycast *rc)
+{
+	int	x;
+	int	y;
+
+	move_prep(rc);
+	x = (rc->pos[X] + rc->delta[X]) / UNIT;
+	y = rc->pos[Y] / UNIT;
+	if (data->map->map[x][y] != '1')
+		rc->pos[X] += rc->delta[X];
+	x = rc->pos[X] / UNIT;
+	y = (rc->pos[Y] + rc->delta[Y]) / UNIT;
+	if (data->map->map[x][y] != '1')
+		rc->pos[Y] += rc->delta[Y];
+}
+
+static void	backward_handler(t_data *data, t_raycast *rc)
+{
+	int	x;
+	int	y;
+
+	move_prep(rc);
+	x = (rc->pos[X] - rc->delta[X]) / UNIT;
+	y = rc->pos[Y] / UNIT;
+	if (data->map->map[x][y] != '1')
+		rc->pos[X] -= rc->delta[X];
+	x = rc->pos[X] / UNIT;
+	y = (rc->pos[Y] - rc->delta[Y]) / UNIT;
+	if (data->map->map[x][y] != '1')
+		rc->pos[Y] -= rc->delta[Y];
 }
 
 static void	angle_handler(int key, t_data *data)
