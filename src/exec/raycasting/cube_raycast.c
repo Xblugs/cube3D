@@ -14,7 +14,9 @@
 
 static void	raycast(t_data *data, t_raycast *rc);
 static void	test_render(t_data *data, t_raycast *rc);
-static void	test_predraw(t_data *data, t_raycast *rc, t_draw *draw);
+static void	test_predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw);
+static void	test_predraw_wall(t_data *data, t_raycast *rc, t_draw *draw);
+static void	test_predraw_floor(t_data *data, t_raycast *rc, t_draw *draw);
 
 /*
 	Raycast is calculated depending on its angle
@@ -67,40 +69,82 @@ static void	test_render(t_data *data, t_raycast *rc)
 		* data->calc->dist_to_proj;
 	rc->wall_dist[rc->ray_index] /= cos(deg_to_rad(
 				rc->ray_angle - rc->view_angle));
-
-	// map->h_ceiling
-	draw.color = C_CYAN;
-	test_predraw(data, rc, &draw);
+	data->map->h_ceiling = C_CYAN;
+	data->map->h_floor = C_BROWN;
+	test_predraw_ceil(data, rc, &draw);
 	draw_line(data->img, &draw);
-
-	// walls
-	draw.color = C_PURPLE;
-	test_predraw(data, rc, &draw);
+	if (rc->ray_angle <= 90)
+	{
+		if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == 0
+			&& rc->wall_hit[rc->ray_index][Y] % (short)UNIT == UNIT - 1)
+			draw.color = data->map->h_wall;
+		else if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == 0)
+			draw.color = C_GREEN;
+		else if (rc->wall_hit[rc->ray_index][Y] % (short)UNIT == UNIT - 1)
+			draw.color = C_ORANGE;
+	}
+	else if (rc->ray_angle <= 180)
+	{
+		if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == UNIT - 1
+			&& rc->wall_hit[rc->ray_index][Y] % (short)UNIT == UNIT - 1)
+			draw.color = data->map->h_wall;
+		else if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == UNIT - 1)
+			draw.color = C_YELLOW;
+		else if (rc->wall_hit[rc->ray_index][Y] % (short)UNIT == UNIT - 1)
+			draw.color = C_ORANGE;
+	}
+	else if (rc->ray_angle <= 270)
+	{
+		if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == UNIT - 1
+			&& rc->wall_hit[rc->ray_index][Y] % (short)UNIT == 0)
+			draw.color = data->map->h_wall;
+		else if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == UNIT - 1)
+			draw.color = C_YELLOW;
+		else if (rc->wall_hit[rc->ray_index][Y] % (short)UNIT == 0)
+			draw.color = C_WHITE;
+	}
+	else if (rc->ray_angle < 360)
+	{
+		if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == 0
+			&& rc->wall_hit[rc->ray_index][Y] % (short)UNIT == 0)
+			draw.color = data->map->h_wall;
+		else if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == 0)
+			draw.color = C_GREEN;
+		else if (rc->wall_hit[rc->ray_index][Y] % (short)UNIT == 0)
+			draw.color = C_WHITE;
+	}
+	data->map->h_wall = draw.color;
+	test_predraw_wall(data, rc, &draw);
 	draw_line(data->img, &draw);
-
-	// map->h_floor
-	draw.color = C_BROWN;
-	test_predraw(data, rc, &draw);
+	test_predraw_floor(data, rc, &draw);
 	draw_line(data->img, &draw);
 }
 
-static void	test_predraw(t_data *data, t_raycast *rc, t_draw *draw)
+// TODO: map->h_ceiling instead of C_CYAN + combine those 3 func into one
+static void	test_predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw)
+{
+	draw->color = data->map->h_ceiling;
+	draw->x[0] = (WIDTH - 1) - rc->ray_index;
+	draw->x[1] = (WIDTH - 1) - rc->ray_index;
+	draw->y[0] = 0;
+	draw->y[1] = data->calc->half_height - (rc->wall_dist[rc->ray_index] / 2);
+}
+
+// walls
+static void	test_predraw_wall(t_data *data, t_raycast *rc, t_draw *draw)
 {
 	draw->x[0] = (WIDTH - 1) - rc->ray_index;
 	draw->x[1] = (WIDTH - 1) - rc->ray_index;
-	if (draw->color == C_CYAN)
-	{
-		draw->y[0] = 0;
-		draw->y[1] = data->calc->half_height - (rc->wall_dist[rc->ray_index] / 2);
-	}
-	else if (draw->color == C_PURPLE)
-	{
-		draw->y[0] = draw->y[1];
-		draw->y[1] = data->calc->half_height + (rc->wall_dist[rc->ray_index] / 2);
-	}
-	else if (draw->color == C_BROWN)
-	{
-		draw->y[0] = draw->y[1];
-		draw->y[1] = HEIGHT - 1;
-	}
+	draw->y[0] = draw->y[1];
+	draw->y[1] = data->calc->half_height + (rc->wall_dist[rc->ray_index] / 2);
+}
+
+// TODO: map->h_floor instead of C_BROWN
+static void	test_predraw_floor(t_data *data, t_raycast *rc, t_draw *draw)
+{
+	draw->color = data->map->h_floor;
+	draw->x[0] = (WIDTH - 1) - rc->ray_index;
+	draw->x[1] = (WIDTH - 1) - rc->ray_index;
+	draw->y[0] = draw->y[1];
+	draw->y[1] = HEIGHT - 1;
 }

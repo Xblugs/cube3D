@@ -24,7 +24,12 @@ int	mouse_io(t_data *data)
 int	mouse_handler(int mouse, int x, int y, t_data *data)
 {
 	if (mouse == LMB)
-		printf("Cursor at (x, y) = [%d, %d]\n", x, y);
+	{
+		printf(B_WHITE"\tCursor at (x, y) = [%d, %d]\t", x, y);
+		printf("Wall at (x, y) = [%d, %d]%s\n",
+			data->rc->wall_hit[WIDTH - x - 1][X],
+			data->rc->wall_hit[WIDTH - x - 1][Y], END);
+	}
 	else if (mouse == WHEEL_CLICK)
 		print_pos(data);
 	return (0);

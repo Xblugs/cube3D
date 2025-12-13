@@ -42,7 +42,8 @@ static void	main_func(t_data *data)
 	t_tex	tex;
 
 	map = (t_map){0};
-	map.map = (char *[]){"11111", "10001", "10N01", "10001", "11111"};
+	map.map = (char *[]){"11111", "10001", "10101", "10N01", "11111"};
+	// map.map = (char *[]){"111", "1N1", "111"};
 	size_of_struct();
 	data_init(data, &img, NULL);
 	if (parsing_placeholder(data, &map))

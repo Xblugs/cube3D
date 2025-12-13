@@ -173,7 +173,7 @@
 // Texture size and half size
 # define UNIT				64
 # define HALF_UNIT			32
-# define MOV_SPEED			5
+# define MOV_SPEED			8
 
 // Resolutions definitions
 # define MAX_WID			1600
@@ -249,7 +249,6 @@ typedef struct s_draw
 {
 	short		x[3];				// x0, x1, dx
 	short		y[3];				// y0, y1, dy
-	short		angle;				// in degree		unused for now
 	int			color;
 }	t_draw;
 
@@ -263,9 +262,10 @@ typedef struct s_map
 	short		line;				// y
 	short		col;				// x
 	char		*path[4];			// path to N, W, S, E textures
-	short		ceiling[3];			// R, G, B
-	short		floor[3];			// R, G, B
+	short		ceiling[3];			// R, G, B (unused)
+	short		floor[3];			// R, G, B (unused)
 	int			h_ceiling;			// color in hex format
+	int			h_wall;				// last wall data used internally
 	int			h_floor;			// color in hex format
 }	t_map;
 
