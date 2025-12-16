@@ -47,8 +47,6 @@ static void	predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw)
 // prepare to draw walls
 static void	predraw_wall(t_data *data, t_raycast *rc, t_draw *draw)
 {
-	draw->x[0] = rc->ray_index;
-	draw->x[1] = rc->ray_index;
 	draw->y[0] = draw->y[1];
 	draw->y[1] = data->calc->half_height + (rc->wall_dist[rc->ray_index] / 2);
 }
@@ -56,9 +54,8 @@ static void	predraw_wall(t_data *data, t_raycast *rc, t_draw *draw)
 // prepare to draw floor
 static void	predraw_floor(t_data *data, t_raycast *rc, t_draw *draw)
 {
+	(void) rc;
 	draw->color = data->map->h_floor;
-	draw->x[0] = rc->ray_index;
-	draw->x[1] = rc->ray_index;
 	draw->y[0] = draw->y[1];
 	draw->y[1] = HEIGHT - 1;
 }

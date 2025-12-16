@@ -296,7 +296,7 @@ typedef struct s_calc
 }	t_calc;
 
 /*
-	short is used for reduced memory cost
+	short is used to reduce memory cost
 
 	[ulimit -s] in bash to see stack size limit
 */
@@ -309,7 +309,7 @@ typedef struct s_raycast
 	short		ray_index;			// 0 to WIDTH - 1
 	short		view_angle;			// player angle in degree
 	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
-	double		wall_dist[WIDTH];	// distance to projected wall
+	short		wall_dist[WIDTH];	// distance to projected wall
 	short		ray_status;			// ray current status
 }	t_raycast;
 

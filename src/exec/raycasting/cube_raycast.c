@@ -24,7 +24,7 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 	rc->ray_index = 0;
 	rc->ray_angle = rc->view_angle - data->calc->half_fov;
 	ft_memset(data->rc->wall_hit, 0, WIDTH * 2 * sizeof(short));
-	ft_memset(data->rc->wall_dist, 0, WIDTH * sizeof(double));
+	ft_memset(data->rc->wall_dist, 0, WIDTH * sizeof(short));
 	while (rc->ray_index != WIDTH)
 	{
 		raycast_init_wrapper(data, rc);
@@ -53,7 +53,9 @@ static void	raycast(t_data *data, t_raycast *rc)
 	render(data, rc);
 }
 
-// calc distance, resulting projection
+/*
+	Calculating distance to wall
+*/
 static void	distance_calc(t_data *data, t_raycast *rc)
 {
 	short	i;
@@ -63,7 +65,7 @@ static void	distance_calc(t_data *data, t_raycast *rc)
 	{
 		rc->wall_dist[i] = sqrt(pow(rc->pos[Y] - rc->wall_hit[i][X], 2)
 				+ pow(rc->pos[X] - rc->wall_hit[i][Y], 2));
-		rc->wall_dist[i] = ((double) UNIT / rc->wall_dist[i])
+		rc->wall_dist[i] = ((double) UNIT / (double) rc->wall_dist[i])
 			* data->calc->dist_to_proj;
 	}
 }
