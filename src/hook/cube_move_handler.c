@@ -86,7 +86,7 @@ static void	angle_handler(int key, t_data *data)
 	else if (key == RIGHT || key == 'd')
 		data->rc->view_angle += 10;
 	if (data->rc->view_angle < 0)
-			data->rc->view_angle += 360;
+		data->rc->view_angle += 360;
 	else
 		data->rc->view_angle %= 360;
 }

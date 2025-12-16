@@ -9,6 +9,9 @@ RAYCAST		:=	src/exec/raycasting/cube_raycast_init.c		\
 				src/exec/raycasting/cube_raycast_status.c	\
 				src/exec/raycasting/cube_raycast.c			\
 
+RENDER		:=	src/exec/rendering/cube_rendering.c			\
+				src/exec/rendering/cube_texturing.c			\
+
 HOOK		:=	src/hook/cube_hook.c						\
 				src/hook/cube_key_hook.c					\
 				src/hook/cube_mouse_hook.c					\
@@ -28,7 +31,7 @@ SRC			:=	src/cube_brick_wall.c						\
 				src/cube_welcome.c							\
 				src/cube.c									\
 
-EXEC_SRC	:=	$(EXEC) $(RAYCAST)
+EXEC_SRC	:=	$(EXEC) $(RAYCAST) $(RENDER)
 PARSING_SRC	:=	$(PARSING)
 
 SOURCES		:=	$(DEBUG) $(EXEC_SRC) $(HOOK) $(PARSING_SRC) $(UTILS) $(SRC)

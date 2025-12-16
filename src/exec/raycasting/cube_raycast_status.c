@@ -23,23 +23,24 @@ void	ray_status_check_wrapper(t_data *data, t_raycast *rc)
 
 /*
 	Did we hit a wall or got out of the map?
-		x = line index
-		y = col  index
+		l = line index
+		c = col  index
+	both shortened for norm compliance
 */
 static void	ray_status_check(t_data *data, t_raycast *rc, t_calc *calc)
 {
-	int	x;
-	int	y;
+	int	l;
+	int	c;
 
-	x = rc->ray[Y];
-	y = rc->ray[X];
-	if (y >= calc->max_width || x >= calc->max_height || x < 0 || y < 0)
+	l = rc->ray[Y];
+	c = rc->ray[X];
+	if (c >= calc->max_width || l >= calc->max_height || l < 0 || c < 0)
 		rc->ray_status = OUT;
 	else
 	{
-		x /= UNIT;
-		y /= UNIT;
-		if (data->map->map[x][y] == '1')
+		l /= UNIT;
+		c /= UNIT;
+		if (data->map->map[l][c] == '1')
 			rc->ray_status = HIT;
 	}
 }

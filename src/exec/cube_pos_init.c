@@ -12,6 +12,11 @@
 
 #include "cube.h"
 
+/*
+	function to print current position is located 
+		in cube_debug along other info prints
+*/
+
 static void	find_start_pos(t_map *map, t_raycast *rc);
 static void	find_start_angle(t_map *map, t_raycast *rc);
 

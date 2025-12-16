@@ -261,8 +261,8 @@ typedef struct s_map
 	short		line;				// y
 	short		col;				// x
 	char		*path[4];			// path to N, W, S, E textures
-	short		ceiling[3];			// R, G, B (unused)
-	short		floor[3];			// R, G, B (unused)
+	short		ceiling[3];			// R, G, B
+	short		floor[3];			// R, G, B
 	int			h_ceiling;			// color in hex format
 	int			h_wall;				// last wall data used internally
 	int			h_floor;			// color in hex format
@@ -348,6 +348,16 @@ int		wall_hit(t_data *data, t_raycast *rc);
 
 // 		-- src/exec/raycasting/cube_raycast.c --
 void	raycast_wrapper(t_data *data, t_raycast *rc);
+
+/*
+	Rendering functions
+	dir: src/exec/rendering
+*/
+//		-- src/exec/rendering/cube_rendering.c --
+void	render(t_data *data, t_raycast *rc);
+
+//		-- src/exec/rendering/cube_rendering.c --
+void	draw_texture(t_data *data, t_raycast *rc, t_draw *draw);
 
 /*
 	Everything related to actions through mlx_hook(...)

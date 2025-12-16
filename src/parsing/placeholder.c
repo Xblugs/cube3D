@@ -13,6 +13,8 @@
 #include "cube.h"
 
 /*
+	TODO: Look at what need to be changed when merging with parsing
+
 	init map values to {0} and associate the structures
 	return 1 on error
 */

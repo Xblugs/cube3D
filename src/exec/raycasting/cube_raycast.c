@@ -13,10 +13,8 @@
 #include "cube.h"
 
 static void	raycast(t_data *data, t_raycast *rc);
-static void	test_render(t_data *data, t_raycast *rc);
-static void	test_predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw);
-static void	test_predraw_wall(t_data *data, t_raycast *rc, t_draw *draw);
-static void	test_predraw_floor(t_data *data, t_raycast *rc, t_draw *draw);
+static void	distance_calc(t_data *data, t_raycast *rc);
+static void	distance_correction(t_data *data, t_raycast *rc);
 
 /*
 	Raycast is calculated depending on its angle
@@ -31,7 +29,6 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 	{
 		raycast_init_wrapper(data, rc);
 		raycast(data, rc);
-		test_render(data, rc);
 		rc->ray_angle += data->calc->angle_between_rays;
 		rc->ray_index++;
 	}
@@ -51,103 +48,33 @@ static void	raycast(t_data *data, t_raycast *rc)
 			rc->ray[Y] += rc->delta[Y];
 	}
 	wall_hit(data, rc);
+	distance_calc(data, rc);
+	distance_correction(data, rc);
+	render(data, rc);
 }
 
-// calc distance, resulting projection and correction for fisheye lens effect
-// TODO: move this to its own file, eventually separate it into multiple func?
-// 	distance calculation could be optimized, sqrt and pow are cpu expensive
-static void	test_render(t_data *data, t_raycast *rc)
+// calc distance, resulting projection
+static void	distance_calc(t_data *data, t_raycast *rc)
 {
-	t_draw	draw;
+	short	i;
+
+	i = rc->ray_index;
+	if (rc->wall_hit[i][X] != 0 || rc->wall_hit[i][Y] != 0)
+	{
+		rc->wall_dist[i] = sqrt(pow(rc->pos[Y] - rc->wall_hit[i][X], 2)
+				+ pow(rc->pos[X] - rc->wall_hit[i][Y], 2));
+		rc->wall_dist[i] = ((double) UNIT / rc->wall_dist[i])
+			* data->calc->dist_to_proj;
+	}
+}
+
+// correction for fisheye lens effect
+static void	distance_correction(t_data *data, t_raycast *rc)
+{
+	short	i;
 
 	(void) data;
-	if (rc->wall_hit[rc->ray_index][X] != 0 || rc->wall_hit[rc->ray_index][Y] != 0)
-	{
-		rc->wall_dist[rc->ray_index] = sqrt(pow(rc->pos[Y]
-					- rc->wall_hit[rc->ray_index][X], 2)
-				+ pow(rc->pos[X] - rc->wall_hit[rc->ray_index][Y], 2));
-		rc->wall_dist[rc->ray_index]
-			= ((float) UNIT / rc->wall_dist[rc->ray_index])
-			* data->calc->dist_to_proj;
-		rc->wall_dist[rc->ray_index] /= cos(deg_to_rad(
-					rc->ray_angle - rc->view_angle));
-	}
-	data->map->h_ceiling = C_CYAN;
-	data->map->h_floor = C_BROWN;
-	test_predraw_ceil(data, rc, &draw);
-	draw_line(data->img, &draw);
-	if (rc->ray_angle <= 90)
-	{
-		if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == 0
-			&& rc->wall_hit[rc->ray_index][Y] % (short)UNIT == UNIT - 1)
-			draw.color = data->map->h_wall;
-		else if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == 0)
-			draw.color = C_GREEN;
-		else if (rc->wall_hit[rc->ray_index][Y] % (short)UNIT == UNIT - 1)
-			draw.color = C_ORANGE;
-	}
-	else if (rc->ray_angle <= 180)
-	{
-		if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == UNIT - 1
-			&& rc->wall_hit[rc->ray_index][Y] % (short)UNIT == UNIT - 1)
-			draw.color = data->map->h_wall;
-		else if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == UNIT - 1)
-			draw.color = C_YELLOW;
-		else if (rc->wall_hit[rc->ray_index][Y] % (short)UNIT == UNIT - 1)
-			draw.color = C_ORANGE;
-	}
-	else if (rc->ray_angle <= 270)
-	{
-		if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == UNIT - 1
-			&& rc->wall_hit[rc->ray_index][Y] % (short)UNIT == 0)
-			draw.color = data->map->h_wall;
-		else if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == UNIT - 1)
-			draw.color = C_YELLOW;
-		else if (rc->wall_hit[rc->ray_index][Y] % (short)UNIT == 0)
-			draw.color = C_WHITE;
-	}
-	else if (rc->ray_angle < 360)
-	{
-		if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == 0
-			&& rc->wall_hit[rc->ray_index][Y] % (short)UNIT == 0)
-			draw.color = data->map->h_wall;
-		else if (rc->wall_hit[rc->ray_index][X] % (short)UNIT == 0)
-			draw.color = C_GREEN;
-		else if (rc->wall_hit[rc->ray_index][Y] % (short)UNIT == 0)
-			draw.color = C_WHITE;
-	}
-	data->map->h_wall = draw.color;
-	test_predraw_wall(data, rc, &draw);
-	draw_line(data->img, &draw);
-	test_predraw_floor(data, rc, &draw);
-	draw_line(data->img, &draw);
-}
-
-// TODO: map->h_ceiling instead of C_CYAN + combine those 3 func into one
-static void	test_predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw)
-{
-	draw->color = data->map->h_ceiling;
-	draw->x[0] = rc->ray_index;
-	draw->x[1] = rc->ray_index;
-	draw->y[0] = 0;
-	draw->y[1] = data->calc->half_height - (rc->wall_dist[rc->ray_index] / 2);
-}
-
-// walls
-static void	test_predraw_wall(t_data *data, t_raycast *rc, t_draw *draw)
-{
-	draw->x[0] = rc->ray_index;
-	draw->x[1] = rc->ray_index;
-	draw->y[0] = draw->y[1];
-	draw->y[1] = data->calc->half_height + (rc->wall_dist[rc->ray_index] / 2);
-}
-
-// TODO: map->h_floor instead of C_BROWN
-static void	test_predraw_floor(t_data *data, t_raycast *rc, t_draw *draw)
-{
-	draw->color = data->map->h_floor;
-	draw->x[0] = rc->ray_index;
-	draw->x[1] = rc->ray_index;
-	draw->y[0] = draw->y[1];
-	draw->y[1] = HEIGHT - 1;
+	i = rc->ray_index;
+	if (rc->wall_hit[i][X] != 0 || rc->wall_hit[i][Y] != 0)
+		rc->wall_dist[i] /= cos(deg_to_rad(rc->ray_angle - rc->view_angle));
 }
