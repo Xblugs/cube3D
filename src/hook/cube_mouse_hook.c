@@ -12,6 +12,9 @@
 
 #include "cube.h"
 
+/*
+	Print on mouse [enter/exit] the screen
+*/
 int	mouse_io(t_data *data)
 {
 	if (data != NULL)
@@ -21,24 +24,20 @@ int	mouse_io(t_data *data)
 	return (0);
 }
 
+/*
+	interface mouse buttons to move handler wheel click to print information
+*/
 int	mouse_handler(int mouse, int x, int y, t_data *data)
 {
 	if (mouse == LMB)
-	{
-		printf(B_WHITE"\tCursor at (x, y) = [%d, %d]\t", x, y);
-		printf("Wall at (x, y) = [%d, %d]%s\n",
-			data->rc->wall_hit[WIDTH - x - 1][X],
-			data->rc->wall_hit[WIDTH - x - 1][Y], END);
-	}
+		move_handler(LEFT, data);
+	else if (mouse == RMB)
+		move_handler(RIGHT, data);
+	else if (mouse == WHEEL_UP)
+		move_handler(UP, data);
+	else if (mouse == WHEEL_DOWN)
+		move_handler(DOWN, data);
 	else if (mouse == WHEEL_CLICK)
-		print_pos(data);
+		print_pos(data, x, y);
 	return (0);
 }
-
-//mlx_mouse_hide() leaks :(
-/*
-	else if (keycode == 'h')
-			mlx_mouse_hide(data->mlx, data->win);
-	else if (keycode == 'm')
-			mlx_mouse_show(data->mlx, data->win);
-*/

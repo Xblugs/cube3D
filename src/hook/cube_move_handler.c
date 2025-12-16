@@ -20,20 +20,6 @@ static void	angle_handler(int key, t_data *data);
 /*
 	move values depend on current orientation
 	use arrow key and [wasd] for movement
-
-	TODO:
-	manage in mouse_hook then call the function with emulated key depending
-		on where we clicked on screen?
-	
-				UP
-			╔═══════╗			Or bind LMD / RMB and mousewheel?		
-			║ \   / ║				+ make sure it doesn't conflict
-			║  \ /	║				with some other Kb input
-	TURN  	║   X   ║ 	TURN	
-	  LEFT	║  / \	║	  RIGHT		Or even consider "banner" on the screen edge
-			║ /   \ ║					
-			╚═══════╝				Bonus is only rotating with mouse, EASY
-				DOWN
 */
 void	move_handler(int key, t_data *data)
 {
@@ -51,8 +37,8 @@ void	move_handler(int key, t_data *data)
 */
 static void	move_prep(t_raycast *rc)
 {
-	rc->delta[X] = cos(deg_to_rad(rc->view_angle));
-	rc->delta[Y] = -sin(deg_to_rad(rc->view_angle));
+	rc->delta[X] = -sin(deg_to_rad(rc->view_angle));
+	rc->delta[Y] = +cos(deg_to_rad(rc->view_angle));
 	rc->delta[X] *= MOV_SPEED;
 	rc->delta[Y] *= MOV_SPEED;
 }
@@ -67,12 +53,12 @@ static void	forward_handler(t_data *data, t_raycast *rc)
 	int	y;
 
 	move_prep(rc);
-	x = (rc->pos[X] + rc->delta[X]) / UNIT;
-	y = rc->pos[Y] / UNIT;
+	x = rc->pos[Y] / UNIT;
+	y = (rc->pos[X] + rc->delta[X]) / UNIT;
 	if (data->map->map[x][y] != '1')
 		rc->pos[X] += rc->delta[X];
-	x = rc->pos[X] / UNIT;
-	y = (rc->pos[Y] + rc->delta[Y]) / UNIT;
+	x = (rc->pos[Y] + rc->delta[Y]) / UNIT;
+	y = rc->pos[X] / UNIT;
 	if (data->map->map[x][y] != '1')
 		rc->pos[Y] += rc->delta[Y];
 }
@@ -83,12 +69,12 @@ static void	backward_handler(t_data *data, t_raycast *rc)
 	int	y;
 
 	move_prep(rc);
-	x = (rc->pos[X] - rc->delta[X]) / UNIT;
-	y = rc->pos[Y] / UNIT;
+	x = rc->pos[Y] / UNIT;
+	y = (rc->pos[X] - rc->delta[X]) / UNIT;
 	if (data->map->map[x][y] != '1')
 		rc->pos[X] -= rc->delta[X];
-	x = rc->pos[X] / UNIT;
-	y = (rc->pos[Y] - rc->delta[Y]) / UNIT;
+	x = (rc->pos[Y] - rc->delta[Y]) / UNIT;
+	y = rc->pos[X] / UNIT;
 	if (data->map->map[x][y] != '1')
 		rc->pos[Y] -= rc->delta[Y];
 }
@@ -96,14 +82,13 @@ static void	backward_handler(t_data *data, t_raycast *rc)
 static void	angle_handler(int key, t_data *data)
 {
 	if (key == LEFT || key == 'a')
-		data->rc->view_angle += 10;
-	else if (key == RIGHT || key == 'd')
-	{
 		data->rc->view_angle -= 10;
-		if (data->rc->view_angle < 0)
+	else if (key == RIGHT || key == 'd')
+		data->rc->view_angle += 10;
+	if (data->rc->view_angle < 0)
 			data->rc->view_angle += 360;
-	}
-	data->rc->view_angle %= 360;
+	else
+		data->rc->view_angle %= 360;
 }
 
 /*

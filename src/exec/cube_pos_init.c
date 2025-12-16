@@ -21,10 +21,13 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc)
 	find_start_angle(map, rc);
 	printf("pos(x, y) = (%d, %d)\n", data->rc->pos[X], data->rc->pos[Y]);
 	printf("   (l, c) = (%d, %d)\n\n", data->map->line, data->map->col);
-	print_pos(data);
+	print_pos(data, -1, -1);
 }
 
-// find position in index values
+/*
+	find start position in index values
+	[stored in rc->pos to save memory]
+*/
 static void	find_start_pos(t_map *map, t_raycast *rc)
 {
 	int	i;
@@ -39,15 +42,15 @@ static void	find_start_pos(t_map *map, t_raycast *rc)
 			if (map->map[i][j] == 'N' || map->map[i][j] == 'S'
 				|| map->map[i][j] == 'W' || map->map[i][j] == 'E')
 			{
-				rc->pos[X] = j;
 				rc->pos[Y] = i;
+				rc->pos[X] = j;
 				return ;
 			}
 			j++;
 		}
 		i++;
 	}
-	printf("This should never print as map is correct at this point\n");
+	printf(B_RED"This should never print as map is correct at this point\n"END);
 }
 
 // set start angle and switches coordinates to px representation
@@ -56,14 +59,14 @@ static void	find_start_angle(t_map *map, t_raycast *rc)
 	int	i;
 	int	j;
 
-	i = rc->pos[X];
-	j = rc->pos[Y];
-	if (map->map[i][j] == 'N')
+	i = rc->pos[Y];
+	j = rc->pos[X];
+	if (map->map[i][j] == 'W')
 		rc->view_angle = 90;
-	else if (map->map[i][j] == 'W')
+	if (map->map[i][j] == 'N')
 		rc->view_angle = 180;
-	else if (map->map[i][j] == 'S')
+	else if (map->map[i][j] == 'E')
 		rc->view_angle = 270;
-	rc->pos[X] = rc->pos[X] * UNIT + HALF_UNIT;
-	rc->pos[Y] = rc->pos[Y] * UNIT + HALF_UNIT;
+	rc->pos[Y] = i * UNIT + HALF_UNIT;
+	rc->pos[X] = j * UNIT + HALF_UNIT;
 }

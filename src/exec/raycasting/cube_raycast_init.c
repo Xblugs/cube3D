@@ -24,6 +24,6 @@ void	raycast_init_wrapper(t_data *data, t_raycast *rc)
 		rc->ray_angle -= 360;
 	else if (rc->ray_angle < 0)
 		rc->ray_angle += 360;
-	rc->delta[X] = +cos(deg_to_rad(data->rc->ray_angle));
-	rc->delta[Y] = -sin(deg_to_rad(data->rc->ray_angle));
+	rc->delta[X] = -sin(deg_to_rad(data->rc->ray_angle));
+	rc->delta[Y] = +cos(deg_to_rad(data->rc->ray_angle));
 }

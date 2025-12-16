@@ -24,12 +24,25 @@ void	size_of_struct(void)
 		sizeof(t_tex), sizeof(t_calc), sizeof(t_raycast));
 }
 
-void	print_pos(t_data *data)
+/*
+	Player coordinates:
+	Coordinates [x, y],	angle°
+	Cursor [x, y]		Wall [x, y]
+*/
+void	print_pos(t_data *data, int x, int y)
 {
 	printf(B_WHITE"Player coordinates:\n");
 	printf("\tplayer is located at [%d, %d]",
 		data->rc->pos[X], data->rc->pos[Y]);
-	printf(", looking at [%d°]%s\n\n", data->rc->view_angle, END);
+	printf(", looking at [%d°]%s\n", data->rc->view_angle, END);
+	if (x != -1 && y != -1)
+	{
+		printf(B_WHITE"\tCursor at (x, y) = [%d, %d]\t", x, y);
+		printf("Wall at (x, y) = [%d, %d]%s\n",
+			data->rc->wall_hit[x][X],
+			data->rc->wall_hit[x][Y], END);
+	}
+	printf("\n");
 }
 
 /*
@@ -42,11 +55,11 @@ void	print_pos(t_data *data)
 void	print_raycast_hit_px(t_raycast *rc)
 {
 	const int	scale = 10;
+	int			count;
 	int			i;
-	int			j;
 
 	i = 0;
-	j = 0;
+	count = 0;
 	printf(GREEN"\tDEBUG RAYCAST HIT VALUES%s\n", END);
 	printf(GREEN"\tPrinting 1:%d rays values%s\n", scale, END);
 	while (i < WIDTH)
@@ -55,10 +68,10 @@ void	print_raycast_hit_px(t_raycast *rc)
 			printf("(x, y) = (%d, %d)\n",
 				rc->wall_hit[i][X], rc->wall_hit[i][Y]);
 		if (rc->wall_hit[i][X] != 0 || rc->wall_hit[i][Y] != 0)
-			j++;
+			count++;
 		i++;
 	}
-	printf("%d raycast hit a wall out of %d casted\n", j, WIDTH);
+	printf("%d raycast hit a wall out of %d casted\n", count, WIDTH);
 	printf(GREEN"\tDEBUG RAYCAST END%s\n", END);
 }
 
@@ -66,11 +79,11 @@ void	print_raycast_hit_px(t_raycast *rc)
 void	print_raycast_hit_index(t_raycast *rc)
 {
 	const int	scale = 10;
+	int			count;
 	int			i;
-	int			j;
 
 	i = 0;
-	j = 0;
+	count = 0;
 	printf(GREEN"\tDEBUG RAYCAST HIT VALUES%s\n", END);
 	printf(GREEN"\tPrinting 1:%d rays values%s\n", scale, END);
 	while (i < WIDTH)
@@ -79,10 +92,10 @@ void	print_raycast_hit_index(t_raycast *rc)
 			printf("(x, y) = (%d, %d)\n",
 				rc->wall_hit[i][X] / 64, rc->wall_hit[i][Y] / 64);
 		if (rc->wall_hit[i][X] != 0 || rc->wall_hit[i][Y] != 0)
-			j++;
+			count++;
 		i++;
 	}
-	printf("%d raycast hit a wall out of %d casted\n", j, WIDTH);
+	printf("%d raycast hit a wall out of %d casted\n", count, WIDTH);
 	printf(GREEN"\tDEBUG RAYCAST END%s\n", END);
 }
 

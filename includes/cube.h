@@ -142,10 +142,9 @@
 /*
 	Used for array indexes for more code clarity
 */
-// X, Y, Z coordinates
+// X, Y coordinates
 # define X					0
 # define Y					1
-# define Z					2
 
 // Cardinal positions
 # define N					0
@@ -320,7 +319,7 @@ typedef struct s_raycast
 */
 // 		-- src/debug/cube_debug.c --
 void	size_of_struct(void);
-void	print_pos(t_data *data);
+void	print_pos(t_data *data, int x, int y);
 void	print_raycast_hit_px(t_raycast *rc);
 void	print_raycast_hit_index(t_raycast *rc);
 void	print_raycast_dist(t_raycast *rc);

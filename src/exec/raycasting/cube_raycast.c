@@ -31,7 +31,6 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 	{
 		raycast_init_wrapper(data, rc);
 		raycast(data, rc);
-		// here correct wall hit to be the exact pixel
 		test_render(data, rc);
 		rc->ray_angle += data->calc->angle_between_rays;
 		rc->ray_index++;
@@ -46,10 +45,10 @@ static void	raycast(t_data *data, t_raycast *rc)
 	{
 		ray_status_check_wrapper(data, rc);
 		if (!rc->ray_status)
-		{
 			rc->ray[X] += rc->delta[X];
+		ray_status_check_wrapper(data, rc);
+		if (!rc->ray_status)
 			rc->ray[Y] += rc->delta[Y];
-		}
 	}
 	wall_hit(data, rc);
 }
@@ -62,13 +61,17 @@ static void	test_render(t_data *data, t_raycast *rc)
 	t_draw	draw;
 
 	(void) data;
-	rc->wall_dist[rc->ray_index] = sqrt(pow(rc->pos[X]
-				- rc->wall_hit[rc->ray_index][X], 2)
-			+ pow(rc->pos[Y] - rc->wall_hit[rc->ray_index][Y], 2));
-	rc->wall_dist[rc->ray_index] = ((float) UNIT / rc->wall_dist[rc->ray_index])
-		* data->calc->dist_to_proj;
-	rc->wall_dist[rc->ray_index] /= cos(deg_to_rad(
-				rc->ray_angle - rc->view_angle));
+	if (rc->wall_hit[rc->ray_index][X] != 0 || rc->wall_hit[rc->ray_index][Y] != 0)
+	{
+		rc->wall_dist[rc->ray_index] = sqrt(pow(rc->pos[Y]
+					- rc->wall_hit[rc->ray_index][X], 2)
+				+ pow(rc->pos[X] - rc->wall_hit[rc->ray_index][Y], 2));
+		rc->wall_dist[rc->ray_index]
+			= ((float) UNIT / rc->wall_dist[rc->ray_index])
+			* data->calc->dist_to_proj;
+		rc->wall_dist[rc->ray_index] /= cos(deg_to_rad(
+					rc->ray_angle - rc->view_angle));
+	}
 	data->map->h_ceiling = C_CYAN;
 	data->map->h_floor = C_BROWN;
 	test_predraw_ceil(data, rc, &draw);
@@ -124,8 +127,8 @@ static void	test_render(t_data *data, t_raycast *rc)
 static void	test_predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw)
 {
 	draw->color = data->map->h_ceiling;
-	draw->x[0] = (WIDTH - 1) - rc->ray_index;
-	draw->x[1] = (WIDTH - 1) - rc->ray_index;
+	draw->x[0] = rc->ray_index;
+	draw->x[1] = rc->ray_index;
 	draw->y[0] = 0;
 	draw->y[1] = data->calc->half_height - (rc->wall_dist[rc->ray_index] / 2);
 }
@@ -133,8 +136,8 @@ static void	test_predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw)
 // walls
 static void	test_predraw_wall(t_data *data, t_raycast *rc, t_draw *draw)
 {
-	draw->x[0] = (WIDTH - 1) - rc->ray_index;
-	draw->x[1] = (WIDTH - 1) - rc->ray_index;
+	draw->x[0] = rc->ray_index;
+	draw->x[1] = rc->ray_index;
 	draw->y[0] = draw->y[1];
 	draw->y[1] = data->calc->half_height + (rc->wall_dist[rc->ray_index] / 2);
 }
@@ -143,8 +146,8 @@ static void	test_predraw_wall(t_data *data, t_raycast *rc, t_draw *draw)
 static void	test_predraw_floor(t_data *data, t_raycast *rc, t_draw *draw)
 {
 	draw->color = data->map->h_floor;
-	draw->x[0] = (WIDTH - 1) - rc->ray_index;
-	draw->x[1] = (WIDTH - 1) - rc->ray_index;
+	draw->x[0] = rc->ray_index;
+	draw->x[1] = rc->ray_index;
 	draw->y[0] = draw->y[1];
 	draw->y[1] = HEIGHT - 1;
 }

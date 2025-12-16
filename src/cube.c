@@ -35,6 +35,11 @@ int	texture_init(t_data *data, t_tex *tex, t_map *map)
 	return (0);
 }
 
+// map.map = (char *[]){"111", "101", "1N1", "101", "101", "101", "111"};
+// map.map = (char *[]){"111111", "10E001", "111111"};
+// map.map = (char *[]){"11111", "10001", "10N01", "10001", "11111"};
+// map.map = (char *[]){"11111", "10001", "10101", "10N01", "11111"};
+// map.map = (char *[]){"11111", "10001", "10101", "10011", "100N1", "11111"};
 static void	main_func(t_data *data)
 {
 	t_img	img;
@@ -42,8 +47,7 @@ static void	main_func(t_data *data)
 	t_tex	tex;
 
 	map = (t_map){0};
-	map.map = (char *[]){"11111", "10001", "10101", "10N01", "11111"};
-	// map.map = (char *[]){"111", "1N1", "111"};
+	map.map = (char *[]){"11111", "10001", "10N01", "10001", "11111"};
 	size_of_struct();
 	data_init(data, &img, NULL);
 	if (parsing_placeholder(data, &map))
