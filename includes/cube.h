@@ -356,7 +356,10 @@ void	raycast_wrapper(t_data *data, t_raycast *rc);
 //		-- src/exec/rendering/cube_rendering.c --
 void	render(t_data *data, t_raycast *rc);
 
-//		-- src/exec/rendering/cube_rendering.c --
+//		-- src/exec/rendering/cube_select_texture.c --
+void	select_texture_wrapper(t_data *data, t_raycast *rc, t_draw *draw);
+
+//		-- src/exec/rendering/cube_texturing.c --
 void	draw_texture(t_data *data, t_raycast *rc, t_draw *draw);
 
 /*

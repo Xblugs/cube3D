@@ -10,6 +10,7 @@ RAYCAST		:=	src/exec/raycasting/cube_raycast_init.c		\
 				src/exec/raycasting/cube_raycast.c			\
 
 RENDER		:=	src/exec/rendering/cube_rendering.c			\
+				src/exec/rendering/cube_select_texture.c	\
 				src/exec/rendering/cube_texturing.c			\
 
 HOOK		:=	src/hook/cube_hook.c						\
