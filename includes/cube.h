@@ -212,7 +212,6 @@ typedef struct s_raycast	t_raycast;
 typedef struct s_data
 {
 	t_img		*img;				// rendered screen
-	t_draw		*draw;				// data to draw for point A to B
 	t_map		*map;				// data from map file
 	t_tex		*tex;				// textures
 	t_calc		*calc;				// precalculated math
@@ -423,7 +422,8 @@ void	*mlx_xpm_ftoi(void *mlx, char *file, int *width, int *height);
 // void	brick_wall(t_data *data);
 
 // 		-- src/cube_data_init.c --
-void	data_init(t_data *data, t_img *img, t_draw *draw);
+void	data_init(t_data *data, t_img *img);
+int		texture_init(t_data *data, t_tex *tex, t_map *map);
 void	mlx_data_init(t_data *data);
 
 // 		-- src/cube_draw_line.c --
@@ -433,6 +433,5 @@ void	draw_line(t_img *img, t_draw *draw);
 void	cube_welcome(void);
 
 // 		-- src/cube.c --
-int		texture_init(t_data *data, t_tex *tex, t_map *map);
 
 #endif

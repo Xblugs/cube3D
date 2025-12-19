@@ -15,7 +15,9 @@
 /*
 	TODO: Look at what need to be changed when merging with parsing
 
-	init map values to {0} and associate the structures
+	parsing_placeholder can be commented or deleted later on
+
+	Init map values to {0} and associate the structures
 	return 1 on error
 */
 int	parsing_placeholder(t_data *data, t_map *map)

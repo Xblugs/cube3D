@@ -32,7 +32,7 @@ void	cube_welcome(void)
 	if (FOV < 30 || FOV > 120)
 	{
 		printf(B_RED"Wrong screen resolution, please check [cube.h]\n");
-		printf("\t(30 < FOV < 120)%s\n\n",END);
+		printf("\t(30 < FOV < 120)%s\n\n", END);
 		exit(0);
 	}
 }

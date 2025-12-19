@@ -35,7 +35,9 @@ void	render(t_data *data, t_raycast *rc)
 	draw_line(data->img, &draw);
 }
 
-// prepare to draw ceiling
+/*
+	Draw from top of the screen to wall
+*/
 static void	predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw)
 {
 	draw->color = data->map->h_ceiling;
@@ -45,14 +47,18 @@ static void	predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw)
 	draw->y[1] = data->calc->half_height - (rc->wall_dist[rc->ray_index] / 2);
 }
 
-// prepare to draw walls
+/*
+	Draw wall in-between
+*/
 static void	predraw_wall(t_data *data, t_raycast *rc, t_draw *draw)
 {
 	draw->y[0] = draw->y[1];
 	draw->y[1] = data->calc->half_height + (rc->wall_dist[rc->ray_index] / 2);
 }
 
-// prepare to draw floor
+/*
+	Draw from last wall part to the bottom of the screen
+*/
 static void	predraw_floor(t_data *data, t_raycast *rc, t_draw *draw)
 {
 	(void) rc;
