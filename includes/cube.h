@@ -352,6 +352,9 @@ void	raycast_wrapper(t_data *data, t_raycast *rc);
 	Rendering functions
 	dir: src/exec/rendering
 */
+// 		-- src/cube_draw_line.c --
+void	draw_line(t_img *img, t_draw *draw);
+
 //		-- src/exec/rendering/cube_rendering.c --
 void	render(t_data *data, t_raycast *rc);
 
@@ -425,9 +428,6 @@ void	*mlx_xpm_ftoi(void *mlx, char *file, int *width, int *height);
 void	data_init(t_data *data, t_img *img);
 int		texture_init(t_data *data, t_tex *tex, t_map *map);
 void	mlx_data_init(t_data *data);
-
-// 		-- src/cube_draw_line.c --
-void	draw_line(t_img *img, t_draw *draw);
 
 // 		-- src/cube_welcome.c --
 void	cube_welcome(void);

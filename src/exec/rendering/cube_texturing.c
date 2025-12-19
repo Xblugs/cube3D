@@ -12,8 +12,6 @@
 
 #include "cube.h"
 
-static int	texture_init(t_data *data, t_tex *tex, t_map *map);
-
 /*
 	Wall rendering wrapper
 */

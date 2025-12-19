@@ -1,6 +1,7 @@
 CFLAGS		:=	-Wextra -Wall -Werror
 
-DEBUG		:=	src/debug/cube_debug.c						\
+DEBUG		:=	src/debug/cube_brick_wall.c					\
+				src/debug/cube_debug.c						\
 
 EXEC		:=	src/exec/cube_exec.c						\
 				src/exec/cube_pos_init.c					\
@@ -9,7 +10,8 @@ RAYCAST		:=	src/exec/raycasting/cube_raycast_init.c		\
 				src/exec/raycasting/cube_raycast_status.c	\
 				src/exec/raycasting/cube_raycast.c			\
 
-RENDER		:=	src/exec/rendering/cube_rendering.c			\
+RENDER		:=	src/exec/rendering/cube_draw_line.c			\
+				src/exec/rendering/cube_rendering.c			\
 				src/exec/rendering/cube_select_texture.c	\
 				src/exec/rendering/cube_texturing.c			\
 
@@ -26,9 +28,7 @@ UTILS		:=	src/utils/clean_utils.c						\
 				src/utils/mlx_utils.c						\
 				src/utils/mlx_wrapper.c						\
 
-SRC			:=	src/cube_brick_wall.c						\
-				src/cube_data_init.c						\
-				src/cube_draw_line.c						\
+SRC			:=	src/cube_data_init.c						\
 				src/cube_welcome.c							\
 				src/cube.c									\
 
