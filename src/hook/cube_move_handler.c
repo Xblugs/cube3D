@@ -12,7 +12,6 @@
 
 #include "cube.h"
 
-static void	move_prep(t_raycast *rc);
 static void	forward_handler(t_data *data, t_raycast *rc);
 static void	backward_handler(t_data *data, t_raycast *rc);
 static void	angle_handler(int key, t_data *data);
@@ -27,18 +26,22 @@ void	move_handler(int key, t_data *data)
 		forward_handler(data, data->rc);
 	else if (key == DOWN || key == 's')
 		backward_handler(data, data->rc);
-	else if (key == LEFT || key == 'a' || key == RIGHT || key == 'd')
+	else if (key == LEFT || key == 'q' || key == RIGHT || key == 'e')
 		angle_handler(key, data);
+	else if (key == 'a' || key == 'd')
+		lateral_handler(data, data->rc, key);
 	exec_loop(data);
 }
 
 /*
 	Re-using delta array to not allocate more memory
+
+	shift is used for lateral moves
 */
-static void	move_prep(t_raycast *rc)
+void	move_prep(t_raycast *rc, int shift)
 {
-	rc->delta[X] = -sin(deg_to_rad(rc->view_angle));
-	rc->delta[Y] = +cos(deg_to_rad(rc->view_angle));
+	rc->delta[X] = -sin(deg_to_rad(rc->view_angle + shift));
+	rc->delta[Y] = +cos(deg_to_rad(rc->view_angle + shift));
 	rc->delta[X] *= MOV_SPEED;
 	rc->delta[Y] *= MOV_SPEED;
 }
@@ -52,7 +55,7 @@ static void	forward_handler(t_data *data, t_raycast *rc)
 	int	x;
 	int	y;
 
-	move_prep(rc);
+	move_prep(rc, 0);
 	x = rc->pos[Y] / UNIT;
 	y = (rc->pos[X] + rc->delta[X]) / UNIT;
 	if (data->map->map[x][y] != '1')
@@ -68,7 +71,7 @@ static void	backward_handler(t_data *data, t_raycast *rc)
 	int	x;
 	int	y;
 
-	move_prep(rc);
+	move_prep(rc, 0);
 	x = rc->pos[Y] / UNIT;
 	y = (rc->pos[X] - rc->delta[X]) / UNIT;
 	if (data->map->map[x][y] != '1')
@@ -81,9 +84,9 @@ static void	backward_handler(t_data *data, t_raycast *rc)
 
 static void	angle_handler(int key, t_data *data)
 {
-	if (key == LEFT || key == 'a')
+	if (key == LEFT || key == 'q')
 		data->rc->view_angle -= 10;
-	else if (key == RIGHT || key == 'd')
+	else if (key == RIGHT || key == 'e')
 		data->rc->view_angle += 10;
 	if (data->rc->view_angle < 0)
 		data->rc->view_angle += 360;

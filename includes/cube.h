@@ -180,20 +180,10 @@
 # define MIN_WID			320
 # define MIN_HEI			200
 
-//	[	320*200	screen with 60° field of view	]
-// # define FOV				60
-// # define WIDTH				320
-// # define HEIGHT				200
-
 //	[	640*480	screen with 60° field of view	]
 # define FOV				60
 # define WIDTH				640
 # define HEIGHT				480
-
-//	[	800*600	screen with 60° field of view	]
-// # define FOV				60
-// # define WIDTH				800
-// # define HEIGHT				600
 
 typedef struct s_data		t_data;
 typedef struct s_draw		t_draw;
@@ -268,20 +258,22 @@ typedef struct s_map
 }	t_map;
 
 /*
-	texture are assumed to be the exact same size (UNIT_SIZE)
-	path is used only to load the texture once
-	textures are kept in memory for the program entire lifetime
+	Texture size are kept in the corresponding [w,h] array
+	--> img[N] is a [w[N] * h[N]] resolution texture
+
+	Path are only use to load the texture once
+		textures are kept in memory for the program entire lifetime
 */
 typedef struct s_tex
 {
-	int			w;					// texture width  [set by mlx]
-	int			h;					// texture height [set by mlx]
+	int			w[4];				// texture width  [set by mlx]
+	int			h[4];				// texture height [set by mlx]
 	void		*img[4];			// ptr to N, W, S, E textures
 }	t_tex;
 
 /*
-	precalc values for dynamic window size
-	define might be used in code for readability purposes
+	Precalc values that won't change during the program lifetime
+		use memory to save on calculation time
 */
 typedef struct s_calc
 {
@@ -380,8 +372,11 @@ int		mouse_handler(int button, int x, int y, t_data *data);
 
 // 		-- src/hook/cube_move_handler.c --
 void	move_handler(int key, t_data *data);
+void	move_prep(t_raycast *rc, int shift);
 // void	brick_move_handler(int key, t_data *data);
 
+// 		-- src/hook/cube_move_handler2.c --
+void	lateral_handler(t_data *data, t_raycast *rc, int key);
 /*
 	Everything related to file parsing
 	dir: src/parsing

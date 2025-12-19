@@ -56,10 +56,10 @@ static void	select_texture_1(t_data *data, t_raycast *rc, t_draw *draw)
 			&& rc->wall_hit[i][Y] % (short)UNIT == UNIT - 1)
 			draw->color = data->map->h_wall;
 		else if (rc->wall_hit[i][X] % (short)UNIT == 0)
-			draw->color = C_GREEN;
+			draw->color = S;
 		else if (rc->wall_hit[i][Y] % (short)UNIT == UNIT - 1)
-			draw->color = C_ORANGE;
-		if (draw->color == C_ORANGE)
+			draw->color = W;
+		if (draw->color == W)
 			rc->ray_status = Y;
 	}
 }
@@ -75,10 +75,10 @@ static void	select_texture_2(t_data *data, t_raycast *rc, t_draw *draw)
 			&& rc->wall_hit[i][Y] % (short)UNIT == UNIT - 1)
 			draw->color = data->map->h_wall;
 		else if (rc->wall_hit[i][X] % (short)UNIT == UNIT - 1)
-			draw->color = C_YELLOW;
+			draw->color = N;
 		else if (rc->wall_hit[i][Y] % (short)UNIT == UNIT - 1)
-			draw->color = C_ORANGE;
-		if (draw->color == C_ORANGE)
+			draw->color = W;
+		if (draw->color == W)
 			rc->ray_status = Y;
 	}
 }
@@ -94,10 +94,10 @@ static void	select_texture_3(t_data *data, t_raycast *rc, t_draw *draw)
 			&& rc->wall_hit[i][Y] % (short)UNIT == 0)
 			draw->color = data->map->h_wall;
 		else if (rc->wall_hit[i][X] % (short)UNIT == UNIT - 1)
-			draw->color = C_YELLOW;
+			draw->color = N;
 		else if (rc->wall_hit[i][Y] % (short)UNIT == 0)
-			draw->color = C_WHITE;
-		if (draw->color == C_WHITE)
+			draw->color = E;
+		if (draw->color == E)
 			rc->ray_status = Y;
 	}
 }
@@ -113,10 +113,10 @@ static void	select_texture_4(t_data *data, t_raycast *rc, t_draw *draw)
 			&& rc->wall_hit[i][Y] % (short)UNIT == 0)
 			draw->color = data->map->h_wall;
 		else if (rc->wall_hit[i][X] % (short)UNIT == 0)
-			draw->color = C_GREEN;
+			draw->color = S;
 		else if (rc->wall_hit[i][Y] % (short)UNIT == 0)
-			draw->color = C_WHITE;
-		if (draw->color == C_WHITE)
+			draw->color = E;
+		if (draw->color == E)
 			rc->ray_status = Y;
 	}
 }

@@ -40,6 +40,8 @@ int	key_handler(int key, t_data *data)
 		s_key_handler(key, data);
 	else if (key == 'w' || key == 'a' || key == 's' || key == 'd')
 		move_handler(key, data);
+	else if (key == 'q' || key == 'e')
+		move_handler(key, data);
 	if (key != ENTER)
 		printf("Key press = [%d 0x%X '%c']\n", key, key, key);
 	return (0);

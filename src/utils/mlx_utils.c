@@ -32,6 +32,7 @@ int	mlx_close(t_data *data)
 	exit(0);
 	return (0);
 }
+// TODO: Add back once merge with parsing
 // if (data->map->map != NULL)
 // 	char_cleanup(data->map->map, data->map->line);
 

@@ -13,7 +13,6 @@
 #include "cube.h"
 
 static void	predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw);
-static void	predraw_wall(t_data *data, t_raycast *rc, t_draw *draw);
 static void	predraw_floor(t_data *data, t_raycast *rc, t_draw *draw);
 
 /*
@@ -29,14 +28,14 @@ void	render(t_data *data, t_raycast *rc)
 	predraw_ceil(data, rc, &draw);
 	draw_line(data->img, &draw);
 	draw_texture(data, rc, &draw);
-	predraw_wall(data, rc, &draw);
-	draw_line(data->img, &draw);
 	predraw_floor(data, rc, &draw);
 	draw_line(data->img, &draw);
 }
 
 /*
 	Draw from top of the screen to wall
+
+	fmod to add missing dot (i.e: 149 / 2 = 74 on each side, 1px is missing)
 */
 static void	predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw)
 {
@@ -45,15 +44,8 @@ static void	predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw)
 	draw->x[1] = rc->ray_index;
 	draw->y[0] = 0;
 	draw->y[1] = data->calc->half_height - (rc->wall_dist[rc->ray_index] / 2);
-}
-
-/*
-	Draw wall in-between
-*/
-static void	predraw_wall(t_data *data, t_raycast *rc, t_draw *draw)
-{
-	draw->y[0] = draw->y[1];
-	draw->y[1] = data->calc->half_height + (rc->wall_dist[rc->ray_index] / 2);
+	if (fmod(rc->wall_dist[rc->ray_index], 2) != 0)
+		draw->y[1]++;
 }
 
 /*

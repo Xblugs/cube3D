@@ -19,6 +19,7 @@ HOOK		:=	src/hook/cube_hook.c						\
 				src/hook/cube_key_hook.c					\
 				src/hook/cube_mouse_hook.c					\
 				src/hook/cube_move_handler.c				\
+				src/hook/cube_move_handler2.c				\
 
 PARSING		:=	src/parsing/placeholder.c					\
 

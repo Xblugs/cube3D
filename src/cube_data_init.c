@@ -45,10 +45,10 @@ int	texture_init(t_data *data, t_tex *tex, t_map *map)
 {
 	*tex = (t_tex){0};
 	data->tex = tex;
-	tex->img[N] = mlx_xpm_ftoi(data->mlx, map->path[N], &tex->w, &tex->h);
-	tex->img[W] = mlx_xpm_ftoi(data->mlx, map->path[W], &tex->w, &tex->h);
-	tex->img[S] = mlx_xpm_ftoi(data->mlx, map->path[S], &tex->w, &tex->h);
-	tex->img[E] = mlx_xpm_ftoi(data->mlx, map->path[E], &tex->w, &tex->h);
+	tex->img[N] = mlx_xpm_ftoi(data->mlx, map->path[N], &tex->w[N], &tex->h[N]);
+	tex->img[W] = mlx_xpm_ftoi(data->mlx, map->path[W], &tex->w[W], &tex->h[W]);
+	tex->img[S] = mlx_xpm_ftoi(data->mlx, map->path[S], &tex->w[S], &tex->h[S]);
+	tex->img[E] = mlx_xpm_ftoi(data->mlx, map->path[E], &tex->w[E], &tex->h[E]);
 	if (!tex->img[N] || !tex->img[W] || !tex->img[S] || !tex->img[E])
 	{
 		printf("%s", TEXT_OPEN_FAIL);
