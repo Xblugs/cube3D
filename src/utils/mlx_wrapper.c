@@ -15,6 +15,9 @@
 /*
 	function name is too long, norm unhappy
 	mlx use 5 args, we need to think smart to be norm compliant
+
+	int	--> long --> mlx_pitow --> long --> int --> mlx_put_image_to_window
+	int										int
 */
 void	mlx_pitow(void *mlx, void *win, void *img, long wh)
 {

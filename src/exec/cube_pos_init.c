@@ -13,7 +13,7 @@
 #include "cube.h"
 
 /*
-	function to print current position is located 
+	Function to print current position is located 
 		in cube_debug along other info prints
 */
 
@@ -30,7 +30,7 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc)
 }
 
 /*
-	find start position in index values
+	Find start position in index values
 	[stored in rc->pos to save memory]
 */
 static void	find_start_pos(t_map *map, t_raycast *rc)
@@ -58,7 +58,9 @@ static void	find_start_pos(t_map *map, t_raycast *rc)
 	printf(B_RED"This should never print as map is correct at this point\n"END);
 }
 
-// set start angle and switches coordinates to px representation
+/*
+	Set start angle and switches coordinates to px representation
+*/
 static void	find_start_angle(t_map *map, t_raycast *rc)
 {
 	int	i;

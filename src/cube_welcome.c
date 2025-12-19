@@ -14,6 +14,9 @@
 
 static void	print_ascii(void);
 
+/*
+	ASCII logo and screen resolution + FOV check
+*/
 void	cube_welcome(void)
 {
 	print_ascii();
@@ -26,8 +29,17 @@ void	cube_welcome(void)
 			MIN_WID, MIN_HEI, MAX_WID, MAX_HEI, END);
 		exit(0);
 	}
+	if (FOV < 30 || FOV > 120)
+	{
+		printf(B_RED"Wrong screen resolution, please check [cube.h]\n");
+		printf("\t(30 < FOV < 120)%s\n\n",END);
+		exit(0);
+	}
 }
 
+/*
+	ASCII logo
+*/
 static void	print_ascii(void)
 {
 	printf(B_WHITE"\t%s\t%s\t%s\t%s\t%s\t%s%s\n",

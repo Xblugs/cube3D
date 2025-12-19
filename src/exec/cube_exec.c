@@ -14,6 +14,9 @@
 
 static void	exec_init(t_data *data, t_calc *calc);
 
+/*
+	Exec wrapper
+*/
 void	exec_func(t_data *data)
 {
 	t_calc		calc;
@@ -30,14 +33,18 @@ void	exec_func(t_data *data)
 // print_raycast_hit_index(&rc);
 // print_raycast_dist(&rc);
 
-// instructions to do once on startup
+/*
+	Exec init
+*/
 static void	exec_init(t_data *data, t_calc *calc)
 {
 	precalc_val(data, calc);
 	start_pos_wrapper(data, data->map, data->rc);
 }
 
-// separated to be called on hook
+/*
+	Separated to be called on hook for redrawing
+*/
 int	exec_loop(t_data *data)
 {
 	raycast_wrapper(data, data->rc);

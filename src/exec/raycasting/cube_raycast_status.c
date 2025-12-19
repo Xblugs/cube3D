@@ -14,7 +14,9 @@
 
 static void	ray_status_check(t_data *data, t_raycast *rc, t_calc *calc);
 
-// check if our rays are going out of bounds or hit a wall
+/*
+	Check if our rays are going out of bounds or hit a wall
+*/
 void	ray_status_check_wrapper(t_data *data, t_raycast *rc)
 {
 	if (!(rc->ray_status))
@@ -45,7 +47,9 @@ static void	ray_status_check(t_data *data, t_raycast *rc, t_calc *calc)
 	}
 }
 
-// get the wall coordinates
+/*
+	Get the wall coordinates and update ray status
+*/
 int	wall_hit(t_data *data, t_raycast *rc)
 {
 	if (rc->ray_status == HIT)

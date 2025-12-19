@@ -14,6 +14,11 @@
 
 static void	data_value_init(t_data *data, t_img *img, t_draw *draw);
 
+/*
+	Start mlx and init structure member if provided
+
+	TODO: Remove t_draw part from [t_data] and [data_init]
+*/
 void	data_init(t_data *data, t_img *img, t_draw *draw)
 {
 	data->mlx = mlx_init();

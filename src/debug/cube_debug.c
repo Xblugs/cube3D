@@ -75,7 +75,9 @@ void	print_raycast_hit_px(t_raycast *rc)
 	printf(GREEN"\tDEBUG RAYCAST END%s\n", END);
 }
 
-// same function except we print index coordinates instead of px values
+/*
+	same function except we print index coordinates instead of px values
+*/
 void	print_raycast_hit_index(t_raycast *rc)
 {
 	const int	scale = 10;
@@ -99,7 +101,9 @@ void	print_raycast_hit_index(t_raycast *rc)
 	printf(GREEN"\tDEBUG RAYCAST END%s\n", END);
 }
 
-// prints corrected coordinates distances
+/*
+	Print distance from player position to wall
+*/
 void	print_raycast_dist(t_raycast *rc)
 {
 	const int	scale = 10;

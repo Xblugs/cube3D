@@ -18,6 +18,7 @@ static void	predraw_floor(t_data *data, t_raycast *rc, t_draw *draw);
 
 /*
 	TODO: Delete color hardcode when merging with parsing
+		+ move predraw_wall once texturing gets done
 */
 void	render(t_data *data, t_raycast *rc)
 {

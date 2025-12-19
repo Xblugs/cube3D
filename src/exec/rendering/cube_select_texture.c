@@ -28,7 +28,8 @@ static void	select_texture_4(t_data *data, t_raycast *rc, t_draw *draw);
 
 	(TODO: to be eventually replaced with corresponding macros)
 
-	[rc->ray_status] is re-used as a flag, default as [X]
+	[rc->ray_status] is re-used as a flag representing which wall side got hit
+		, default as [X] changed if needed
 */
 void	select_texture_wrapper(t_data *data, t_raycast *rc, t_draw *draw)
 {
@@ -58,6 +59,8 @@ static void	select_texture_1(t_data *data, t_raycast *rc, t_draw *draw)
 			draw->color = C_GREEN;
 		else if (rc->wall_hit[i][Y] % (short)UNIT == UNIT - 1)
 			draw->color = C_ORANGE;
+		if (draw->color == C_ORANGE)
+			rc->ray_status = Y;
 	}
 }
 
@@ -75,6 +78,8 @@ static void	select_texture_2(t_data *data, t_raycast *rc, t_draw *draw)
 			draw->color = C_YELLOW;
 		else if (rc->wall_hit[i][Y] % (short)UNIT == UNIT - 1)
 			draw->color = C_ORANGE;
+		if (draw->color == C_ORANGE)
+			rc->ray_status = Y;
 	}
 }
 
@@ -92,6 +97,8 @@ static void	select_texture_3(t_data *data, t_raycast *rc, t_draw *draw)
 			draw->color = C_YELLOW;
 		else if (rc->wall_hit[i][Y] % (short)UNIT == 0)
 			draw->color = C_WHITE;
+		if (draw->color == C_WHITE)
+			rc->ray_status = Y;
 	}
 }
 
@@ -109,5 +116,7 @@ static void	select_texture_4(t_data *data, t_raycast *rc, t_draw *draw)
 			draw->color = C_GREEN;
 		else if (rc->wall_hit[i][Y] % (short)UNIT == 0)
 			draw->color = C_WHITE;
+		if (draw->color == C_WHITE)
+			rc->ray_status = Y;
 	}
 }

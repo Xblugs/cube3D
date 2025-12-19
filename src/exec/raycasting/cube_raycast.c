@@ -17,7 +17,7 @@ static void	distance_calc(t_data *data, t_raycast *rc);
 static void	distance_correction(t_data *data, t_raycast *rc);
 
 /*
-	Raycast is calculated depending on its angle
+	Reset various indexes and flag before proceeding to actual raycast
 */
 void	raycast_wrapper(t_data *data, t_raycast *rc)
 {
@@ -35,7 +35,9 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 	mlx_pitow(data->mlx, data->win, data->img->img, 0);
 }
 
-// ray_status is [TRUE] once the ray is [OUT] or [HIT] a wall
+/*
+	ray_status is [TRUE] once the ray is [OUT] or [HIT] a wall
+*/
 static void	raycast(t_data *data, t_raycast *rc)
 {
 	while (!(rc->ray_status))
@@ -70,7 +72,10 @@ static void	distance_calc(t_data *data, t_raycast *rc)
 	}
 }
 
-// correction for fisheye lens effect
+/*
+	Correction for fisheye lens effect
+	Can be disabled for maximum FOV experience
+*/
 static void	distance_correction(t_data *data, t_raycast *rc)
 {
 	short	i;

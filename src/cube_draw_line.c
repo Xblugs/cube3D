@@ -17,7 +17,9 @@ static void	draw_low(t_img *img, t_draw draw);
 static void	draw_high(t_img *img, t_draw draw);
 static void	invert_coordinates(t_draw *draw);
 
-// (simplified) function to draw lines inherited from FdF
+/*
+	(simplified) function to draw lines inherited from FdF
+*/
 void	draw_line(t_img *img, t_draw *draw)
 {
 	if (abs_val(draw->y[1] - draw->y[0]) < abs_val(draw->x[1] - draw->x[0]))
@@ -105,6 +107,9 @@ static void	draw_high(t_img *img, t_draw draw)
 	}
 }
 
+/*
+	draw_line only handle drawing on one direction
+*/
 static void	invert_coordinates(t_draw *draw)
 {
 	short	swap;

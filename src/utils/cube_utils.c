@@ -63,11 +63,17 @@ size_t	ft_digitcount(char const *s, char c)
 	return (count);
 }
 
+/*
+	Store 2 int into one long for norm dodging purposes
+*/
 long	int_to_long(int x, int y)
 {
 	return ((long)((long) x << 32) + y);
 }
 
+/*
+	Retrieve 2 int from one long
+*/
 void	long_to_int(long l, int *x, int *y)
 {
 	*x = (l >> 32);

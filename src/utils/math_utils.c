@@ -12,6 +12,9 @@
 
 #include "cube.h"
 
+/*
+	libm math function use only radians
+*/
 double	deg_to_rad(double angle)
 {
 	return ((angle) * M_PI / 180.0);

@@ -13,7 +13,7 @@
 #include "cube.h"
 
 /*
-	Functions are agenced this way to allow for static and norm compliance
+	Set ray status and increment value for each step
 */
 void	raycast_init_wrapper(t_data *data, t_raycast *rc)
 {

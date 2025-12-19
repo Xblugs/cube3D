@@ -14,7 +14,9 @@
 
 static int	mlx_close_tex(t_data *data);
 
-// close wrapper
+/*
+	Close wrapper
+*/
 int	mlx_close(t_data *data)
 {
 	mlx_close_tex(data);
@@ -33,7 +35,9 @@ int	mlx_close(t_data *data)
 // if (data->map->map != NULL)
 // 	char_cleanup(data->map->map, data->map->line);
 
-// free texture related memory
+/*
+	Free texture related memory
+*/
 static int	mlx_close_tex(t_data *data)
 {
 	if (data->tex->img[N] != NULL)
@@ -47,7 +51,9 @@ static int	mlx_close_tex(t_data *data)
 	return (0);
 }
 
-// clear the img from data struct
+/*
+	Force clear the img from data struct
+*/
 void	clear_screen(t_data *data)
 {
 	void	*black_screen;
@@ -58,7 +64,9 @@ void	clear_screen(t_data *data)
 	mlx_destroy_image(data->mlx, black_screen);
 }
 
-// put pixel except if we're outside the window to prevent crashing
+/*
+	put pixel with bound check to prevent crashing
+*/
 void	pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
