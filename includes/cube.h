@@ -309,7 +309,7 @@ typedef struct s_raycast
 	short		ray_index;			// 0 to WIDTH - 1
 	short		view_angle;			// player angle in degree
 	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
-	short		wall_dist[WIDTH];	// distance to projected wall
+	double		wall_dist[WIDTH];	// distance to projected wall
 	short		ray_status;			// ray current status
 }	t_raycast;
 

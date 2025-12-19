@@ -24,7 +24,7 @@ void	raycast_wrapper(t_data *data, t_raycast *rc)
 	rc->ray_index = 0;
 	rc->ray_angle = rc->view_angle - data->calc->half_fov;
 	ft_memset(data->rc->wall_hit, 0, WIDTH * 2 * sizeof(short));
-	ft_memset(data->rc->wall_dist, 0, WIDTH * sizeof(short));
+	ft_memset(data->rc->wall_dist, 0, WIDTH * sizeof(double));
 	while (rc->ray_index != WIDTH)
 	{
 		raycast_init_wrapper(data, rc);

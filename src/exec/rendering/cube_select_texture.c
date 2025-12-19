@@ -27,9 +27,12 @@ static void	select_texture_4(t_data *data, t_raycast *rc, t_draw *draw);
 		W = C_ORANGE			E = C_WHITE
 
 	(TODO: to be eventually replaced with corresponding macros)
+
+	[rc->ray_status] is re-used as a flag, default as [X]
 */
 void	select_texture_wrapper(t_data *data, t_raycast *rc, t_draw *draw)
 {
+	rc->ray_status = X;
 	if (rc->ray_angle <= 90)
 		select_texture_1(data, rc, draw);
 	else if (rc->ray_angle <= 180)
