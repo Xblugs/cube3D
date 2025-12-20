@@ -134,10 +134,24 @@
 # define WHEEL_UP			4
 # define WHEEL_DOWN			5
 
+// Hook flags and Hook mask are defined in X.h (used internally by mlx)
 // HOOK FLAGS
+# define ON_KEY_PRESS		2
+# define ON_KEY_RELEASE		3
+# define ON_MOUSE_PRESS		4
+# define ON_MOUSE_RELEASE	5
 # define ON_ENTER			7
 # define ON_LEAVE			8
 # define ON_DESTROY			17
+
+// HOOK MASK
+# define NO_EVENT			0L
+# define KEY_PRESS			1L
+# define KEY_RELEASE		2L
+# define MOUSE_PRESS		4L
+# define MOUSE_RELEASE		8L
+# define ENTER_WINDOW		16L
+# define LEAVE_WINDOW		32L
 
 /*
 	Used for array indexes for more code clarity
@@ -201,13 +215,15 @@ typedef struct s_raycast	t_raycast;
 */
 typedef struct s_data
 {
-	t_img		*img;				// rendered screen
-	t_map		*map;				// data from map file
-	t_tex		*tex;				// textures
-	t_calc		*calc;				// precalculated math
-	t_raycast	*rc;				// raycasting variables
-	void		*mlx;
-	void		*win;
+	t_img			*img;				// rendered screen
+	t_map			*map;				// data from map file
+	t_tex			*tex;				// textures
+	t_calc			*calc;				// precalculated math
+	t_raycast		*rc;				// raycasting variables
+	struct timeval	t0;					// Used for keyboard hooks
+	struct timeval	t1;					// Used for keyboard hooks
+	void			*mlx;
+	void			*win;
 }	t_data;
 
 /*
@@ -217,13 +233,13 @@ typedef struct s_data
 */
 typedef struct s_img
 {
-	int			bpp;
-	int			line_len;
-	int			endian;
-	int			x;
-	int			y;
-	void		*img;
-	char		*addr;
+	int				bpp;
+	int				line_len;
+	int				endian;
+	int				x;
+	int				y;
+	void			*img;
+	char			*addr;
 }	t_img;
 
 /*
@@ -235,9 +251,9 @@ typedef struct s_img
 */
 typedef struct s_draw
 {
-	short		x[3];				// x0, x1, dx
-	short		y[3];				// y0, y1, dy
-	int			color;
+	short			x[3];				// x0, x1, dx
+	short			y[3];				// y0, y1, dy
+	int				color;
 }	t_draw;
 
 /*
@@ -246,15 +262,15 @@ typedef struct s_draw
 */
 typedef struct s_map
 {
-	char		**map;
-	short		line;				// y
-	short		col;				// x
-	char		*path[4];			// path to N, W, S, E textures
-	short		ceiling[3];			// R, G, B
-	short		floor[3];			// R, G, B
-	int			h_ceiling;			// color in hex format
-	int			h_wall;				// last wall data used internally
-	int			h_floor;			// color in hex format
+	char			**map;
+	short			line;				// y
+	short			col;				// x
+	char			*path[4];			// path to N, W, S, E textures
+	short			ceiling[3];			// R, G, B
+	short			floor[3];			// R, G, B
+	int				h_ceiling;			// color in hex format
+	int				h_wall;				// last wall data used internally
+	int				h_floor;			// color in hex format
 }	t_map;
 
 /*
@@ -266,9 +282,9 @@ typedef struct s_map
 */
 typedef struct s_tex
 {
-	int			w[4];				// texture width  [set by mlx]
-	int			h[4];				// texture height [set by mlx]
-	void		*img[4];			// ptr to N, W, S, E textures
+	int				w[4];				// texture width  [set by mlx]
+	int				h[4];				// texture height [set by mlx]
+	void			*img[4];			// ptr to N, W, S, E textures
 }	t_tex;
 
 /*
@@ -277,13 +293,13 @@ typedef struct s_tex
 */
 typedef struct s_calc
 {
-	short		half_fov;
-	short		half_width;			// screen size
-	short		half_height;		// screen size
-	short		max_width;			// projection size
-	short		max_height;			// projection size
-	short		dist_to_proj;		// distance in pixels
-	double		angle_between_rays; // angle variation between rays in degree
+	short			half_fov;
+	short			half_width;			// screen size
+	short			half_height;		// screen size
+	short			max_width;			// projection size
+	short			max_height;			// projection size
+	short			dist_to_proj;		// distance in pixels
+	double			angle_between_rays; // angle variation in degree
 }	t_calc;
 
 /*
@@ -293,15 +309,15 @@ typedef struct s_calc
 */
 typedef struct s_raycast
 {
-	double		delta[2];			// delta[X, Y]
-	double		ray[2];				// ray[X, Y]
-	int			pos[2];				// player pos [x, y]
-	double		ray_angle;			// raycasting angle
-	short		ray_index;			// 0 to WIDTH - 1
-	short		view_angle;			// player angle in degree
-	short		wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
-	double		wall_dist[WIDTH];	// distance to projected wall
-	short		ray_status;			// ray current status
+	double			delta[2];			// delta[X, Y]
+	double			ray[2];				// ray[X, Y]
+	int				pos[2];				// player pos [x, y]
+	double			ray_angle;			// raycasting angle
+	short			ray_index;			// 0 to WIDTH - 1
+	short			view_angle;			// player angle in degree
+	short			wall_hit[WIDTH][2]; // in map coordinates (px / UNIT)
+	double			wall_dist[WIDTH];	// distance to projected wall
+	short			ray_status;			// ray current status
 }	t_raycast;
 
 /*

@@ -63,7 +63,7 @@ int	texture_init(t_data *data, t_tex *tex, t_map *map)
 */
 void	mlx_data_init(t_data *data)
 {
-	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cube3D");
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "cube3D");
 	data->img->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->img->addr = mlx_get_data_addr(data->img->img, &(data->img->bpp),
 			&(data->img->line_len), &(data->img->endian));

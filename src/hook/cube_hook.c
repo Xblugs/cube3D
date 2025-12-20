@@ -12,11 +12,13 @@
 
 #include "cube.h"
 
+// mlx_key_hook(data->win, &key_handler, data);
 void	set_hook(t_data *data)
 {
-	mlx_key_hook(data->win, &key_handler, data);
-	mlx_hook(data->win, ON_ENTER, 1L << 4, &mouse_io, data);
-	mlx_hook(data->win, ON_LEAVE, 1L << 5, &mouse_io, NULL);
-	mlx_hook(data->win, ON_DESTROY, 0L, &mlx_close, data);
+	gettimeofday(&data->t0, NULL);
+	mlx_hook(data->win, ON_KEY_PRESS, KEY_PRESS, &key_handler, data);
 	mlx_mouse_hook(data->win, &mouse_handler, data);
+	mlx_hook(data->win, ON_ENTER, ENTER_WINDOW, &mouse_io, data);
+	mlx_hook(data->win, ON_LEAVE, LEAVE_WINDOW, &mouse_io, NULL);
+	mlx_hook(data->win, ON_DESTROY, NO_EVENT, &mlx_close, data);
 }
