@@ -13,23 +13,24 @@
 #include "cube.h"
 
 // main
+/*
+	Test maps for exec standalone
 
-// map.map = (char *[]){"111", "101", "1N1", "101", "101", "101", "111"};
-// map.map = (char *[]){"111111", "10E001", "111111"};
-// map.map = (char *[]){"11111", "10001", "10N01", "10001", "11111"};
-// map.map = (char *[]){"11111", "10001", "10101", "10N01", "11111"};
-// map.map = (char *[]){"11111", "10001", "10101", "10011", "100N1", "11111"};
-static void	main_func(t_data *data)
+	map.map = (char *[]){"111", "101", "1N1", "101", "101", "101", "111"};
+	map.map = (char *[]){"111111", "10E001", "111111"};
+	map.map = (char *[]){"11111", "10001", "10N01", "10001", "11111"};
+	map.map = (char *[]){"11111", "10001", "10101", "10N01", "11111"};
+	map.map = (char *[]){"11111", "10001", "10101", "10011", "100N1", "11111"};
+*/
+static void	main_func(t_data *data, char *filename)
 {
 	t_img	img;
 	t_map	map;
 	t_tex	tex;
 
 	map = (t_map){0};
-	map.map = (char *[]){"11111", "10001", "10N01", "10001", "11111"};
-	size_of_struct();
-	data_init(data, &img);
-	if (parsing_placeholder(data, &map))
+	data_init(data, &img, &map);
+	if (parsing(&map, filename))
 		mlx_close(data);
 	if (texture_init(data, &tex, &map))
 		mlx_close(data);
@@ -48,11 +49,11 @@ int	main(int ac, char **av)
 	if (ac == 2 && ft_strlen(av[1]) >= MIN_ARGV_LEN)
 	{
 		cube_welcome();
-		main_func(&data);
+		main_func(&data, av[1]);
 	}
 	else if (ac == 2 && ft_strlen(av[1]) < MIN_ARGV_LEN)
-		printf("%s", WRONG_EXT);
+		printf("%s%s", ERROR, WRONG_EXT);
 	else
-		printf("%s", WRONG_ARGC);
+		printf("%s%s", ERROR, WRONG_ARGC);
 	return (0);
 }

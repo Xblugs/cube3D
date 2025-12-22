@@ -23,11 +23,6 @@ static void	select_texture_4(t_data *data, t_raycast *rc, t_draw *draw);
 
 	When hitting a corner, consider the last drawn wall as the correct one
 
-		N = C_YELLOW			S = C_GREEN
-		W = C_ORANGE			E = C_WHITE
-
-	(TODO: to be eventually replaced with corresponding macros)
-
 	[rc->ray_status] is re-used as a flag representing which wall side got hit
 		, default as [X] changed if needed
 */

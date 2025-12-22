@@ -12,34 +12,35 @@
 
 #include "cube.h"
 
-static void	data_value_init(t_data *data, t_img *img);
+static void	data_value_init(t_data *data, t_img *img, t_map *map);
 
 /*
 	Start mlx and init structure member if provided
 */
-void	data_init(t_data *data, t_img *img)
+void	data_init(t_data *data, t_img *img, t_map *map)
 {
 	data->mlx = mlx_init();
 	if (!data->mlx)
 	{
-		printf("%s", MLX_FAIL);
+		printf("%s%s", ERROR, MLX_FAIL);
 		exit(1);
 	}
-	data_value_init(data, img);
+	data_value_init(data, img, map);
 }
 
-static void	data_value_init(t_data *data, t_img *img)
+static void	data_value_init(t_data *data, t_img *img, t_map *map)
 {
 	if (data != NULL)
+	{
 		data->img = img;
+		data->map = map;
+	}
 	if (img != NULL)
 		*img = (t_img){0};
 }
 
 /*
-	Hardcoded textures for tests
-	remove them from /texture/xpm to segfault 😉
-	TODO: Take a look here again once merged with parsing
+	Open textures for later use
 */
 int	texture_init(t_data *data, t_tex *tex, t_map *map)
 {
@@ -49,9 +50,13 @@ int	texture_init(t_data *data, t_tex *tex, t_map *map)
 	tex->img[W] = mlx_xpm_ftoi(data->mlx, map->path[W], &tex->w[W], &tex->h[W]);
 	tex->img[S] = mlx_xpm_ftoi(data->mlx, map->path[S], &tex->w[S], &tex->h[S]);
 	tex->img[E] = mlx_xpm_ftoi(data->mlx, map->path[E], &tex->w[E], &tex->h[E]);
+	free(map->path[N]);
+	free(map->path[W]);
+	free(map->path[S]);
+	free(map->path[E]);
 	if (!tex->img[N] || !tex->img[W] || !tex->img[S] || !tex->img[E])
 	{
-		printf("%s", TEXT_OPEN_FAIL);
+		printf("%s%s", ERROR, TEXT_OPEN_FAIL);
 		return (1);
 	}
 	return (0);

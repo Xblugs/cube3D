@@ -19,7 +19,10 @@ static int	mlx_close_tex(t_data *data);
 */
 int	mlx_close(t_data *data)
 {
-	mlx_close_tex(data);
+	if (data->tex != NULL)
+		mlx_close_tex(data);
+	if (data->map->map != NULL)
+		char_cleanup(data->map->map, data->map->height);
 	if (data->img->img != NULL)
 		mlx_destroy_image(data->mlx, data->img->img);
 	if (data->win != NULL)
@@ -32,9 +35,6 @@ int	mlx_close(t_data *data)
 	exit(0);
 	return (0);
 }
-// TODO: Add back once merge with parsing
-// if (data->map->map != NULL)
-// 	char_cleanup(data->map->map, data->map->line);
 
 /*
 	Free texture related memory

@@ -52,7 +52,7 @@ static void	raycast(t_data *data, t_raycast *rc)
 	wall_hit(data, rc);
 	distance_calc(data, rc);
 	distance_correction(data, rc);
-	render(data, rc);
+	render(data, rc, data->map);
 }
 
 /*

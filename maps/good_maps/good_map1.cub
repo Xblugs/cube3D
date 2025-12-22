@@ -1,12 +1,10 @@
 NO ./texture/xpm/tile_cyan.xpm
 SO ./texture/xpm/tile_magenta.xpm
-
-
-F 220,  100,  0
-C 225,  30,   0
-
 WE ./texture/xpm/tile_yellow.xpm
-EA ./texture/xpm/green.xpm
+EA ./texture/xpm/redbrick.xpm
+
+F 220,100,0
+C 225,30,0
 
         1111111111111111111111111
         1000000000110000000000001

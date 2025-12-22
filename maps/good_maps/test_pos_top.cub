@@ -1,0 +1,21 @@
+NO ./texture/xpm/tile_cyan.xpm
+SO ./texture/xpm/tile_magenta.xpm
+WE ./texture/xpm/tile_yellow.xpm
+EA ./texture/xpm/green.xpm
+
+F 20,20,20
+C 200,200,200
+
+111
+1N1
+101
+101
+101
+101
+101
+101
+101
+101
+101
+101
+111

@@ -15,16 +15,12 @@
 static void	predraw_ceil(t_data *data, t_raycast *rc, t_draw *draw);
 static void	predraw_floor(t_data *data, t_raycast *rc, t_draw *draw);
 
-/*
-	TODO: Delete color hardcode when merging with parsing
-		+ move predraw_wall once texturing gets done
-*/
-void	render(t_data *data, t_raycast *rc)
+void	render(t_data *data, t_raycast *rc, t_map *m)
 {
 	t_draw	draw;
 
-	data->map->h_ceiling = C_CYAN;
-	data->map->h_floor = C_BROWN;
+	m->h_ceiling = get_rgb_hex(m->ceiling[R], m->ceiling[G], m->ceiling[B]);
+	m->h_floor = get_rgb_hex(m->floor[R], m->floor[G], m->floor[B]);
 	predraw_ceil(data, rc, &draw);
 	draw_line(data->img, &draw);
 	draw_texture(data, rc, &draw);

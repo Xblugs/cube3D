@@ -25,13 +25,15 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc)
 	find_start_pos(map, rc);
 	find_start_angle(map, rc);
 	printf("pos(x, y) = (%d, %d)\n", data->rc->pos[X], data->rc->pos[Y]);
-	printf("   (l, c) = (%d, %d)\n\n", data->map->line, data->map->col);
+	printf("   (l, c) = (%d, %d)\n\n", data->map->height, data->map->width);
 	print_pos(data, -1, -1);
 }
 
 /*
 	Find start position in index values
 	[stored in rc->pos to save memory]
+
+	TODO: Normalize map
 */
 static void	find_start_pos(t_map *map, t_raycast *rc)
 {
@@ -39,10 +41,10 @@ static void	find_start_pos(t_map *map, t_raycast *rc)
 	int	j;
 
 	i = 0;
-	while (i < map->line)
+	while (i < map->height - 1)
 	{
 		j = 0;
-		while (j < map->col)
+		while (j < map->width)
 		{
 			if (map->map[i][j] == 'N' || map->map[i][j] == 'S'
 				|| map->map[i][j] == 'W' || map->map[i][j] == 'E')
