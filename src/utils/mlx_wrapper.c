@@ -13,7 +13,7 @@
 #include "cube.h"
 
 /*
-	function name is too long, norm unhappy
+	Function name is too long, norm unhappy
 	mlx use 5 args, we need to think smart to be norm compliant
 
 	int	--> long --> mlx_pitow --> long --> int --> mlx_put_image_to_window
@@ -31,7 +31,7 @@ void	mlx_pitow(void *mlx, void *win, void *img, long wh)
 }
 
 /*
-	function name is too long, norm unhappy
+	Function name is too long, norm unhappy
 	just a simple wrapper to gain space
 */
 void	*mlx_xpm_ftoi(void *mlx, char *file, int *width, int *height)

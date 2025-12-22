@@ -65,8 +65,9 @@ void	mlx_data_init(t_data *data)
 {
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "cube3D");
 	data->img->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	data->img->addr = mlx_get_data_addr(data->img->img, &(data->img->bpp),
-			&(data->img->line_len), &(data->img->endian));
+	if (data->img->img)
+		data->img->addr = mlx_get_data_addr(data->img->img, &(data->img->bpp),
+				&(data->img->line_len), &(data->img->endian));
 	if (data->mlx == NULL || data->win == NULL || data->img->img == NULL)
 		mlx_close(data);
 	set_hook(data);

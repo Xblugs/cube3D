@@ -20,18 +20,18 @@ static void	print_ascii(void);
 void	cube_welcome(void)
 {
 	print_ascii();
-	printf(B_WHITE"\n\tCheck algo.md and math.md!%s\n\n", END);
+	printf(B_WHITE"\t>> Check algo.md and math.md! <<%s\n\n", END);
 	if (WIDTH > MAX_WID || WIDTH < MIN_WID
 		|| HEIGHT > MAX_HEI || HEIGHT < MIN_HEI)
 	{
-		printf(B_RED"Wrong screen resolution, please check [cube.h]\n");
+		printf(B_RED"%s", WRONG_RES);
 		printf("\t(%d*%d to %d*%d)%s\n\n",
 			MIN_WID, MIN_HEI, MAX_WID, MAX_HEI, END);
 		exit(0);
 	}
 	if (FOV < 30 || FOV > 120)
 	{
-		printf(B_RED"Wrong screen resolution, please check [cube.h]\n");
+		printf(B_RED"%s", WRONG_RES);
 		printf("\t(30 < FOV < 120)%s\n\n", END);
 		exit(0);
 	}

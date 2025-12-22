@@ -13,7 +13,7 @@
 #include "cube.h"
 
 /*
-	libm math function use only radians
+	libm math function expect radians
 */
 double	deg_to_rad(double angle)
 {

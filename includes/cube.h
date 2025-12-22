@@ -40,6 +40,7 @@
 # define MIN_ARGV_LEN		4
 # define WRONG_ARGC 		"cube3D require a path to a map file (*.cub)\n"
 # define WRONG_EXT 			"wrong extension (.cub required)\n"
+# define WRONG_RES			"Wrong screen resolution, please check [cube.h]\n"
 # define FILE_NOT_FOUND 	"file not found\n"
 # define OPEN_FAIL 			"failed to open file\n"
 

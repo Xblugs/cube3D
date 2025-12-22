@@ -66,7 +66,8 @@ void	clear_screen(t_data *data)
 }
 
 /*
-	put pixel with bound check to prevent crashing
+	mlx_pixel_put with bound check to prevent crashing
+		and without force-refreshing the affected image (better performances)
 */
 void	pixel_put(t_img *img, int x, int y, int color)
 {

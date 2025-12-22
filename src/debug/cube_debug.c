@@ -13,7 +13,7 @@
 #include "cube.h"
 
 /*
-	for memory alignement purposes (and ordering)
+	For memory alignement purposes
 	(also for curiosity)
 */
 void	size_of_struct(void)
@@ -76,7 +76,7 @@ void	print_raycast_hit_px(t_raycast *rc)
 }
 
 /*
-	same function except we print index coordinates instead of px values
+	Same function except we print index coordinates instead of px values
 */
 void	print_raycast_hit_index(t_raycast *rc)
 {
