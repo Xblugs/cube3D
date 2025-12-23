@@ -24,7 +24,7 @@ static void	select_texture_4(t_data *data, t_raycast *rc, t_draw *draw);
 	When hitting a corner, consider the last drawn wall as the correct one
 
 	[rc->ray_status] is re-used as a flag representing which wall side got hit
-		, default as [X] changed if needed
+		, default as [X], changed if needed
 */
 void	select_texture_wrapper(t_data *data, t_raycast *rc, t_draw *draw)
 {

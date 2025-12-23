@@ -19,8 +19,6 @@ static long	time_since(struct timeval *t0, struct timeval *t1);
 	Hardcap fps to prevent re-calculating before previous render is done
 		1/60 = 0.016666 second between images = ~16ms per frame
 		1/50 = 0.020000 second between images = ~20ms per frame
-
-	gettimeofday returns second and microseconds
 */
 int	key_handler(int key, t_data *data)
 {
@@ -56,6 +54,7 @@ static int	s_key_handler(int key, t_data *data)
 
 /*
 	Get a time difference between previous time t0 and current t1
+		gettimeofday returns second and microseconds
 */
 static long	time_since(struct timeval *t0, struct timeval *t1)
 {

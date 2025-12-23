@@ -21,9 +21,6 @@ static void	init_direct_flags(t_direction *flags)
 	flags->f = 0;
 	flags->c = 0;
 }
-/*
-initializes rgb values to be parsed
-*/
 
 static void	init_rgb(t_map *color)
 {

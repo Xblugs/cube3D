@@ -18,6 +18,10 @@ static void	distance_correction(t_data *data, t_raycast *rc);
 
 /*
 	Reset various indexes and flag before proceeding to actual raycast
+
+	raycast could be optimized by going faster (bigger rc->delta)
+	and going backward once inside the wall to recover his exact coordinates
+				**Currently it moves 1px by 1px**
 */
 void	raycast_wrapper(t_data *data, t_raycast *rc)
 {

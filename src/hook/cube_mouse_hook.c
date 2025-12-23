@@ -13,7 +13,7 @@
 #include "cube.h"
 
 /*
-	Print on mouse [enter/exit] the screen
+	Prints when cursor [enter/exit] the screen
 */
 int	mouse_io(t_data *data)
 {
@@ -25,7 +25,7 @@ int	mouse_io(t_data *data)
 }
 
 /*
-	Interface mouse buttons to move handler wheel click to print information
+	Interface mouse buttons to move handler, wheel click to print information
 */
 int	mouse_handler(int mouse, int x, int y, t_data *data)
 {

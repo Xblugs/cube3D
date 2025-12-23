@@ -11,18 +11,10 @@
 /* ************************************************************************** */
 
 #include "cube.h"
+
 /*
-Locating the player's starting point and orientation
-
-loops over the map 
-
-it find the x,y coordinates of the spawn character
-by adding 0.5 the player is correctly initialized at the
-center of that map tile
-
-sets initial direction
-
-exits after first spawn 
+	Locating the player's starting point and orientation
+	(Values setting got moved to exec part)
 */
 void	check_player_pos(t_map *map)
 {

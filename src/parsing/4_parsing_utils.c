@@ -40,12 +40,7 @@ bool	is_color_config_line(char *line)
 }
 
 /*
-VERIFIE QU UN CHEMIN DE TEXTURE EST VALIDE
-IL NE DOIT PAS ETRE NULL
-IL DOIT AVOIR AU MOINS 5 CHARS
-IL DOIT SE TERMINER PAR .XPM
-IL DOIT Y AVOIR UN NOM DE FICHIER AVANT L'EXTENSION
-TER DOSYA ADI + 4 KARAKTER .XPM
+	Verify texture path and file extension
 */
 int	valid_texture_path(char *path)
 {

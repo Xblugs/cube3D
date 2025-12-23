@@ -39,7 +39,7 @@ static void	main_func(t_data *data, char *filename)
 }
 
 /*
-	Precheck on file name to prevent unecessary calculation
+	Precheck on file name lenght to prevent unecessary calculation
 */
 int	main(int ac, char **av)
 {

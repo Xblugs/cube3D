@@ -32,14 +32,16 @@ void	start_pos_wrapper(t_data *data, t_map *map, t_raycast *rc)
 /*
 	Find start position in index values
 	[stored in rc->pos to save memory]
-
-	TODO: Normalize map
 */
 static void	find_start_pos(t_map *map, t_raycast *rc)
 {
-	int	i;
-	int	j;
+	char	**temp;
+	int		i;
+	int		j;
 
+	temp = normalize_map(map->map, map->height, map->width);
+	char_cleanup(map->map, map->height);
+	map->map = temp;
 	i = 0;
 	while (i < map->height - 1)
 	{

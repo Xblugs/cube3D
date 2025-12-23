@@ -1,13 +1,13 @@
-   WE                            ./texture/xpm/tile_yellow.xpm
-NO      ./texture/xpm/tile_cyan.xpm
+   WE                            ./texture/xpm/bluestone.xpm
+NO      ./texture/xpm/bluestone.xpm
 
 
 
-SO ./texture/xpm/tile_magenta.xpm
+SO ./texture/xpm/bluestone.xpm
 
 F      17,    38,     64
 
-EA ./texture/xpm/green.xpm
+EA ./texture/xpm/bluestone.xpm
 
 
 

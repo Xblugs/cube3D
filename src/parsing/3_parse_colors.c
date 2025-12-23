@@ -13,13 +13,12 @@
 #include "cube.h"
 
 /*
-checks if str only contains 0-9 and a single comma
-1. if block -> anything other than digit or comma
-3. if block -> rgb cannot start with a comma (,R,G,B)
-2. if block -> check for consecutive commas
-4. if block -> rgb cannot end with a comma ("R,G,B,")
+	Checks if str only contains 0-9 and a single comma
+	1. if block -> anything other than digit or comma
+	2. if block -> rgb cannot start with a comma (,R,G,B)
+	3. if block -> check for consecutive commas
+	4. if block -> rgb cannot end with a comma ("R,G,B,")
 */
-
 static int	valid_rgb_chars(char *line)
 {
 	size_t	i;
@@ -50,20 +49,10 @@ static int	valid_rgb_chars(char *line)
 }
 
 /*
-CONVERTIT UNE CHAINE RGB COMME "200, 100, 0" EN UN TABLEAU
-D'ENTIERS
-VERIFIE D'ABORD QUE LA CHAINE NE CONTIENT QUE DES CHIFFRES
-ET DES VIRGULES AVEC VALID_RGB_CHARS
-ELLE DECOUPE LA CHAINE PAR LES VIRGULES ET S'ASSURE QU'IL 
-Y A EXACTEMENT 3 VALEURS NON VIDES
-ELLE ALLOUE DE LA MEMOIRE POUR R G B, CONVERTIT CHAQUE PARTIE
-ON MALLOC COLOR CAR ON CREE UN TABLEAU LOCAL COMME
-INT *COLOR ET QU'ON RETURNE COLOR, ON RENVOIE UN PTR VERS
-UNE ZONE DE PILE QUI DEVIENT INVALIDE A LA SORTIE DE
-LA FONCTION.
-EN ENTIER AVEC FT_ATOI ET LE STOCKE DANS CE TABLEAU
+	Convert for exemple "200, 100, 0" 
+	to an allocated int array with the values
 */
-static int	*get_rgb_arr(char *line) // SEE IF I CAN MAKE A LOOP INSTEAD
+static int	*get_rgb_arr(char *line)
 {
 	char	**parts;
 	int		*color;
@@ -93,8 +82,7 @@ static int	*get_rgb_arr(char *line) // SEE IF I CAN MAKE A LOOP INSTEAD
 }
 
 /*
-ELLE VERIFIE QUE CHAQUE VALEUR DE RGB EST COMPRISE
-ENTRE 0 ET 255 
+	Verify values are between [0] and [255] only
 */
 static int	valid_rgb_int(int *color)
 {
@@ -111,11 +99,9 @@ static int	valid_rgb_int(int *color)
 }
 
 /*
-ELLE ANALYSE UNE CHAINE RG "220, 100, 0"
-LA CONVERTIT EN 3 ENTIERS SEPARES
-VERIFIE QUE LES VALEURS SONT VALIDES
-PUIS LES STOCKE DANS PARTS_DESTS
-RGB[0] = 220, RGB[1] = 100, RGB[2] = 0;
+	Separate the values and check their validity
+
+	"200, 100, 0" --> [200] [100] [0]
 */
 int	parse_colors(char *line, short *parts_dest)
 {
@@ -140,14 +126,8 @@ int	parse_colors(char *line, short *parts_dest)
 }
 
 /*
-ELLE CONVERTIT 3 VALEURS DE RGB EN UN ENTIER 32 BITS
-REPRESENTANT UNE COULEUR
-CHAQUE COMPOSANTE UTILISE 8 BITS
-AVEC R DANS L'OCTET LE PLUS ELEVE
-G AU MILIEU ET B DANS L'OCTET LE PLUS BAS
-L'OPERATION  & 0XFF GARANTIT QUE CHAQUE COMPOSANTE RESTE
-DANS L'INTERVALLE 0 - 255
-((r & 0xff) << 16 | (g & 0xff) << 8 | (b & 0xff));
+	Convert RGB to hexadecimal values (int)
+	hex_color = (R << 16) + (G << 8) + B
 */
 int	get_rgb_hex(int r, int g, int b)
 {

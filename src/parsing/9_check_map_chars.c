@@ -19,9 +19,9 @@ static int	valid_char(char c)
 }
 
 /*
-y loops over each line in the map_lines[y]
-x loops over each character in the line map_lines[y][x]
-checks if the character is allowed 0 1 N S E W ' '
+	y loops over each line in the map_lines[y]
+	x loops over each character in the line map_lines[y][x]
+	checks if the character is allowed (0 1 N S E W ' ')
 */
 int	check_map_chars(char **map_lines)
 {

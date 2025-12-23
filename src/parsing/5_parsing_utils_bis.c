@@ -12,6 +12,9 @@
 
 #include "cube.h"
 
+/*
+	Returns 1 when line is part of the map
+*/
 bool	is_map_line(char *line)
 {
 	char	c;
@@ -31,10 +34,8 @@ int	is_spawn(char c)
 }
 
 /*
-GNL LAISSE  "\n" A LA FIN DE LA CHAINE DE CARACTERE
-CETTE FONCTION L'EFFACE 
+	Remove '\n' left by GNL when reading the file
 */
-
 void	remove_newline(char *line)
 {
 	char	*temp;

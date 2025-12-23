@@ -1,7 +1,6 @@
-CFLAGS		:=	-Wextra -Wall -Werror -O3 -g
+CFLAGS		:=	-Wextra -Wall -Werror -O3
 
-DEBUG		:=	src/debug/cube_brick_wall.c					\
-				src/debug/cube_debug.c						\
+DEBUG		:=	src/debug/cube_debug.c						\
 
 EXEC		:=	src/exec/cube_exec.c						\
 				src/exec/cube_pos_init.c					\
@@ -42,7 +41,6 @@ PARSING		:=	src/parsing/1_read_map_file.c				\
 
 UTILS		:=	src/utils/clean_utils.c						\
 				src/utils/cube_utils.c						\
-				src/utils/math_utils.c						\
 				src/utils/mlx_utils.c						\
 				src/utils/mlx_wrapper.c						\
 

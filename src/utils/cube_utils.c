@@ -12,57 +12,6 @@
 
 #include "cube.h"
 
-// Copy pasted from ft_split: if a malloc fails, clear all
-size_t	ft_splitcheck(char **split, size_t wordcount)
-{
-	size_t	i;
-	size_t	isvalid;
-
-	i = 0;
-	isvalid = 1;
-	while (i < wordcount)
-	{
-		if (split[i] == NULL)
-			isvalid = 0;
-		i++;
-	}
-	if (isvalid == 0)
-	{
-		while (i > 0)
-		{
-			free(split[i]);
-			i--;
-		}
-	}
-	return (isvalid);
-}
-
-// Copy pasted from ft_split + consider '\n' the same as '\0'
-size_t	ft_digitcount(char const *s, char c)
-{
-	size_t	i;
-	size_t	new_word;
-	size_t	count;
-
-	i = 0;
-	new_word = 0;
-	count = 0;
-	while (s[i] != 0 && s[i] != '\n')
-	{
-		if (s[i] != c && ft_isdigit(s[i]) && new_word == 0)
-			new_word = 1;
-		if (s[i] == c && new_word == 1)
-		{
-			new_word = 0;
-			count++;
-		}
-		i++;
-	}
-	if ((s[i] == 0 || s[i] == '\n') && new_word == 1)
-		count++;
-	return (count);
-}
-
 /*
 	Store 2 int into one long for norm dodging purposes
 */
@@ -78,4 +27,17 @@ void	long_to_int(long l, int *x, int *y)
 {
 	*x = (l >> 32);
 	*y = l;
+}
+
+/*
+	libm math function expect radians
+*/
+double	deg_to_rad(double angle)
+{
+	return ((angle) * M_PI / 180.0);
+}
+
+double	rad_to_deg(double radian)
+{
+	return ((radian) * 180.0 / M_PI);
 }

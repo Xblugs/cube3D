@@ -17,9 +17,10 @@ static int	is_valid_char_forflood(char c);
 static int	open_map_handling(t_map *map);
 
 /*
-if outside of the map, error
-if 1 or V, true
-if ' ' false
+	if outside of the map, error
+	if 1 or V, true
+	if ' ' false
+	Set to 'V' for each visited space
 */
 bool	flood_fill(t_map *map, int x, int y)
 {
@@ -36,11 +37,7 @@ bool	flood_fill(t_map *map, int x, int y)
 }
 
 /*
-copy of map for floodfill
-loop over the whole map
-if sees 0 or starting point, floodfill starts
-if floodfill false, map is open
-if no problem, returns 1
+	Floodfill the map to ensure it's closed
 */
 int	check_if_map_closed(t_map *map)
 {
@@ -69,11 +66,7 @@ int	check_if_map_closed(t_map *map)
 }
 
 /*
-creates a copy from the original map
-if error, returns error
-0 is walkalde
-N S E W player spawn
-it has to be not visited before != v
+	Creates a copy from the original map for floodfill
 */
 static int	init_map_copy_forflood(t_map *map)
 {
@@ -87,10 +80,10 @@ static int	init_map_copy_forflood(t_map *map)
 }
 
 /*
-if 0 can be walked on
-if N S E W 
-if not V, isn't visited yet
-its to show where flood fill starts from
+	if 0 (can be walked on)
+	if N S E W (player spawn)
+	if not V, isn't visited yet
+	its to show where flood fill starts from
 */
 static int	is_valid_char_forflood(char c)
 {
@@ -98,9 +91,7 @@ static int	is_valid_char_forflood(char c)
 }
 
 /*
-called when floodfill fails
-frees copy of map
-prints a message, returns 0 
+	Called when floodfill fails
 */
 static int	open_map_handling(t_map *map)
 {
@@ -108,7 +99,3 @@ static int	open_map_handling(t_map *map)
 	printf("%sError: Map is open.\n", ERROR);
 	return (0);
 }
-
-/*
-it floodfills for each walkable point
-*/

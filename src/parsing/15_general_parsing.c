@@ -16,10 +16,8 @@ static int	validate_map(t_map *config);
 static int	parse_config(t_map *map, char **lines, int config_end);
 
 /*
-reads the map
-find the map start
-if parse error, frees all 
-..
+	Reads the file and recover the various required parameters
+	On error, free everything
 */
 int	parse_map_file(t_map *map, char *path)
 {
@@ -46,9 +44,9 @@ int	parse_map_file(t_map *map, char *path)
 }
 
 /*
-reads texture path lines (NO SO WE EA F RGB C RGB)
-if error returns error
-checks only lines before map starts
+	Read config lines (NO SO WE EA F C)
+
+	Checks only lines before map starts
 */
 static int	parse_config(t_map *map, char **lines, int config_end)
 {

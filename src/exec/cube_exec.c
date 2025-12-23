@@ -13,6 +13,7 @@
 #include "cube.h"
 
 static void	exec_init(t_data *data, t_calc *calc);
+static void	precalc_val(t_data *data, t_calc *calc);
 
 /*
 	Exec wrapper
@@ -40,6 +41,28 @@ static void	exec_init(t_data *data, t_calc *calc)
 {
 	precalc_val(data, calc);
 	start_pos_wrapper(data, data->map, data->rc);
+}
+
+/*
+	Precalculate constant values
+*/
+static void	precalc_val(t_data *data, t_calc *calc)
+{
+	*calc = (t_calc){0};
+	data->calc = calc;
+	calc->half_fov = FOV / 2;
+	calc->half_width = WIDTH / 2;
+	calc->half_height = HEIGHT / 2;
+	calc->max_width = data->map->width * UNIT;
+	calc->max_height = data->map->height * UNIT;
+	calc->dist_to_proj = calc->half_height / tan(deg_to_rad(calc->half_fov));
+	calc->angle_between_rays = (double)FOV / WIDTH;
+	printf("Precalc values:\n");
+	printf("fov/2=[%d]\tW/2=[%d]\tH/2=[%d]\tdist=[%d]\tangle=[%f]\n\n",
+		calc->half_fov, calc->half_width,
+		calc->half_height, calc->dist_to_proj, calc->angle_between_rays);
+	printf("Projection bounds:\n");
+	printf("width=[%d]\theight=[%d]\n\n", calc->max_width, calc->max_height);
 }
 
 /*

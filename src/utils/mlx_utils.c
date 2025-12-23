@@ -53,7 +53,7 @@ static int	mlx_close_tex(t_data *data)
 }
 
 /*
-	Force clear the img from data struct
+	Force refresh the img from data struct
 */
 void	clear_screen(t_data *data)
 {

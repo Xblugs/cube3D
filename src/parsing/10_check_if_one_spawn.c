@@ -16,14 +16,6 @@ int	is_player_spawn(char c)
 {
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
-/*
-loops over every row and column of the map
-
-for each char in the map, it calls is_player_spawn to check if that
-char represents a valid player spawn(N S E W)
-    if it is the count is incrementes
-ensures there is exactly one player spawn
-*/
 
 static int	find_last_line(char **map)
 {
@@ -35,6 +27,9 @@ static int	find_last_line(char **map)
 	return (k);
 }
 
+/*
+	Ensures there is exactly one player spawn
+*/
 int	check_if_one_spawn(char **map)
 {
 	int	x;

@@ -436,25 +436,25 @@ void	lateral_handler(t_data *data, t_raycast *rc, int key);
 	Everything related to file parsing
 	dir: src/parsing
 */
-// 		-- src/1_parsing/read_map_file.c --
+// 		-- src/parsing/1_read_map_file.c --
 char	**read_map_file(char *filename);
 
-// 		-- src/2_parsing/parse_texture.c --
+// 		-- src/parsing/2_parse_texture.c --
 int		has_right_extension(char *filename);
 int		check_double_id(t_direction *flag, char *id);
 int		parse_texture_line(char *line, t_map *map);
 
-// 		-- src/3_parsing/parse_colors.c --
+// 		-- src/parsing/3_parse_colors.c --
 int		get_rgb_hex(int r, int g, int b);
 int		parse_colors(char *line, short *parts_dest);
 
-// 		-- src/4_parsing/parsing_utils.c --
+// 		-- src/parsing/4_parsing_utils.c --
 bool	is_config_line(char *line);
 bool	is_color_config_line(char *line);
 int		valid_texture_path(char *path);
 int		missing_texture_line(t_direction *direction);
 
-// 		-- src/5_parsing/parsing_utils_bis.c --
+// 		-- src/parsing/5_parsing_utils_bis.c --
 bool	is_map_line(char *line);
 int		is_spawn(char c);
 void	remove_newline(char *line);
@@ -484,28 +484,27 @@ void	check_player_pos(t_map *map);
 bool	flood_fill(t_map *map, int x, int y);
 int		check_if_map_closed(t_map *map);
 
-// 		-- src/13_parsing/flood_prep.c --
+// 		-- src/parsing/13_parsing/flood_prep.c --
 char	**normalize_map(char **map, int height, int width);
 char	**prepare_for_flood(char **map, int height, int width);
 
-//		-- src/14_parsing/init_parsing.c --
+//		-- src/parsing/14_parsing/init_parsing.c --
 void	init_t_map(t_map *map);
 void	init_text_fd(t_map *config);
 
-//		-- src/15_general_parsing.c --
+//		-- src/parsing/15_general_parsing.c --
 int		parse_map_file(t_map *map, char *path);
 
-//		-- src/16_free.c -- 
+//		-- src/parsing/16_free.c -- 
 void	free_dbl_arr(char **lines);
 int		free_lines_and_config(t_map *map, char **lines, int ret);
 void	free_config(t_map *config);
 
-//		--src/17_is_text_accessible.c --
+//		--src/parsing/17_is_text_accessible.c --
 int		is_text_accessible(t_map *map);
 
 // 		-- src/parsing/cube_parsing.c --
 int		parsing(t_map *map, char *filename);
-// int		parsing_placeholder(t_data *data, t_map *map);
 
 /*
 	Various generic utils files
@@ -516,15 +515,10 @@ void	int_cleanup(int **intmap, int line);
 void	char_cleanup(char **charmap, int line);
 
 // 		-- src/utils/cube_utils.c --
-size_t	ft_splitcheck(char **split, size_t wordcount);
-size_t	ft_digitcount(char const *s, char c);
 long	int_to_long(int x, int y);
 void	long_to_int(long l, int *x, int *y);
-
-// 		-- src/utils/math_utils.c --
 double	deg_to_rad(double angle);
 double	rad_to_deg(double radian);
-void	precalc_val(t_data *data, t_calc *calc);
 
 // 		-- src/utils/mlx_utils.c --
 int		mlx_close(t_data *data);
@@ -539,9 +533,6 @@ void	*mlx_xpm_ftoi(void *mlx, char *file, int *width, int *height);
 	./src/ root folder
 	dir: src/
 */
-// 		-- src/cube_brick_wall.c --
-// void	brick_wall(t_data *data);
-
 // 		-- src/cube_data_init.c --
 void	data_init(t_data *data, t_img *img, t_map *map);
 int		texture_init(t_data *data, t_tex *tex, t_map *map);

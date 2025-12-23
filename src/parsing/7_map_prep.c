@@ -11,11 +11,10 @@
 /* ************************************************************************** */
 
 #include "cube.h"
-/*
-Ensures that only empty lines exist after the map
-if otherwise, error.
-*/
 
+/*
+	Ensures there's nothing after the map
+*/
 static int	check_lines_after_map(char **lines, int y)
 {
 	while (lines[y])
@@ -31,17 +30,12 @@ static int	check_lines_after_map(char **lines, int y)
 }
 
 /*
-starts scanning from the starting line
-checks each line to see if its a valid map
-measures the len of each map line 
-tracks the max line len which becomes the map's width
-counts the number of consecutive map lines which becomes the map's height
-updates the output parameters
-after finishing the map block it calls checklinesaftermap to ensure
-    no invalid or unexpected content appears after the map section
-returns the result of checklinesaftermap indicatng whether
-the map block is valid.
+	Scan each line to ensure only accepted character are part of the map
 
+	Saves the maximum line lenght for later use (width)
+		and number of lines (height)
+
+	Return with [true] or [false] depending if there's content after the map
 */
 int	validate_map_block(char **lines, int start, int *width, int *height)
 {

@@ -32,16 +32,7 @@ int	check_double_id(t_direction *flag, char *id)
 }
 
 /*
-for exemple for this texture : 
-F 220,  100,  0
-C 225,  30,   0
-i do split pour the spaces, this breaks the tgb into multiple parts
---> split[0] = "F", split[1] = "220," split[2] = "" but my code 
-was only using split[1] so it sent only "220," which ends with a comma
-as this was an error, rgb line wasnt being splitted correctly.
-it should have been ---> ID + MULTIPLE VALUES (sometimes broken due to spaces)
-to rebuild rgb line correctly i do concatenation of 
-split[1] + split[2] + split[3] etc
+	Recover RGB values
 */
 static char	*join_rgb_parts_after_split(char **split)
 {
@@ -65,40 +56,35 @@ static char	*join_rgb_parts_after_split(char **split)
 
 int	parse_texture_line(char *line, t_map *map)
 {
-	char	**splt;
+	char	**split;
 	int		status;
 	char	*res;
 
-	splt = ft_split(line, ' ');
-	if (!splt || !splt[0] || !splt[1])
-		return (free_dbl_arr(splt), 0);
-	status = check_double_id(&map->flags, splt[0]);
+	split = ft_split(line, ' ');
+	if (!split || !split[0] || !split[1])
+		return (free_dbl_arr(split), 0);
+	status = check_double_id(&map->flags, split[0]);
 	if (status == -1)
-		return (free_dbl_arr(splt), status);
-	res = join_rgb_parts_after_split(splt);
+		return (free_dbl_arr(split), status);
+	res = join_rgb_parts_after_split(split);
 	if (!res)
-		return (free_dbl_arr(splt), 0);
-	if (!is_color_config_line(splt[0]) && parse_texture_path(map, splt))
-		return (free (res), free_dbl_arr(splt), 1);
-	else if (ft_strncmp(splt[0], "F", 1) == 0
+		return (free_dbl_arr(split), 0);
+	if (!is_color_config_line(split[0]) && parse_texture_path(map, split))
+		return (free (res), free_dbl_arr(split), 1);
+	else if (ft_strncmp(split[0], "F", 1) == 0
 		&& parse_colors(res, map->floor) == 0)
-		return (free(res), free_dbl_arr(splt), 0);
-	else if (ft_strncmp(splt[0], "C", 1) == 0
+		return (free(res), free_dbl_arr(split), 0);
+	else if (ft_strncmp(split[0], "C", 1) == 0
 		&& parse_colors(res, map->ceiling) == 0)
-		return (free(res), free_dbl_arr(splt), 0);
+		return (free(res), free_dbl_arr(split), 0);
 	else
-		return (free(res), free_dbl_arr(splt), -1);
-	return (free(res), free_dbl_arr(splt), 0);
+		return (free(res), free_dbl_arr(split), -1);
+	return (free(res), free_dbl_arr(split), 0);
 }
 
 /*
-ASSOCIE UN CHEMIN DE TEXTURE A LA DIRECTION CORRESPONDANTE
-DANS LE MAP
-ELL SUPPRIME LE RETOUR A LA LIGNE, VERIFIE QUE LE CHEMIN
-EST VALIDE
-PUIS COPIE LA CHAINE DANS LE BON EMPLACEMENT (NO SO WE EA)
+	Recover texture path
 */
-
 static int	parse_texture_path(t_map *map, char **split)
 {
 	remove_newline(split[1]);

@@ -13,11 +13,13 @@
 #include "cube.h"
 
 static void	prepare_texture(t_data *data, t_img *img, t_draw *d, float *ratio);
-static void	predraw_wall(t_draw *draw, t_img *img, int px_count);
 static void	scale_to_ratio(t_img *i, int *count, float *ratio, float *leftover);
+static void	predraw_wall(t_draw *draw, t_img *img, int px_count);
 
 /*
 	Wall rendering wrapper
+
+	Drawing texture is the most expensive operation in all cube3D
 */
 void	draw_texture(t_data *data, t_raycast *rc, t_draw *draw)
 {
@@ -62,21 +64,9 @@ static void	prepare_texture(t_data *data, t_img *img, t_draw *d, float *ratio)
 }
 
 /*
-	Draw wall in-between
-
-	img->addr + (img->y * img->line_len + img->x * (img->bpp / 8))
-		(img->bpp / 8) is precalculated as x doesn't change in our case
+	How many pixel on screen need to be filled per one pixel of texture
+		+ leftovers for non-int ratio values to be taken in account
 */
-static void	predraw_wall(t_draw *draw, t_img *img, int px_count)
-{
-	char	*cursor;
-
-	cursor = img->addr + (img->y * img->line_len + img->x);
-	draw->color = *(unsigned int *)cursor;
-	draw->y[0] = draw->y[1];
-	draw->y[1] += px_count;
-}
-
 static void	scale_to_ratio(t_img *i, int *count, float *ratio, float *leftover)
 {
 	*leftover += *ratio - floor(*ratio);
@@ -92,4 +82,20 @@ static void	scale_to_ratio(t_img *i, int *count, float *ratio, float *leftover)
 		(*count)--;
 		*leftover += 1;
 	}
+}
+
+/*
+	Draw wall in-between
+
+	img->addr + (img->y * img->line_len + img->x * (img->bpp / 8))
+		(img->bpp / 8) is precalculated (constant in our case)
+*/
+static void	predraw_wall(t_draw *draw, t_img *img, int px_count)
+{
+	char	*cursor;
+
+	cursor = img->addr + (img->y * img->line_len + img->x);
+	draw->color = *(unsigned int *)cursor;
+	draw->y[0] = draw->y[1];
+	draw->y[1] += px_count;
 }

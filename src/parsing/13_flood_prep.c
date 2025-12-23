@@ -16,7 +16,8 @@ static char	**alloc_normalized_map(int height, int width);
 static void	fill_line_with_spaces(char *dest, char *source, int width);
 
 /*
-ALIGNE LES LIGNES DE MAP AVEC LES ESPACES SI NECESSAIRE
+	Align map width for each line to prevent any read/write error
+	in case the map isn't a rectangle or a square
 */
 char	**normalize_map(char **map, int height, int width)
 {
@@ -64,7 +65,7 @@ char	**prepare_for_flood(char **map, int height, int width)
 }
 
 /*
-FAIS DE LA MEMOIRE POUR UNE MAP NORMALIZE
+	Allocate memory for the normalized map
 */
 static char	**alloc_normalized_map(int height, int width)
 {
@@ -90,8 +91,7 @@ static char	**alloc_normalized_map(int height, int width)
 }
 
 /*
-AJOUTE AUTANT D'ESPACE QU'IL FAUT POUR NORMALISER 
-LES DIMENSIONS DU MAP
+	Copy the map content and fill with spaces as needed
 */
 static void	fill_line_with_spaces(char *dest, char *source, int width)
 {

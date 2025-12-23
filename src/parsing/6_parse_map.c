@@ -13,10 +13,8 @@
 #include "cube.h"
 
 /*
-si strchr trouve \n a la fin de la ligne, il le remplace
-par \0
-toutes les tabulations sont remplace par des ' '
-pour faciliter l'alignement de map.
+	Replace '\n' with '\0'
+	Tab are replaced with spaces
 */
 static void	remove_map_newline(char **lines)
 {
@@ -57,11 +55,8 @@ int	find_map_start(char **lines)
 }
 
 /*
-
-map lines are extracted from the .cub
-a newly allocated arr of str containing only the map
-lines or null if failure
-
+	lines contain the file content
+	This function returns only the map part
 */
 char	**extract_map(char **lines, int start, int line_num)
 {
@@ -83,23 +78,19 @@ char	**extract_map(char **lines, int start, int line_num)
 	map[i] = NULL;
 	return (map);
 }
+
 /*
-	finds where the map starts
-	
-	using validate_map_block, it checks whether the map area has the
+	Parse the map part of the file:
+
+	Find where the map start and checks whether the map area has the
 	correct shape and retrieves the map's width and height.
 	
 	it copies the map lines into a separate 2d array using extract_map
+	without newlines and store it into config->map
 	
-	it cleans \n  with remove_map_newline
-	
-	stores the map in the config
-	
-	it verifies that the map only contains allowed chars via check_map_chars()
-	
-	it ensures the map is closed
+	then verifies that the map only contains allowed chars
+	and ensures the map is closed
 */
-
 int	map_parsing(t_map *config, char **lines)
 {
 	char	**map;

@@ -1,7 +1,7 @@
-NO ./texture/xpm/tile_cyan.xpm
-SO ./texture/xpm/tile_magenta.xpm
-WE ./texture/xpm/tile_yellow.xpm
-EA ./texture/xpm/green.xpm
+NO ./texture/xpm/purplestone.xpm
+SO ./texture/xpm/purplestone.xpm
+WE ./texture/xpm/purplestone.xpm
+EA ./texture/xpm/purplestone.xpm
 
 C 35,19,73
 F 15,6,40

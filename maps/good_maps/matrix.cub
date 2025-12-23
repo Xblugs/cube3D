@@ -1,6 +1,6 @@
-NO ./texture/xpm/tile_cyan.xpm
-SO ./texture/xpm/tile_magenta.xpm
-WE ./texture/xpm/tile_yellow.xpm
+NO ./texture/xpm/green.xpm
+SO ./texture/xpm/green.xpm
+WE ./texture/xpm/green.xpm
 EA ./texture/xpm/green.xpm
 
 F 0,0,0

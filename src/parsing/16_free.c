@@ -29,6 +29,7 @@ void	free_config(t_map *config)
 	free_texture(config);
 	if (config->map)
 		free_dbl_arr(config->map);
+	config->map = NULL;
 }
 
 static void	free_texture(t_map *config)

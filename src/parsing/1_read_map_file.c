@@ -12,7 +12,11 @@
 
 #include "cube.h"
 
-// +2  = newline + null
+/*
+	Allocate current line count + 2
+		1 to add [new_line]
+		1 to NULL terminate
+*/
 static char	**add_line(char **lines, char *new_line, int count)
 {
 	char	**new;

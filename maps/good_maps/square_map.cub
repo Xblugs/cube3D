@@ -1,7 +1,7 @@
 NO ./texture/xpm/tile_cyan.xpm
-SO ./texture/xpm/tile_magenta.xpm
-WE ./texture/xpm/tile_yellow.xpm
-EA ./texture/xpm/green.xpm
+SO ./texture/xpm/tile_cyan.xpm
+WE ./texture/xpm/tile_cyan.xpm
+EA ./texture/xpm/tile_cyan.xpm
 
 F   69, 222, 199
 
