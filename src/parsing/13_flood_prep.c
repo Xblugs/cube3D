@@ -55,8 +55,6 @@ char	**prepare_for_flood(char **map, int height, int width)
 		x = 0;
 		while (x < width)
 		{
-			if (copy[y][x] == ' ')
-				copy[y][x] = '1';
 			x++;
 		}
 		y++;
